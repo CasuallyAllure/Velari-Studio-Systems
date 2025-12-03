@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+:root {
+  /* Default theme colors (Swedish Minimal) */
+  --color-primary: #4A90E2;
+  --color-secondary: #171717;
+  --color-accent: #4A90E2;
+  --color-background: #FFFFFF;
+  --color-foreground: #171717;
+  --color-muted: #F5F5F5;
+  --color-border: #E5E5E5;
+  
+  /* Font */
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
