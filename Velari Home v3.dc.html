@@ -1624,5 +1624,19 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script>
+/* DEV ONLY - auto-reload on file change (localhost). Strip before production deploy. */
+(function () {
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') return;
+  var last = null;
+  setInterval(function () {
+    fetch(location.href, { method: 'HEAD', cache: 'no-store' }).then(function (r) {
+      var m = r.headers.get('last-modified') || r.headers.get('etag');
+      if (last && m && m !== last) location.reload();
+      last = m;
+    }).catch(function () {});
+  }, 2000);
+})();
+</script>
 </body>
 </html>

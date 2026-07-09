@@ -10,7 +10,7 @@
     {
       "name": "velari-dc",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["-y", "http-server", ".", "-p", "8081", "-c-1", "--silent"],
+      "runtimeArgs": ["-y", "live-server", "--port=8081", "--no-browser", "--quiet", "--watch=Velari Home v3.dc.html,support.js,img", "."],
       "port": 8081
     }
   ]
