@@ -59,9 +59,10 @@ a:hover { color: #fcf4de; }
   <div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;z-index:0">
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,#0a0710 0%,#0a0710 40%,#241318 100%)"></div>
     <div ref="{{ R.heroPhoto }}" style="position:absolute;inset:0;transform-origin:50% 50%">
-      <img src="img/plates/skyline_2560.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%;filter:contrast(1.07) saturate(1.06)">
+      <video ref="{{ R.heroPlate }}" playsinline preload="auto" poster="img/plates/dust_poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%">
+        <source src="img/plates/dust_scrub_2048.mp4" type="video/mp4">
+      </video>
     </div>
-    <div style="position:absolute;left:0;right:0;top:24%;height:26%;pointer-events:none;background:radial-gradient(58% 62% at 63% 68%,rgba(252,240,214,0.22) 0%,rgba(252,240,214,0.08) 55%,transparent 80%),radial-gradient(40% 55% at 16% 60%,rgba(252,240,214,0.13) 0%,transparent 75%)"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,3,8,0.16) 0%,rgba(6,3,8,0.04) 38%,rgba(5,2,8,0.34) 66%,rgba(4,1,6,0.7) 100%)"></div>
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 60%,rgba(3,1,4,0.38) 100%)"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,7,16,0.36) 0%,rgba(10,7,16,0.1) 40%,transparent 60%),radial-gradient(46% 44% at 20% 76%,rgba(8,5,12,0.62) 0%,rgba(8,5,12,0.3) 55%,transparent 78%)"></div>
@@ -82,7 +83,6 @@ a:hover { color: #fcf4de; }
       <a href="#systems" style="display:inline-flex;align-items:center;gap:8px;font-family:'Geist Mono',monospace;font-size:14px;text-transform:uppercase;letter-spacing:0.1em;color:#f4d68c;text-decoration:none;transition:gap 0.15s" style-hover="gap:12px">View Systems <span aria-hidden="true">→</span></a>
     </div>
   </div>
-  <canvas ref="{{ R.skyDust }}" aria-hidden="true" style="position:absolute;left:0;right:0;top:16%;height:56%;width:100%;pointer-events:none;z-index:10"></canvas>
   
 </section>
 
@@ -708,10 +708,9 @@ class Component extends DCLogic {
       this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
       this.setupReveals();
       this.setupPlates();
+      this.setupScrub();
       if (!this.reduced) {
-        this.setupFog();
         this.setupFlow();
-        this.setupSkyDust();
         this.setupAmbient();
       }
       this.setupScroll();
@@ -1228,7 +1227,6 @@ class Component extends DCLogic {
         const r = hero.getBoundingClientRect();
         const hp = this.clamp01(-r.top / r.height);
         const tf = 'translateY(' + (-5 * hp) + '%)';
-        if (R.heroPhoto.current) R.heroPhoto.current.style.transform = tf;
         if (R.heroFlash.current) R.heroFlash.current.style.transform = tf;
         if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.3, 0.94) * 0.97);
         this.fogOutV = this.map(hp, 0.55, 0.98);
@@ -1522,6 +1520,30 @@ class Component extends DCLogic {
     };
     raf = requestAnimationFrame(draw);
     this.cleanups.push(() => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); });
+  }
+
+  setupScrub() {
+    /* scroll-scrubbed dust plate: scroll drives the playhead (all-keyframe encode).
+       lerp in rAF, never seek in the scroll handler; dead-zone masks Chrome seek coalescing */
+    const v = this.R.heroPlate.current;
+    if (!v || this.reduced) return;
+    v.muted = true;
+    let dur = 0, target = 0, cur = 0, raf = 0;
+    const onMeta = () => { dur = v.duration || 0; };
+    v.addEventListener('loadedmetadata', onMeta);
+    if (v.readyState >= 1) onMeta();
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      if (!dur) return;
+      const vh = window.innerHeight;
+      target = this.clamp01(window.scrollY / (vh * 1.35)) * (dur - 0.05);
+      cur += (target - cur) * 0.1;
+      if (Math.abs(v.currentTime - cur) > 0.03 && v.seekable.length) {
+        try { v.currentTime = cur; } catch (e) { /* iOS low-power: poster stays */ }
+      }
+    };
+    raf = requestAnimationFrame(tick);
+    this.cleanups.push(() => { cancelAnimationFrame(raf); v.removeEventListener('loadedmetadata', onMeta); });
   }
 
   setupPlates() {
