@@ -72,8 +72,9 @@ a:hover { color: #fcf4de; }
       <a href="#systems" style="display:inline-flex;align-items:center;gap:8px;font-family:'Geist Mono',monospace;font-size:14px;text-transform:uppercase;letter-spacing:0.1em;color:#f4d68c;text-decoration:none;transition:gap 0.15s" style-hover="gap:12px">View Systems <span aria-hidden="true">→</span></a>
     </div>
   </div>
-  <canvas ref="{{ R.heroDust }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10"></canvas>
+  <canvas ref="{{ R.heroDust }}" aria-hidden="true" style="position:absolute;left:0;right:0;top:56%;bottom:0;width:100%;height:44%;pointer-events:none;z-index:10"></canvas>
 </section>
+
 
 <section ref="{{ R.pos }}" id="systems" data-screen-label="Positioning — VELARI" style="position:relative;height:340vh;background:linear-gradient(to bottom,#0a0710 0%,#0d0812 35%,#170e16 68%,#20131c 100%)">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden">
@@ -646,7 +647,7 @@ class Component extends DCLogic {
       this.setupPlates();
       if (!this.reduced) {
         this.setupFog();
-        this.setupDust(this.R.heroDust.current, { direction: 'rise', deep: false, count: 70 });
+        this.setupDust(this.R.heroDust.current, { direction: 'sink', deep: false, count: 56, size: 0.42 });
         this.setupAmbient();
       }
       this.setupScroll();
@@ -783,8 +784,8 @@ class Component extends DCLogic {
       uFogOut: gl.getUniformLocation(prog, 'uFogOut'),
     };
     const resize = () => {
-      canvas.width = Math.max(2, Math.floor(canvas.clientWidth * 0.6));
-      canvas.height = Math.max(2, Math.floor(canvas.clientHeight * 0.6));
+      canvas.width = Math.max(2, Math.floor(canvas.clientWidth * 0.42));
+      canvas.height = Math.max(2, Math.floor(canvas.clientHeight * 0.42));
       gl.viewport(0, 0, canvas.width, canvas.height);
     };
     resize();
@@ -884,7 +885,7 @@ class Component extends DCLogic {
         X += m.ox; Y += m.oy;
         /* depth of field: far = tiny sharp spark, near = large soft bokeh */
         const breathe = 0.5 + 0.5 * Math.sin(t * 0.00055 + m.tw);
-        const sz = (3 + m.z * m.z * 30) * dpr;
+        const sz = (3 + m.z * m.z * 30) * dpr * (opts.size || 1);
         const aBase = (0.16 + 0.5 * breathe) * (1 - m.z * 0.62) * (deep ? 0.55 : 1);
         const a = Math.min(1, aBase * (1 + prox * 1.6));
         dx.globalAlpha = a;
@@ -1336,12 +1337,7 @@ class Component extends DCLogic {
       v.defaultMuted = true;
       v.loop = true;
     });
-    const hero = this.R.heroPlate.current;
-    if (hero) {
-      if (this.reduced) { try { hero.pause(); } catch (e) {} }
-      else { const pl = hero.play && hero.play(); if (pl && pl.catch) pl.catch(() => {}); }
-    }
-    [this.R.ctaPlate.current, this.R.stackPlate.current].forEach((v) => {
+    [this.R.heroPlate.current, this.R.ctaPlate.current, this.R.stackPlate.current].forEach((v) => {
       if (!v || this.reduced || !('IntersectionObserver' in window)) return;
       const io = new IntersectionObserver((entries) => {
         const e = entries[0];
