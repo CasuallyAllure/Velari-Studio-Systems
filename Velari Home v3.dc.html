@@ -71,12 +71,12 @@ a:hover { color: #fcf4de; }
     </div>
   </div>
   <canvas ref="{{ R.skyDust }}" aria-hidden="true" style="position:absolute;left:0;right:0;top:16%;height:56%;width:100%;pointer-events:none;z-index:10"></canvas>
-  <canvas ref="{{ R.heroDust }}" aria-hidden="true" style="position:absolute;left:0;right:0;top:56%;bottom:0;width:100%;height:44%;pointer-events:none;z-index:10;-webkit-mask-image:linear-gradient(to bottom,black 55%,transparent 96%);mask-image:linear-gradient(to bottom,black 55%,transparent 96%)"></canvas>
+  
 </section>
 
 
 <div style="position:relative;height:0;z-index:7" aria-hidden="true">
-  <canvas ref="{{ R.trailDust }}" style="position:absolute;left:0;right:0;top:-44vh;height:126vh;width:100%;pointer-events:none"></canvas>
+  <canvas ref="{{ R.flowDust }}" style="position:absolute;left:0;right:0;top:-55vh;height:130vh;width:100%;pointer-events:none"></canvas>
 </div>
 
 <section ref="{{ R.pos }}" id="systems" data-screen-label="Positioning — VELARI" style="position:relative;height:340vh;margin-top:-20vh;pointer-events:none;background:linear-gradient(to bottom,rgba(10,7,16,0) 0%,rgba(10,7,16,0) 5.8%,#0a0710 9%,#0d0812 35%,#170e16 68%,#20131c 100%)">
@@ -523,7 +523,7 @@ class Component extends DCLogic {
   ];
 
   R = (() => {
-    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','ctaPlate','posDio','trailDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
+    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','ctaPlate','posDio','flowDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
     const o = {};
     for (const n of names) o[n] = React.createRef();
     return o;
@@ -650,8 +650,7 @@ class Component extends DCLogic {
       this.setupPlates();
       if (!this.reduced) {
         this.setupFog();
-        this.setupDust(this.R.heroDust.current, { direction: 'sink', deep: false, count: 56, size: 0.42 });
-        this.setupTrail();
+        this.setupFlow();
         this.setupSkyDust();
         this.setupAmbient();
       }
@@ -1396,10 +1395,10 @@ class Component extends DCLogic {
     this.cleanups.push(() => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); });
   }
 
-  setupTrail() {
-    /* scroll-lit falling sparkle trail across the hero/positioning seam —
-       same idea as the process beam: sparks come alive as the scroll head reaches them */
-    const canvas = this.R.trailDust.current;
+  setupFlow() {
+    /* one continuous field of dust spanning the water through the whole transition —
+       uniform coverage, constant slow fall, no scroll gates, no bands */
+    const canvas = this.R.flowDust.current;
     if (!canvas) return;
     const dx = canvas.getContext('2d');
     if (!dx) return;
@@ -1414,20 +1413,13 @@ class Component extends DCLogic {
       if (!visible) dx.clearRect(0, 0, canvas.width, canvas.height);
     });
     io.observe(canvas);
-    const STREAMS = [
-      { cx: 0.26, lag: 0.10, amp: 0.045, ph: 1.7 },
-      { cx: 0.52, lag: 0.0,  amp: 0.05,  ph: 3.9 },
-      { cx: 0.76, lag: 0.16, amp: 0.04,  ph: 0.6 }
-    ];
-    const sparks = Array.from({ length: 216 }, (_, i) => ({
-      st: i % 3,
-      p: Math.floor(i / 3) / 72 + Math.random() * 0.01,
-      j: (Math.random() - 0.5) * 34,
+    const motes = Array.from({ length: 150 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
       z: Math.random(),
       tw: Math.random() * 6.28,
-      dr: 0.25 + Math.random() * 0.75
+      dr: 0.3 + Math.random() * 0.7
     }));
-    const pathX = (st, pp, W) => W * st.cx + Math.sin(pp * 8.5 + st.ph) * W * st.amp;
     let raf = 0;
     const draw = (t) => {
       raf = requestAnimationFrame(draw);
@@ -1435,30 +1427,26 @@ class Component extends DCLogic {
       const W = canvas.width, H = canvas.height;
       dx.clearRect(0, 0, W, H);
       const vh = window.innerHeight;
-      const sy = window.scrollY;
-      const head = this.clamp01((sy - vh * 0.22) / (vh * 0.85));
-      const fade = 1 - this.clamp01((sy - vh * 1.35) / (vh * 0.55));
-      if (head <= 0 || fade <= 0) return;
+      const scrollBoost = 1 + this.clamp01(window.scrollY / vh) * 1.6;
       dx.globalCompositeOperation = 'lighter';
-      for (const sp of sparks) {
-        const st = STREAMS[sp.st];
-        const sHead = this.clamp01(head * (1 + st.lag) - st.lag * 0.4);
-        if (sp.p > sHead) continue;
-        const nearHead = 1 - Math.min(1, (sHead - sp.p) / 0.14);
-        const y = sp.p * H + Math.sin(t * 0.0004 * sp.dr + sp.tw) * 4 * dpr;
-        const x = pathX(st, sp.p, W) + sp.j * dpr * (0.4 + sp.z * 0.6) + Math.cos(t * 0.00035 * sp.dr + sp.tw) * 5 * dpr;
-        const breathe = 0.5 + 0.5 * Math.sin(t * 0.0011 + sp.tw);
-        const taper = 1 - this.clamp01((sp.p - 0.72) / 0.3) * 0.85;
-        const a = fade * taper * (0.13 + 0.46 * breathe) * (0.35 + 0.65 * sp.z) * (0.5 + 0.9 * nearHead);
-        const r = (0.5 + sp.z * 1.3) * dpr * (1 + nearHead * 0.9);
+      for (const m of motes) {
+        m.y += 0.00022 * m.dr * scrollBoost;
+        m.x += Math.sin(t * 0.00028 * m.dr + m.tw) * 0.00009;
+        if (m.y > 1.01) { m.y = -0.01; m.x = Math.random(); }
+        /* soft edges only at the very top and bottom of the field — no hard starts */
+        const edge = Math.min(this.clamp01(m.y / 0.07), this.clamp01((1 - m.y) / 0.1));
+        const breathe = 0.5 + 0.5 * Math.sin(t * 0.0011 + m.tw);
+        const a = edge * (0.10 + 0.42 * breathe) * (0.35 + 0.65 * m.z);
+        const r = (0.45 + m.z * 1.15) * dpr;
+        const x = m.x * W, y = m.y * H;
         dx.globalAlpha = Math.min(1, a);
         dx.fillStyle = 'rgba(255,249,233,1)';
         dx.beginPath(); dx.arc(x, y, r, 0, 6.2832); dx.fill();
-        if (nearHead > 0.55 && breathe > 0.72) {
-          const L = r * 5;
-          dx.globalAlpha = Math.min(1, a * 0.9);
+        if (m.z > 0.8 && breathe > 0.86) {
+          const L = r * 4;
+          dx.globalAlpha = Math.min(1, a * 0.8);
           dx.strokeStyle = 'rgba(252,244,222,1)';
-          dx.lineWidth = 0.6 * dpr;
+          dx.lineWidth = 0.55 * dpr;
           dx.beginPath();
           dx.moveTo(x - L, y); dx.lineTo(x + L, y);
           dx.moveTo(x, y - L); dx.lineTo(x, y + L);
