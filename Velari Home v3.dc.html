@@ -35,7 +35,6 @@ a:hover { color: #fcf4de; }
 @media (max-width: 1200px) {
   nav[aria-label="Primary"] { display: none; }
   #industries img { object-fit: contain !important; }
-  section[data-screen-label="Hero"] img, section[data-screen-label="Hero"] video { object-fit: contain !important; object-position: center 40% !important; }
   video[poster*="stack_poster"] { height: auto !important; width: min(90vw, 156vh) !important; }
 }
 </style>
@@ -1564,11 +1563,10 @@ class Component extends DCLogic {
       drawn = use;
       const im = frames[use];
       const cw = canvas.width, ch = canvas.height;
-      const contain = window.innerWidth <= 1200;
-      const sc = (contain ? Math.min : Math.max)(cw / im.width, ch / im.height);
+      const sc = Math.max(cw / im.width, ch / im.height);
       const w = im.width * sc, h = im.height * sc;
       ctx.clearRect(0, 0, cw, ch);
-      ctx.drawImage(im, (cw - w) / 2, (ch - h) * (contain ? 0.5 : 0.55), w, h);
+      ctx.drawImage(im, (cw - w) / 2, (ch - h) * 0.55, w, h);
     };
     const tick = () => {
       raf = requestAnimationFrame(tick);
