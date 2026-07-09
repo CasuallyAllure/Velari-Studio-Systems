@@ -59,9 +59,7 @@ a:hover { color: #fcf4de; }
   <div aria-hidden="true" style="position:sticky;top:0;height:100vh;margin-bottom:-100vh;overflow:hidden;z-index:0">
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,#0a0710 0%,#0a0710 40%,#241318 100%)"></div>
     <div ref="{{ R.heroPhoto }}" style="position:absolute;inset:0;transform-origin:50% 50%">
-      <video ref="{{ R.heroPlate }}" playsinline preload="auto" poster="img/plates/dust_poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%">
-        <source src="img/plates/dust_scrub_2048.mp4" type="video/mp4">
-      </video>
+      <canvas ref="{{ R.heroSeq }}" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
       <img ref="{{ R.heroStill }}" src="img/plates/dust_master_2560.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:opacity">
     </div>
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,3,8,0.16) 0%,rgba(6,3,8,0.04) 38%,rgba(5,2,8,0.34) 66%,rgba(4,1,6,0.7) 100%)"></div>
@@ -584,7 +582,7 @@ class Component extends DCLogic {
   ];
 
   R = (() => {
-    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','heroStill','ctaPlate','posDio','flowDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
+    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','heroStill','heroSeq','ctaPlate','posDio','flowDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
     const o = {};
     for (const n of names) o[n] = React.createRef();
     return o;
@@ -1524,29 +1522,64 @@ class Component extends DCLogic {
   }
 
   setupScrub() {
-    /* scroll-scrubbed dust plate: scroll drives the playhead (all-keyframe encode).
-       lerp in rAF, never seek in the scroll handler; dead-zone masks Chrome seek coalescing */
-    const v = this.R.heroPlate.current;
-    if (!v || this.reduced) return;
-    v.muted = true;
-    let dur = 0, target = 0, cur = 0, raf = 0;
-    const onMeta = () => { dur = v.duration || 0; };
-    v.addEventListener('loadedmetadata', onMeta);
-    if (v.readyState >= 1) onMeta();
+    /* frame-sequence scrub: 121 pre-sliced stills flipped on a canvas by scroll.
+       no video seeking, no decoder jank — every frame is a crisp photo */
+    const canvas = this.R.heroSeq.current;
+    const still = this.R.heroStill.current;
+    if (!canvas || this.reduced) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const N = 121;
+    const src = (i) => 'img/plates/seq/dust_' + String(i + 1).padStart(3, '0') + '.jpg';
+    const frames = new Array(N).fill(null);
+    const load = (i) => new Promise((ok) => {
+      const im = new Image();
+      im.onload = () => { frames[i] = im; ok(); };
+      im.onerror = () => ok();
+      im.src = src(i);
+    });
+    (async () => {
+      await load(0);
+      drawn = -1;
+      const order = [];
+      const seen = new Set();
+      for (let step = 8; step >= 1; step = step >> 1)
+        for (let i = 0; i < N; i += step)
+          if (!seen.has(i)) { seen.add(i); order.push(i); }
+      for (let k = 0; k < order.length; k += 6)
+        await Promise.all(order.slice(k, k + 6).map(load));
+    })();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let drawn = -1;
+    const resize = () => { canvas.width = canvas.clientWidth * dpr; canvas.height = canvas.clientHeight * dpr; drawn = -1; };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    let cur = 0, raf = 0;
+    const draw = (idx) => {
+      let use = idx;
+      while (use >= 0 && !frames[use]) use--;
+      if (use < 0) { use = idx; while (use < N && !frames[use]) use++; }
+      if (use >= N || !frames[use] || use === drawn) return;
+      drawn = use;
+      const im = frames[use];
+      const cw = canvas.width, ch = canvas.height;
+      const contain = window.innerWidth <= 1200;
+      const sc = (contain ? Math.min : Math.max)(cw / im.width, ch / im.height);
+      const w = im.width * sc, h = im.height * sc;
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(im, (cw - w) / 2, (ch - h) * (contain ? 0.5 : 0.55), w, h);
+    };
     const tick = () => {
       raf = requestAnimationFrame(tick);
-      if (!dur) return;
       const vh = window.innerHeight;
-      target = this.clamp01(window.scrollY / (vh * 1.85)) * (dur - 0.05);
-      cur += (target - cur) * 0.1;
-      const still = this.R.heroStill.current;
-      if (still) still.style.opacity = String(this.clamp01(1 - target / 0.35));
-      if (Math.abs(v.currentTime - cur) > 0.03 && v.seekable.length) {
-        try { v.currentTime = cur; } catch (e) { /* iOS low-power: poster stays */ }
-      }
+      const p = this.clamp01(window.scrollY / (vh * 1.85));
+      cur += (p - cur) * 0.14;
+      if (still) still.style.opacity = String(this.clamp01(1 - p * 12));
+      draw(Math.round(cur * (N - 1)));
     };
     raf = requestAnimationFrame(tick);
-    this.cleanups.push(() => { cancelAnimationFrame(raf); v.removeEventListener('loadedmetadata', onMeta); });
+    this.cleanups.push(() => { cancelAnimationFrame(raf); ro.disconnect(); });
   }
 
   setupPlates() {
