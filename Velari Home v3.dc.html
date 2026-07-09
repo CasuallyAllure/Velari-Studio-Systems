@@ -77,8 +77,11 @@ a:hover { color: #fcf4de; }
 
 <section ref="{{ R.pos }}" id="systems" data-screen-label="Positioning — VELARI" style="position:relative;height:340vh;background:linear-gradient(to bottom,#0a0710 0%,#0d0812 35%,#170e16 68%,#20131c 100%)">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden">
-    <canvas ref="{{ R.deepDust }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas>
-    <canvas ref="{{ R.shards }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas>
+    <div ref="{{ R.posDio }}" aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;will-change:opacity,transform">
+      <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(88vh,100%);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen">
+        <source src="img/plates/stack_orbit_1080.mp4" type="video/mp4">
+      </video>
+    </div>
 
     <p ref="{{ R.stmt1 }}" style="position:absolute;left:0;right:0;top:50%;margin:0;padding:0 40px;text-align:center;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:100;text-transform:uppercase;letter-spacing:0.3em;line-height:1.12;font-size:clamp(2.2rem,4.8vw,4.1rem);color:#f4f1ea;text-shadow:0 0 70px rgba(232,213,163,0.22);opacity:0;transform:translateY(-50%)">We build <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0.01em;color:#e8d5a3">websites.</em></p>
     <p ref="{{ R.stmt2 }}" style="position:absolute;left:0;right:0;top:50%;margin:0;padding:0 40px;text-align:center;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:100;text-transform:uppercase;letter-spacing:0.3em;line-height:1.12;font-size:clamp(2.2rem,4.8vw,4.1rem);color:#f4f1ea;text-shadow:0 0 70px rgba(232,213,163,0.22);opacity:0;transform:translateY(-50%)">And the systems <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0.01em;color:#e8d5a3">behind</em> them.</p>
@@ -96,63 +99,30 @@ a:hover { color: #fcf4de; }
           <li ref="{{ R.row4 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;border-bottom:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">05</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Admin</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">the owner’s control room</span></li>
         </ol>
       </div>
-      <div style="perspective:1100px">
-        <div style="position:relative;margin:0 auto;height:420px;width:100%;max-width:460px">
-          <div ref="{{ R.plane0 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:5;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#b3a08e">Interface</span><span style="display:flex;gap:6px"><span style="height:6px;width:6px;border-radius:999px;background:#3a2a20"></span><span style="height:6px;width:6px;border-radius:999px;background:#3a2a20"></span><span style="height:6px;width:6px;border-radius:999px;background:#3a2a20"></span></span></div>
-            <div style="position:relative;margin:0 16px;height:74px;border-radius:8px;overflow:hidden;background:radial-gradient(120% 160% at 20% 0%,#33200f 0%,#0a1220 60%);border:1px solid rgba(255,255,255,0.06)">
-              <div style="position:absolute;left:12px;top:16px;height:7px;width:46%;border-radius:999px;background:rgba(234,240,246,0.85)"></div>
-              <div style="position:absolute;left:12px;top:30px;height:5px;width:30%;border-radius:999px;background:rgba(244,214,140,0.5)"></div>
-              <div style="position:absolute;left:12px;top:46px;height:14px;width:52px;border-radius:999px;border:1px solid rgba(232,213,163,0.6)"></div>
-              <div style="position:absolute;right:-14px;top:10px;height:80px;width:80px;border-radius:999px;background:radial-gradient(circle,rgba(244,214,140,0.25),transparent 70%)"></div>
-            </div>
-          </div>
-          <div ref="{{ R.plane1 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:4;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span ref="{{ R.planeLab1 }}" style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#b3a08e;opacity:0">Branding</span></div>
-            <div style="margin:0 16px;display:flex;align-items:center;gap:12px">
-              <span style="display:flex;height:34px;width:34px;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(232,213,163,0.5);font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:12px;letter-spacing:0.1em;color:#e8d5a3">A</span>
-              <div style="display:flex;flex-direction:column;gap:6px"><div style="height:7px;width:110px;border-radius:999px;background:rgba(234,240,246,0.8)"></div><div style="height:5px;width:70px;border-radius:999px;background:rgba(143,169,191,0.5)"></div></div>
-              <div style="margin-left:auto;display:flex;gap:6px"><span style="height:16px;width:16px;border-radius:999px;background:#9db8a1"></span><span style="height:16px;width:16px;border-radius:999px;background:#e8d5a3"></span><span style="height:16px;width:16px;border-radius:999px;background:#c98a6b"></span></div>
-            </div>
-          </div>
-          <div ref="{{ R.plane2 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:3;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span ref="{{ R.planeLab2 }}" style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#b3a08e;opacity:0">AI</span></div>
-            <div style="margin:0 16px;display:flex;flex-direction:column;gap:6px">
-              <div style="display:flex;align-items:center;gap:8px;border-radius:6px;border:1px solid rgba(124,92,255,0.35);background:rgba(124,92,255,0.08);padding:6px 10px"><span style="height:5px;width:5px;border-radius:999px;background:#9d85ff"></span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:#c9bfff">inquiry → summary → routed</span></div>
-              <div style="height:5px;width:55%;border-radius:999px;background:rgba(124,92,255,0.25)"></div>
-            </div>
-          </div>
-          <div ref="{{ R.plane3 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:2;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span ref="{{ R.planeLab3 }}" style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#b3a08e;opacity:0">Automation</span></div>
-            <div style="margin:0 16px;display:flex;align-items:center;gap:10px">
-              <span style="position:relative;display:inline-block;height:16px;width:30px;border-radius:999px;background:rgba(244,214,140,0.35)"><span style="position:absolute;right:2px;top:2px;height:12px;width:12px;border-radius:999px;background:#f4d68c"></span></span>
-              <span style="border-radius:6px;border:1px solid #2a1a14;background:#171016;padding:4px 10px;font-family:'Geist Mono',monospace;font-size:9px;color:#b3a08e">follow-up sent · 9:00 AM</span>
-            </div>
-          </div>
-          <div ref="{{ R.plane4 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:1;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span ref="{{ R.planeLab4 }}" style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#b3a08e;opacity:0">Admin</span></div>
-            <div style="margin:0 16px;display:flex;flex-direction:column;gap:5px">
-              <div style="display:flex;gap:8px"><div style="height:5px;width:36px;border-radius:999px;background:rgba(244,214,140,0.5)"></div><div style="height:5px;flex:1;border-radius:999px;background:rgba(42,26,20,0.8)"></div></div>
-              <div style="display:flex;gap:8px"><div style="height:5px;width:36px;border-radius:999px;background:rgba(42,26,20,0.8)"></div><div style="height:5px;flex:1;border-radius:999px;background:rgba(42,26,20,0.6)"></div></div>
-              <div style="display:flex;gap:8px"><div style="height:5px;width:36px;border-radius:999px;background:rgba(42,26,20,0.8)"></div><div style="height:5px;flex:1;border-radius:999px;background:rgba(42,26,20,0.5)"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div aria-hidden="true"></div>
     </div>
   </div>
 </section>
 
-<section id="industries" ref="{{ R.ind }}" data-screen-label="Industries — Dioramas" aria-label="Industries we build for" style="position:relative;height:560vh;background:#0a0710">
+<section id="industries" ref="{{ R.ind }}" data-screen-label="Industries — Dioramas" aria-label="Industries we build for" style="position:relative;height:660vh;background:#0a0710">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden">
     <div style="position:absolute;left:0;right:0;top:88px;z-index:20;text-align:center;pointer-events:none">
       <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.42em;color:#8f7d6e">Built for the businesses that run on trust</p>
+    </div>
+    <div ref="{{ R.indEcom }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
+      <img src="img/dioramas/ecommerce_2560.jpg" alt="Miniature 3D online shop diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 62% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
+      <div data-ind-copy="1" style="position:absolute;left:6vw;top:50%;transform:translateY(-50%);max-width:34ch;padding:32px 40px 32px 0;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 32% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
+        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">01 — Online Commerce</p>
+        <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">A storefront that runs <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">itself.</em></h3>
+        <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Start with a clean site and smart intake — or go all the way: AI across your products, carts, and follow-up.</p>
+      </div>
     </div>
     <div ref="{{ R.indS0 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
       <img src="img/dioramas/realestate_2560.jpg" alt="Miniature 3D house diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
       <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 62% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
       <div data-ind-copy="1" style="position:absolute;left:6vw;top:50%;transform:translateY(-50%);max-width:34ch;padding:32px 40px 32px 0;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 32% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">01 — Real Estate</p>
+        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">02 — Real Estate</p>
         <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Listings that close <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">themselves.</em></h3>
         <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Follow-up, showings, and offers — orchestrated while you list the next one.</p>
       </div>
@@ -161,7 +131,7 @@ a:hover { color: #fcf4de; }
       <img src="img/dioramas/healthcare_2560.jpg" alt="Miniature 3D clinic diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
       <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 62% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
       <div data-ind-copy="1" style="position:absolute;left:6vw;top:50%;transform:translateY(-50%);max-width:34ch;padding:32px 40px 32px 0;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 32% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">02 — Healthcare</p>
+        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">03 — Healthcare</p>
         <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Intake without the <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">waiting room.</em></h3>
         <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Patients arrive summarized, scheduled, and routed before the phone rings.</p>
       </div>
@@ -170,7 +140,7 @@ a:hover { color: #fcf4de; }
       <img src="img/dioramas/hospitality_2560.jpg" alt="Miniature 3D bistro diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
       <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 38% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
       <div data-ind-copy="1" style="position:absolute;right:6vw;top:50%;transform:translateY(-50%);max-width:34ch;text-align:right;padding:32px 0 32px 40px;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 68% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">03 — Hospitality</p>
+        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">04 — Hospitality</p>
         <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Every table, every night, <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">booked.</em></h3>
         <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Reservations, waitlists, and follow-up that never miss a shift.</p>
       </div>
@@ -179,7 +149,7 @@ a:hover { color: #fcf4de; }
       <img src="img/dioramas/trades_2560.jpg" alt="Miniature 3D construction diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
       <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 62% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
       <div data-ind-copy="1" style="position:absolute;left:6vw;top:50%;transform:translateY(-50%);max-width:34ch;padding:32px 40px 32px 0;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 32% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">04 — Home Services</p>
+        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">05 — Home Services</p>
         <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Dispatch while you <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">sleep.</em></h3>
         <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Quotes go out, jobs get booked, crews wake up scheduled.</p>
       </div>
@@ -188,7 +158,7 @@ a:hover { color: #fcf4de; }
       <img src="img/dioramas/law_2560.jpg" alt="Miniature 3D law office diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
       <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 38% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
       <div data-ind-copy="1" style="position:absolute;right:6vw;top:50%;transform:translateY(-50%);max-width:34ch;text-align:right;padding:32px 0 32px 40px;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 68% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">05 — Professional</p>
+        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">06 — Professional</p>
         <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Client intake, privileged and <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">instant.</em></h3>
         <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Conflict checks and engagement letters before the second call.</p>
       </div>
@@ -549,7 +519,7 @@ class Component extends DCLogic {
   ];
 
   R = (() => {
-    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','ctaPlate','ind','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
+    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','ctaPlate','posDio','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
     const o = {};
     for (const n of names) o[n] = React.createRef();
     return o;
@@ -677,8 +647,6 @@ class Component extends DCLogic {
       if (!this.reduced) {
         this.setupFog();
         this.setupDust(this.R.heroDust.current, { direction: 'rise', deep: false, count: 70 });
-        this.setupDust(this.R.deepDust.current, { direction: 'sink', deep: true, count: 36 });
-        this.setupShards();
         this.setupAmbient();
       }
       this.setupScroll();
@@ -1227,6 +1195,13 @@ class Component extends DCLogic {
         };
         stmt(R.stmt1.current, 0.04, 0.2, 1);
         stmt(R.stmt2.current, 0.28, 0.44, -1);
+        const dio = R.posDio.current;
+        if (dio) {
+          dio.style.opacity = String(0.55 * this.map(p, 0.02, 0.1) + 0.45 * this.map(p, 0.78, 0.86));
+          const shift = this.map(p, 0.8, 0.88);
+          const grow = 1 + 0.05 * Math.min(p / 0.8, 1);
+          dio.style.transform = 'translateX(' + (22 * shift).toFixed(2) + 'vw) scale(' + (grow - 0.14 * shift).toFixed(3) + ')';
+        }
         this.cv = this.clamp01((p - 0.42) / 0.26);
         this.exV = this.clamp01((p - 0.84) / 0.09);
         const fo = this.map(p, 0.85, 0.91);
@@ -1261,7 +1236,7 @@ class Component extends DCLogic {
         const r = ind.getBoundingClientRect();
         const total = Math.max(1, r.height - vh);
         const p = this.clamp01(-r.top / total);
-        const layers = [R.indS0, R.indS1, R.indS2, R.indS3, R.indS4];
+        const layers = [R.indEcom, R.indS0, R.indS1, R.indS2, R.indS3, R.indS4];
         const n = layers.length;
         const fade = 0.14;
         for (let i = 0; i < n; i++) {
@@ -1355,7 +1330,7 @@ class Component extends DCLogic {
 
   setupPlates() {
     /* the template parser drops bare boolean attrs (loop/muted) — set as properties */
-    [this.R.heroPlate.current, this.R.ctaPlate.current].forEach((v) => {
+    [this.R.heroPlate.current, this.R.ctaPlate.current, this.R.stackPlate.current].forEach((v) => {
       if (!v) return;
       v.muted = true;
       v.defaultMuted = true;
@@ -1366,16 +1341,16 @@ class Component extends DCLogic {
       if (this.reduced) { try { hero.pause(); } catch (e) {} }
       else { const pl = hero.play && hero.play(); if (pl && pl.catch) pl.catch(() => {}); }
     }
-    const cta = this.R.ctaPlate.current;
-    if (cta && !this.reduced && 'IntersectionObserver' in window) {
+    [this.R.ctaPlate.current, this.R.stackPlate.current].forEach((v) => {
+      if (!v || this.reduced || !('IntersectionObserver' in window)) return;
       const io = new IntersectionObserver((entries) => {
         const e = entries[0];
-        if (e.isIntersecting) { const pl = cta.play && cta.play(); if (pl && pl.catch) pl.catch(() => {}); }
-        else { try { cta.pause(); } catch (err) {} }
+        if (e.isIntersecting) { const pl = v.play && v.play(); if (pl && pl.catch) pl.catch(() => {}); }
+        else { try { v.pause(); } catch (err) {} }
       }, { rootMargin: '200px' });
-      io.observe(cta);
+      io.observe(v);
       this.cleanups.push(() => io.disconnect());
-    }
+    });
   }
 
   setupAI() {
