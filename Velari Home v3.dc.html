@@ -35,7 +35,7 @@ a:hover { color: #fcf4de; }
 @media (max-width: 1200px) {
   nav[aria-label="Primary"] { display: none; }
   #industries img { object-fit: contain !important; }
-  section[data-screen-label="Hero"] img { object-fit: contain !important; object-position: center 40% !important; }
+  section[data-screen-label="Hero"] img, section[data-screen-label="Hero"] video { object-fit: contain !important; object-position: center 40% !important; }
   video[poster*="stack_poster"] { height: auto !important; width: min(90vw, 156vh) !important; }
 }
 </style>
@@ -62,6 +62,7 @@ a:hover { color: #fcf4de; }
       <video ref="{{ R.heroPlate }}" playsinline preload="auto" poster="img/plates/dust_poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%">
         <source src="img/plates/dust_scrub_2048.mp4" type="video/mp4">
       </video>
+      <img ref="{{ R.heroStill }}" src="img/plates/dust_master_2560.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:opacity">
     </div>
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,3,8,0.16) 0%,rgba(6,3,8,0.04) 38%,rgba(5,2,8,0.34) 66%,rgba(4,1,6,0.7) 100%)"></div>
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 60%,rgba(3,1,4,0.38) 100%)"></div>
@@ -583,7 +584,7 @@ class Component extends DCLogic {
   ];
 
   R = (() => {
-    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','ctaPlate','posDio','flowDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
+    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','heroStill','ctaPlate','posDio','flowDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
     const o = {};
     for (const n of names) o[n] = React.createRef();
     return o;
@@ -1538,6 +1539,8 @@ class Component extends DCLogic {
       const vh = window.innerHeight;
       target = this.clamp01(window.scrollY / (vh * 1.35)) * (dur - 0.05);
       cur += (target - cur) * 0.1;
+      const still = this.R.heroStill.current;
+      if (still) still.style.opacity = String(this.clamp01(1 - target / 0.35));
       if (Math.abs(v.currentTime - cur) > 0.03 && v.seekable.length) {
         try { v.currentTime = cur; } catch (e) { /* iOS low-power: poster stays */ }
       }
