@@ -102,18 +102,22 @@ a:hover { color: #fcf4de; }
 
     <div ref="{{ R.act3 }}" style="position:relative;height:100%;max-width:1200px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);gap:56px;align-items:center;opacity:0">
       <div>
+        <div ref="{{ R.act3Head }}" style="opacity:0;will-change:opacity,transform">
         <p style="display:flex;align-items:center;gap:12px;margin:0;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#f4d68c"></span>What we actually build</p>
         <h2 style="margin:20px 0 0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#fcf4de">Not just websites. <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">Operating</em> layers.</h2>
         <p style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.7;color:#b3a08e">Brand to backend — one studio.</p>
+        </div>
         <ol style="margin:40px 0 0;padding:0;list-style:none">
-          <li ref="{{ R.row0 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">01</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Interface</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">designed to sell</span></li>
-          <li ref="{{ R.row1 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">02</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Branding</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">logo, palette, voice</span></li>
-          <li ref="{{ R.row2 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">03</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">AI</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">intake that thinks</span></li>
-          <li ref="{{ R.row3 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">04</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Automation</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">follow-up that runs itself</span></li>
-          <li ref="{{ R.row4 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;border-bottom:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">05</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Admin</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">the owner’s control room</span></li>
+          <li ref="{{ R.row0 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">01</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Command center</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">bookings, payments, reports — one desk</span></li>
+          <li ref="{{ R.row1 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">02</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Automation</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">schedules + follow-ups that run themselves</span></li>
+          <li ref="{{ R.row2 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">03</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">AI, on call 24/7</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">intake + booking — never miss a client</span></li>
+          <li ref="{{ R.row3 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">04</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Design</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">brand, palette, voice — built to earn trust</span></li>
+          <li ref="{{ R.row4 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;border-bottom:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">05</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Your business</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">the storefront on top — all of it yours</span></li>
         </ol>
       </div>
-      <div aria-hidden="true"></div>
+      <div aria-hidden="true" style="position:relative;width:100%;max-width:600px;margin:0 auto;aspect-ratio:16/9">
+        <img ref="{{ R.stackStill }}" src="img/plates/stack_poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:screen;clip-path:inset(100% 0 0 0);will-change:clip-path,opacity">
+      </div>
     </div>
   </div>
 </section>
@@ -581,7 +585,7 @@ class Component extends DCLogic {
   ];
 
   R = (() => {
-    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','heroL0','heroGL','ctaPlate','posDio','flowDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
+    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','heroL0','heroGL','ctaPlate','posDio','flowDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','act3Head','stackStill','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
     const o = {};
     for (const n of names) o[n] = React.createRef();
     return o;
@@ -1255,42 +1259,44 @@ class Component extends DCLogic {
           el.style.transform = 'translateY(-50%) translate(' + x + 'vw,' + y + 'vh) scale(' + scale + ')';
           el.style.letterSpacing = (0.48 - 0.22 * Math.min(t, 1)).toFixed(3) + 'em';
         };
-        stmt(R.stmt1.current, 0.015, 0.17, 1);
-        stmt(R.stmt2.current, 0.28, 0.44, -1);
+        stmt(R.stmt1.current, 0.015, 0.15, 1);
+        stmt(R.stmt2.current, 0.22, 0.36, -1);
+        /* payoff only: the finished stack lifts into its glowing orbit at the very end */
         const dio = R.posDio.current;
         if (dio) {
-          dio.style.opacity = String(0.55 * this.map(p, 0.02, 0.1) + 0.45 * this.map(p, 0.78, 0.86));
-          const shift = this.map(p, 0.8, 0.88);
-          const grow = 1 + 0.05 * Math.min(p / 0.8, 1);
-          dio.style.transform = 'translateX(' + (22 * shift).toFixed(2) + 'vw) scale(' + (grow - 0.14 * shift).toFixed(3) + ')';
+          const late = this.map(p, 0.87, 0.93);
+          dio.style.opacity = String(late);
+          dio.style.transform = 'translateX(' + (15 * late).toFixed(2) + 'vw) scale(' + (0.92 + 0.05 * late).toFixed(3) + ')';
         }
         this.cv = this.clamp01((p - 0.42) / 0.26);
         this.exV = this.clamp01((p - 0.84) / 0.09);
-        const fo = this.map(p, 0.85, 0.91);
+        const fo = this.map(p, 0.4, 0.48);
         if (R.act3.current) {
           R.act3.current.style.opacity = String(fo);
           R.act3.current.style.transform = 'translateY(' + (24 * (1 - fo)) + 'px)';
         }
-        const planes = [R.plane0, R.plane1, R.plane2, R.plane3, R.plane4];
-        for (let i = 0; i < 5; i++) {
-          const el = planes[i].current;
-          if (!el) continue;
-          const start = 0.85 + i * 0.02;
-          const t = this.clamp01((p - start) / 0.06);
-          el.style.top = (i * 62 * t) + 'px';
-          if (i > 0) {
-            const lab = R['planeLab' + i].current;
-            if (lab) lab.style.opacity = String(this.clamp01((p - (start + 0.04)) / 0.02));
-          }
+        if (R.act3Head.current) {
+          const ho = this.map(p, 0.87, 0.93);
+          R.act3Head.current.style.opacity = String(ho);
+          R.act3Head.current.style.transform = 'translateY(' + (14 * (1 - ho)).toFixed(1) + 'px)';
         }
+        /* the stack assembles slab by slab, each layer arriving with its row of copy */
         const rows = [R.row0, R.row1, R.row2, R.row3, R.row4];
+        const TOPS = [78, 62, 47, 30, 0];
+        let clipTop = 100;
         for (let i = 0; i < 5; i++) {
+          const seat = 0.46 + i * 0.088;
+          const t = this.clamp01((p - (seat - 0.05)) / 0.05);
+          clipTop = clipTop + (TOPS[i] - clipTop) * t;
           const el = rows[i].current;
           if (!el) continue;
-          const seat = 0.88 + i * 0.018;
-          const t = this.clamp01((p - (seat - 0.02)) / 0.02);
           el.style.opacity = String(0.15 + 0.85 * t);
           el.style.transform = 'translateX(' + (-8 * (1 - t)) + 'px)';
+        }
+        const stk = R.stackStill.current;
+        if (stk) {
+          stk.style.clipPath = 'inset(' + clipTop.toFixed(2) + '% 0 0 0)';
+          stk.style.opacity = String(1 - this.map(p, 0.86, 0.9));
         }
       }
       const ind = R.ind.current;
