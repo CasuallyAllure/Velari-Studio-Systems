@@ -27,6 +27,9 @@ a:hover { color: #fcf4de; }
 @keyframes dustFloat { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(10px, -28px); } }
 @keyframes heroPan { from { transform: translate3d(-1.1%,0,0); } to { transform: translate3d(1.1%,0,0); } }
 @keyframes brandSwap { from { opacity: 0.35; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.indChip { opacity: 0; transform: translateX(-14px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.indChip.on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .indChip { opacity: 1 !important; transform: none !important; transition: none; } }
 /* Narrow/portrait viewports: show artwork whole and smaller instead of crop-zooming.
    No effect at full desktop width. */
 @media (max-width: 1200px) {
@@ -62,7 +65,7 @@ a:hover { color: #fcf4de; }
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,3,8,0.16) 0%,rgba(6,3,8,0.04) 38%,rgba(5,2,8,0.34) 66%,rgba(4,1,6,0.7) 100%)"></div>
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 60%,rgba(3,1,4,0.38) 100%)"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,7,16,0.36) 0%,rgba(10,7,16,0.1) 40%,transparent 60%)"></div>
-    <canvas ref="{{ R.fog }}" style="position:absolute;left:0;right:0;top:20%;height:52%;width:100%;will-change:transform;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 22%,black 62%,transparent 98%);mask-image:linear-gradient(to bottom,transparent 0%,black 22%,black 62%,transparent 98%)"></canvas>
+    <canvas ref="{{ R.fog }}" style="position:absolute;left:0;right:0;top:16%;height:42%;width:100%;will-change:transform;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 32%,black 58%,transparent 90%);mask-image:linear-gradient(to bottom,transparent 0%,black 32%,black 58%,transparent 90%)"></canvas>
     <div ref="{{ R.heroDarken }}" style="position:absolute;inset:0;background:#0a0710;opacity:0"></div>
     <div style="position:absolute;left:0;right:0;bottom:0;height:36vh;background:linear-gradient(to bottom,transparent 0%,rgba(10,7,16,0.55) 55%,#0a0710 100%)"></div>
   </div>
@@ -91,7 +94,7 @@ a:hover { color: #fcf4de; }
 <section ref="{{ R.pos }}" id="systems" data-screen-label="Positioning — VELARI" style="position:relative;height:340vh;margin-top:-20vh;pointer-events:none;background:linear-gradient(to bottom,rgba(10,7,16,0) 0%,rgba(10,7,16,0) 5.8%,#0a0710 9%,#0d0812 35%,#170e16 68%,#20131c 100%)">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden">
     <div ref="{{ R.posDio }}" aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;will-change:opacity,transform">
-      <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(88vh,100%);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen">
+      <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(70vh,44vw);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen">
         <source src="img/plates/stack_orbit_1080.mp4" type="video/mp4">
       </video>
     </div>
@@ -123,57 +126,105 @@ a:hover { color: #fcf4de; }
       <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.42em;color:#8f7d6e">Built for the businesses that run on trust</p>
     </div>
     <div ref="{{ R.indEcom }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <img src="img/dioramas/ecommerce_2560.jpg" alt="Miniature 3D online shop diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 62% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
-      <div data-ind-copy="1" style="position:absolute;left:6vw;top:50%;transform:translateY(-50%);max-width:34ch;padding:32px 40px 32px 0;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 32% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">01 — Online Commerce</p>
-        <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">A storefront that runs <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">itself.</em></h3>
-        <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Start with a clean site and smart intake — or go all the way: AI across your products, carts, and follow-up.</p>
+      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
+        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">01 — Online Commerce</p>
+          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">A storefront that runs <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">itself.</em></h3>
+          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Looks that sell — and the machine behind them: checkout, inventory, recovery.</p>
+          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Front end designed to sell</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Checkout + inventory, built in</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>AI wins back abandoned carts</li>
+          </ul>
+        </div>
+        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
+          <img src="img/dioramas/ecommerce_2560.jpg" alt="Miniature 3D online shop diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+        </figure>
       </div>
     </div>
     <div ref="{{ R.indS0 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <img src="img/dioramas/realestate_2560.jpg" alt="Miniature 3D house diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 62% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
-      <div data-ind-copy="1" style="position:absolute;left:6vw;top:50%;transform:translateY(-50%);max-width:34ch;padding:32px 40px 32px 0;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 32% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">02 — Real Estate</p>
-        <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Listings that close <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">themselves.</em></h3>
-        <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Follow-up, showings, and offers — orchestrated while you list the next one.</p>
+      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
+        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">02 — Property Management</p>
+          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Every door, <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">one dashboard.</em></h3>
+          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">A high-end property site with the operations built in — media, money, maintenance.</p>
+          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Cinematic listings + drone media</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Tenant portal: rent, tickets, logins</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Owner statements in real time</li>
+          </ul>
+        </div>
+        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
+          <img src="img/dioramas/realestate_2560.jpg" alt="Miniature 3D house diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+        </figure>
       </div>
     </div>
     <div ref="{{ R.indS1 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <img src="img/dioramas/healthcare_2560.jpg" alt="Miniature 3D clinic diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 62% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
-      <div data-ind-copy="1" style="position:absolute;left:6vw;top:50%;transform:translateY(-50%);max-width:34ch;padding:32px 40px 32px 0;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 32% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">03 — Healthcare</p>
-        <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Intake without the <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">waiting room.</em></h3>
-        <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Patients arrive summarized, scheduled, and routed before the phone rings.</p>
+      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
+        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">03 — Healthcare</p>
+          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Intake that never <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">sleeps.</em></h3>
+          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">A practice site that reassures — and answers when your front desk can’t.</p>
+          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Your practice, beautifully presented</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>24/7 AI intake + routing</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>After-hours calls become appointments</li>
+          </ul>
+        </div>
+        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
+          <img src="img/dioramas/healthcare_2560.jpg" alt="Miniature 3D clinic diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+        </figure>
       </div>
     </div>
     <div ref="{{ R.indS2 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <img src="img/dioramas/hospitality_2560.jpg" alt="Miniature 3D bistro diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 38% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
-      <div data-ind-copy="1" style="position:absolute;right:6vw;top:50%;transform:translateY(-50%);max-width:34ch;text-align:right;padding:32px 0 32px 40px;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 68% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">04 — Hospitality</p>
-        <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Every table, every night, <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">booked.</em></h3>
-        <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Reservations, waitlists, and follow-up that never miss a shift.</p>
+      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
+        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">04 — Hospitality</p>
+          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Every table, every night, <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">booked.</em></h3>
+          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Own your reservations — no per-cover fees, no commissions on your regulars.</p>
+          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Direct reservations + waitlists</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Deposits that cut no-shows in half</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Custom rewards for your regulars</li>
+          </ul>
+        </div>
+        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
+          <img src="img/dioramas/hospitality_2560.jpg" alt="Miniature 3D bistro diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+        </figure>
       </div>
     </div>
     <div ref="{{ R.indS3 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <img src="img/dioramas/trades_2560.jpg" alt="Miniature 3D construction diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 62% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
-      <div data-ind-copy="1" style="position:absolute;left:6vw;top:50%;transform:translateY(-50%);max-width:34ch;padding:32px 40px 32px 0;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 32% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">05 — Home Services</p>
-        <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Dispatch while you <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">sleep.</em></h3>
-        <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Quotes go out, jobs get booked, crews wake up scheduled.</p>
+      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
+        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">05 — Home Services</p>
+          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Dispatch while you <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">sleep.</em></h3>
+          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Quotes go out, jobs get booked, crews wake up scheduled.</p>
+          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Quotes out in minutes, not days</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Jobs booked straight to the calendar</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Every lead answered, even at 2 a.m.</li>
+          </ul>
+        </div>
+        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
+          <img src="img/dioramas/trades_2560.jpg" alt="Miniature 3D construction diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+        </figure>
       </div>
     </div>
     <div ref="{{ R.indS4 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <img src="img/dioramas/law_2560.jpg" alt="Miniature 3D law office diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 38% 50%,transparent 45%,rgba(10,7,16,0.55) 100%)"></div>
-      <div data-ind-copy="1" style="position:absolute;right:6vw;top:50%;transform:translateY(-50%);max-width:34ch;text-align:right;padding:32px 0 32px 40px;text-shadow:0 2px 24px rgba(0,0,0,0.6);background:radial-gradient(130% 120% at 68% 50%,rgba(10,7,16,0.66) 0%,rgba(10,7,16,0.3) 55%,rgba(10,7,16,0) 75%)">
-        <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">06 — Professional</p>
-        <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;color:#fcf4de">Client intake, privileged and <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">instant.</em></h3>
-        <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Conflict checks and engagement letters before the second call.</p>
+      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
+        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">06 — Professional</p>
+          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Client intake, privileged and <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">instant.</em></h3>
+          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Conflict checks and engagement letters before the second call.</p>
+          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>A practice site that signals trust</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Screened intake, conflicts flagged</li>
+          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Consultations self-scheduled</li>
+          </ul>
+        </div>
+        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
+          <img src="img/dioramas/law_2560.jpg" alt="Miniature 3D law office diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+        </figure>
       </div>
     </div>
     <div aria-hidden="true" style="position:absolute;left:0;right:0;top:0;height:80px;background:linear-gradient(to bottom,#0a0710,transparent);z-index:10"></div>
@@ -769,7 +820,7 @@ class Component extends DCLogic {
       '  float field = fbm(s + fbm(s)*0.8 + ts*0.02);\n' +
       '  float iso = abs(fract(field*11.0)-0.5);\n' +
       '  float line = (1.0-smoothstep(0.0,0.05,iso)) * smoothstep(0.35,0.75,uv.y) * uLines * 0.45 * (0.75+0.25*noise(s*8.0+ts*0.6));\n' +
-      '  vec3 col = vec3(0.76,0.74,0.70)*fogA*1.12;\n' +
+      '  vec3 col = vec3(0.76,0.74,0.70)*fogA*0.55;\n' +
       '  float alpha = clamp(fogA+line,0.,1.)*(1.0-uFogOut);\n' +
       '  gl_FragColor = vec4(col, alpha);\n' +
       '}';
@@ -1271,13 +1322,17 @@ class Component extends DCLogic {
             const img = el.querySelector('img');
             if (img && !this.reduced) {
               const dir = i % 2 ? 1 : -1;
-              img.style.transform = 'translateX(' + (dir * (t - 0.5) * 6).toFixed(2) + '%) scale(1.1)';
+              img.style.transform = 'translateX(' + (dir * (t - 0.5) * 3).toFixed(2) + '%) scale(1.06)';
             }
             const copy = el.querySelector('[data-ind-copy]');
             if (copy) {
               const co = this.clamp01((t - 0.06) / 0.1) * this.clamp01((0.97 - t) / 0.08);
               copy.style.opacity = String(co);
-              if (!this.reduced) copy.style.transform = 'translateY(calc(-50% + ' + (12 * (1 - this.clamp01(t * 5))).toFixed(1) + 'px))';
+              if (!this.reduced) copy.style.transform = 'translateY(' + (12 * (1 - this.clamp01(t * 5))).toFixed(1) + 'px)';
+            }
+            const chips = el.querySelectorAll('.indChip');
+            for (let c = 0; c < chips.length; c++) {
+              chips[c].classList.toggle('on', t > 0.22 + c * 0.12 && t < 0.97);
             }
           }
         }
