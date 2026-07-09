@@ -55,7 +55,7 @@ a:hover { color: #fcf4de; }
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,3,8,0.16) 0%,rgba(6,3,8,0.04) 38%,rgba(5,2,8,0.34) 66%,rgba(4,1,6,0.7) 100%)"></div>
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 60%,rgba(3,1,4,0.38) 100%)"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,7,16,0.36) 0%,rgba(10,7,16,0.1) 40%,transparent 60%)"></div>
-    <canvas ref="{{ R.fog }}" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+    <canvas ref="{{ R.fog }}" style="position:absolute;inset:0;width:100%;height:100%;-webkit-mask-image:linear-gradient(to bottom,black 58%,transparent 97%);mask-image:linear-gradient(to bottom,black 58%,transparent 97%)"></canvas>
     <div ref="{{ R.heroDarken }}" style="position:absolute;inset:0;background:#0a0710;opacity:0"></div>
     <div style="position:absolute;left:0;right:0;bottom:0;height:36vh;background:linear-gradient(to bottom,transparent 0%,rgba(10,7,16,0.55) 55%,#0a0710 100%)"></div>
   </div>
@@ -76,9 +76,12 @@ a:hover { color: #fcf4de; }
 </section>
 
 
+<div style="position:relative;height:0;z-index:7" aria-hidden="true">
+  <canvas ref="{{ R.trailDust }}" style="position:absolute;left:0;right:0;top:-34vh;height:118vh;width:100%;pointer-events:none"></canvas>
+</div>
+
 <section ref="{{ R.pos }}" id="systems" data-screen-label="Positioning — VELARI" style="position:relative;height:340vh;background:linear-gradient(to bottom,#0a0710 0%,#0d0812 35%,#170e16 68%,#20131c 100%)">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden">
-    <canvas ref="{{ R.posDust }}" aria-hidden="true" style="position:absolute;left:0;right:0;top:0;width:100%;height:32vh;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,0.85) 0%,transparent 92%);mask-image:linear-gradient(to bottom,rgba(0,0,0,0.85) 0%,transparent 92%)"></canvas>
     <div ref="{{ R.posDio }}" aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;will-change:opacity,transform">
       <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(88vh,100%);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen">
         <source src="img/plates/stack_orbit_1080.mp4" type="video/mp4">
@@ -521,7 +524,7 @@ class Component extends DCLogic {
   ];
 
   R = (() => {
-    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','ctaPlate','posDio','posDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
+    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','ctaPlate','posDio','trailDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
     const o = {};
     for (const n of names) o[n] = React.createRef();
     return o;
@@ -649,7 +652,7 @@ class Component extends DCLogic {
       if (!this.reduced) {
         this.setupFog();
         this.setupDust(this.R.heroDust.current, { direction: 'sink', deep: false, count: 56, size: 0.42 });
-        this.setupDust(this.R.posDust.current, { direction: 'sink', deep: true, count: 26, size: 0.38 });
+        this.setupTrail();
         this.setupAmbient();
       }
       this.setupScroll();
@@ -758,7 +761,7 @@ class Component extends DCLogic {
       '  float field = fbm(s + fbm(s)*0.8 + ts*0.02);\n' +
       '  float iso = abs(fract(field*11.0)-0.5);\n' +
       '  float line = (1.0-smoothstep(0.0,0.05,iso)) * smoothstep(0.35,0.75,uv.y) * uLines * 0.45 * (0.75+0.25*noise(s*8.0+ts*0.6));\n' +
-      '  vec3 col = vec3(0.70,0.60,0.46)*fogA + vec3(1.0,0.90,0.74)*line;\n' +
+      '  vec3 col = vec3(0.76,0.74,0.70)*fogA + vec3(1.0,0.97,0.90)*line;\n' +
       '  float alpha = clamp(fogA+line,0.,1.)*(1.0-uFogOut);\n' +
       '  gl_FragColor = vec4(col, alpha);\n' +
       '}';
@@ -1329,6 +1332,77 @@ class Component extends DCLogic {
     window.addEventListener('resize', onScroll, { passive: true });
     onScroll();
     this.cleanups.push(() => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); });
+  }
+
+  setupTrail() {
+    /* scroll-lit falling sparkle trail across the hero/positioning seam —
+       same idea as the process beam: sparks come alive as the scroll head reaches them */
+    const canvas = this.R.trailDust.current;
+    if (!canvas) return;
+    const dx = canvas.getContext('2d');
+    if (!dx) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const resize = () => { canvas.width = canvas.clientWidth * dpr; canvas.height = canvas.clientHeight * dpr; };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    let visible = true;
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; });
+    io.observe(canvas);
+    const sparks = Array.from({ length: 110 }, (_, i) => ({
+      p: i / 110 + Math.random() * 0.008,
+      j: (Math.random() - 0.5) * 30,
+      z: Math.random(),
+      tw: Math.random() * 6.28,
+      dr: 0.25 + Math.random() * 0.75
+    }));
+    const pathX = (pp, W) => W * 0.5 + Math.sin(pp * 8.5 + 1.7) * W * 0.05;
+    let raf = 0;
+    const draw = (t) => {
+      raf = requestAnimationFrame(draw);
+      if (!visible || document.hidden) return;
+      const W = canvas.width, H = canvas.height;
+      dx.clearRect(0, 0, W, H);
+      const vh = window.innerHeight;
+      const sy = window.scrollY;
+      const head = this.clamp01((sy - vh * 0.28) / (vh * 0.95));
+      const fade = 1 - this.clamp01((sy - vh * 1.5) / (vh * 0.55));
+      if (head <= 0 || fade <= 0) return;
+      dx.globalCompositeOperation = 'lighter';
+      for (const sp of sparks) {
+        if (sp.p > head) continue;
+        const nearHead = 1 - Math.min(1, (head - sp.p) / 0.14);
+        const y = sp.p * H + Math.sin(t * 0.0004 * sp.dr + sp.tw) * 4 * dpr;
+        const x = pathX(sp.p, W) + sp.j * dpr * (0.4 + sp.z * 0.6) + Math.cos(t * 0.00035 * sp.dr + sp.tw) * 5 * dpr;
+        const breathe = 0.5 + 0.5 * Math.sin(t * 0.0011 + sp.tw);
+        const a = fade * (0.10 + 0.40 * breathe) * (0.35 + 0.65 * sp.z) * (0.5 + 0.9 * nearHead);
+        const r = (0.5 + sp.z * 1.3) * dpr * (1 + nearHead * 0.9);
+        dx.globalAlpha = Math.min(1, a);
+        dx.fillStyle = 'rgba(255,249,233,1)';
+        dx.beginPath(); dx.arc(x, y, r, 0, 6.2832); dx.fill();
+        if (nearHead > 0.55 && breathe > 0.72) {
+          const L = r * 5;
+          dx.globalAlpha = Math.min(1, a * 0.9);
+          dx.strokeStyle = 'rgba(252,244,222,1)';
+          dx.lineWidth = 0.6 * dpr;
+          dx.beginPath();
+          dx.moveTo(x - L, y); dx.lineTo(x + L, y);
+          dx.moveTo(x, y - L); dx.lineTo(x, y + L);
+          dx.stroke();
+        }
+      }
+      const hy = head * H;
+      const hx = pathX(head, W);
+      const g = dx.createRadialGradient(hx, hy, 0, hx, hy, 26 * dpr);
+      g.addColorStop(0, 'rgba(255,250,236,' + (0.28 * fade).toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(255,250,236,0)');
+      dx.globalAlpha = 1;
+      dx.fillStyle = g;
+      dx.beginPath(); dx.arc(hx, hy, 26 * dpr, 0, 6.2832); dx.fill();
+      dx.globalCompositeOperation = 'source-over';
+    };
+    raf = requestAnimationFrame(draw);
+    this.cleanups.push(() => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); });
   }
 
   setupPlates() {
