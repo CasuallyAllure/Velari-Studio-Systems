@@ -57,7 +57,7 @@ a:hover { color: #fcf4de; }
     <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,7,16,0.36) 0%,rgba(10,7,16,0.1) 40%,transparent 60%)"></div>
     <canvas ref="{{ R.fog }}" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
     <div ref="{{ R.heroDarken }}" style="position:absolute;inset:0;background:#0a0710;opacity:0"></div>
-    <div style="position:absolute;left:0;right:0;bottom:0;height:112px;background:linear-gradient(to bottom,transparent,#0a0710)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:36vh;background:linear-gradient(to bottom,transparent 0%,rgba(10,7,16,0.55) 55%,#0a0710 100%)"></div>
   </div>
 
   <div ref="{{ R.heroTitle }}" style="position:relative;z-index:10;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;width:100%;max-width:1200px;margin:0 auto;min-height:100vh;box-sizing:border-box;padding:88px 40px clamp(36px,9vh,110px);text-shadow:0 2px 24px rgba(0,0,0,0.55)">
@@ -72,12 +72,13 @@ a:hover { color: #fcf4de; }
       <a href="#systems" style="display:inline-flex;align-items:center;gap:8px;font-family:'Geist Mono',monospace;font-size:14px;text-transform:uppercase;letter-spacing:0.1em;color:#f4d68c;text-decoration:none;transition:gap 0.15s" style-hover="gap:12px">View Systems <span aria-hidden="true">→</span></a>
     </div>
   </div>
-  <canvas ref="{{ R.heroDust }}" aria-hidden="true" style="position:absolute;left:0;right:0;top:56%;bottom:0;width:100%;height:44%;pointer-events:none;z-index:10"></canvas>
+  <canvas ref="{{ R.heroDust }}" aria-hidden="true" style="position:absolute;left:0;right:0;top:56%;bottom:0;width:100%;height:44%;pointer-events:none;z-index:10;-webkit-mask-image:linear-gradient(to bottom,black 55%,transparent 96%);mask-image:linear-gradient(to bottom,black 55%,transparent 96%)"></canvas>
 </section>
 
 
 <section ref="{{ R.pos }}" id="systems" data-screen-label="Positioning — VELARI" style="position:relative;height:340vh;background:linear-gradient(to bottom,#0a0710 0%,#0d0812 35%,#170e16 68%,#20131c 100%)">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden">
+    <canvas ref="{{ R.posDust }}" aria-hidden="true" style="position:absolute;left:0;right:0;top:0;width:100%;height:32vh;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,0.85) 0%,transparent 92%);mask-image:linear-gradient(to bottom,rgba(0,0,0,0.85) 0%,transparent 92%)"></canvas>
     <div ref="{{ R.posDio }}" aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;will-change:opacity,transform">
       <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(88vh,100%);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen">
         <source src="img/plates/stack_orbit_1080.mp4" type="video/mp4">
@@ -520,7 +521,7 @@ class Component extends DCLogic {
   ];
 
   R = (() => {
-    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','ctaPlate','posDio','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
+    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','ctaPlate','posDio','posDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
     const o = {};
     for (const n of names) o[n] = React.createRef();
     return o;
@@ -648,6 +649,7 @@ class Component extends DCLogic {
       if (!this.reduced) {
         this.setupFog();
         this.setupDust(this.R.heroDust.current, { direction: 'sink', deep: false, count: 56, size: 0.42 });
+        this.setupDust(this.R.posDust.current, { direction: 'sink', deep: true, count: 26, size: 0.38 });
         this.setupAmbient();
       }
       this.setupScroll();
@@ -1166,7 +1168,7 @@ class Component extends DCLogic {
         const tf = 'translateY(' + (-5 * hp) + '%)';
         if (R.heroPhoto.current) R.heroPhoto.current.style.transform = tf;
         if (R.heroFlash.current) R.heroFlash.current.style.transform = tf;
-        if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.15, 0.85) * 0.92);
+        if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.12, 0.68));
         this.fogOutV = this.map(hp, 0.1, 0.75);
         if (R.heroTitle.current) {
           const t = this.clamp01(hp / 0.5);
