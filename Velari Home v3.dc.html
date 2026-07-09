@@ -48,12 +48,13 @@ a:hover { color: #fcf4de; }
   <div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;z-index:0">
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,#0a0710 0%,#0a0710 40%,#241318 100%)"></div>
     <div ref="{{ R.heroPhoto }}" style="position:absolute;inset:0;transform-origin:50% 50%">
-      <img src="img/plates/skyline_2560.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%">
+      <img src="img/plates/skyline_2560.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%;filter:contrast(1.07) saturate(1.06)">
     </div>
+    <div style="position:absolute;left:0;right:0;top:24%;height:26%;pointer-events:none;background:radial-gradient(58% 62% at 63% 68%,rgba(252,240,214,0.11) 0%,rgba(252,240,214,0.04) 55%,transparent 78%),radial-gradient(40% 55% at 16% 60%,rgba(252,240,214,0.07) 0%,transparent 75%)"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,3,8,0.16) 0%,rgba(6,3,8,0.04) 38%,rgba(5,2,8,0.34) 66%,rgba(4,1,6,0.7) 100%)"></div>
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 60%,rgba(3,1,4,0.38) 100%)"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,7,16,0.36) 0%,rgba(10,7,16,0.1) 40%,transparent 60%)"></div>
-    <canvas ref="{{ R.fog }}" style="position:absolute;inset:0;width:100%;height:100%;-webkit-mask-image:linear-gradient(to bottom,black 58%,transparent 97%);mask-image:linear-gradient(to bottom,black 58%,transparent 97%)"></canvas>
+    <canvas ref="{{ R.fog }}" style="position:absolute;left:0;right:0;top:20%;height:52%;width:100%;will-change:transform;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 22%,black 62%,transparent 98%);mask-image:linear-gradient(to bottom,transparent 0%,black 22%,black 62%,transparent 98%)"></canvas>
     <div ref="{{ R.heroDarken }}" style="position:absolute;inset:0;background:#0a0710;opacity:0"></div>
     <div style="position:absolute;left:0;right:0;bottom:0;height:36vh;background:linear-gradient(to bottom,transparent 0%,rgba(10,7,16,0.55) 55%,#0a0710 100%)"></div>
   </div>
@@ -751,7 +752,7 @@ class Component extends DCLogic {
       '  vec2 uv = gl_FragCoord.xy/uRes;\n' +
       '  vec2 asp = vec2(uRes.x/uRes.y,1.);\n' +
       '  float ts = uTime*0.55;\n' +
-      '  vec2 q1 = uv*asp*3.0 + vec2(ts*0.12, ts*0.015);\n' +
+      '  vec2 q1 = uv*asp*4.6 + vec2(ts*0.12, ts*0.015);\n' +
       '  vec2 q2 = uv*asp*5.5 + vec2(ts*0.28,-ts*0.03)+40.0;\n' +
       '  float fog = fbm(q1 + fbm(q1+fbm(q1+ts*0.05)))*0.6 + fbm(q2+fbm(q2)*0.7)*0.4;\n' +
       '  float band = smoothstep(1.05, 0.45, uv.y);\n' +
@@ -760,7 +761,7 @@ class Component extends DCLogic {
       '  float field = fbm(s + fbm(s)*0.8 + ts*0.02);\n' +
       '  float iso = abs(fract(field*11.0)-0.5);\n' +
       '  float line = (1.0-smoothstep(0.0,0.05,iso)) * smoothstep(0.35,0.75,uv.y) * uLines * 0.45 * (0.75+0.25*noise(s*8.0+ts*0.6));\n' +
-      '  vec3 col = vec3(0.76,0.74,0.70)*fogA;\n' +
+      '  vec3 col = vec3(0.76,0.74,0.70)*fogA*0.85;\n' +
       '  float alpha = clamp(fogA+line,0.,1.)*(1.0-uFogOut);\n' +
       '  gl_FragColor = vec4(col, alpha);\n' +
       '}';
@@ -1171,7 +1172,8 @@ class Component extends DCLogic {
         if (R.heroPhoto.current) R.heroPhoto.current.style.transform = tf;
         if (R.heroFlash.current) R.heroFlash.current.style.transform = tf;
         if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.3, 0.94) * 0.97);
-        this.fogOutV = this.map(hp, 0.1, 0.75);
+        this.fogOutV = this.map(hp, 0.55, 0.98);
+        if (R.fog.current && !this.reduced) R.fog.current.style.transform = 'translateY(' + (hp * 58).toFixed(2) + 'vh)';
         if (R.heroTitle.current) {
           const t = this.clamp01(hp / 0.5);
           R.heroTitle.current.style.transform = 'translateY(' + (-44 * t) + 'px) scale(' + (1 - 0.08 * t) + ')';
