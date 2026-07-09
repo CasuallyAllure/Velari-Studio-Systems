@@ -27,6 +27,14 @@ a:hover { color: #fcf4de; }
 @keyframes dustFloat { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(10px, -28px); } }
 @keyframes heroPan { from { transform: translate3d(-1.1%,0,0); } to { transform: translate3d(1.1%,0,0); } }
 @keyframes brandSwap { from { opacity: 0.35; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+/* Narrow/portrait viewports: show artwork whole and smaller instead of crop-zooming.
+   No effect at full desktop width. */
+@media (max-width: 1200px) {
+  nav[aria-label="Primary"] { display: none; }
+  #industries img { object-fit: contain !important; }
+  section[data-screen-label="Hero"] img { object-fit: contain !important; object-position: center 40% !important; }
+  video[poster*="stack_poster"] { height: auto !important; width: min(90vw, 156vh) !important; }
+}
 </style>
 </helmet>
 <div ref="{{ R.root }}" style="min-height:100vh;background:#0a0710;color:#fcf4de;overflow-x:clip">
