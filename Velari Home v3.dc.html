@@ -55,8 +55,8 @@ a:hover { color: #fcf4de; }
   </div>
 </header>
 
-<section ref="{{ R.hero }}" data-screen-label="Hero" onMouseMove="{{ heroMove }}" aria-label="Velari Systems — Bay Area web systems" style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden">
-  <div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;z-index:0">
+<section ref="{{ R.hero }}" data-screen-label="Hero" onMouseMove="{{ heroMove }}" aria-label="Velari Systems — Bay Area web systems" style="position:relative;height:220vh">
+  <div aria-hidden="true" style="position:sticky;top:0;height:100vh;margin-bottom:-100vh;overflow:hidden;z-index:0">
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,#0a0710 0%,#0a0710 40%,#241318 100%)"></div>
     <div ref="{{ R.heroPhoto }}" style="position:absolute;inset:0;transform-origin:50% 50%">
       <video ref="{{ R.heroPlate }}" playsinline preload="auto" poster="img/plates/dust_poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%">
@@ -1229,11 +1229,11 @@ class Component extends DCLogic {
         const hp = this.clamp01(-r.top / r.height);
         const tf = 'translateY(' + (-5 * hp) + '%)';
         if (R.heroFlash.current) R.heroFlash.current.style.transform = tf;
-        if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.3, 0.94) * 0.97);
+        if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.58, 0.92) * 0.97);
         this.fogOutV = this.map(hp, 0.55, 0.98);
         if (R.fog.current && !this.reduced) R.fog.current.style.transform = 'translateY(' + (hp * 58).toFixed(2) + 'vh)';
         if (R.heroTitle.current) {
-          const t = this.clamp01(hp / 0.5);
+          const t = this.clamp01(hp / 0.23);
           R.heroTitle.current.style.transform = 'translateY(' + (-44 * t) + 'px) scale(' + (1 - 0.08 * t) + ')';
         }
       }
@@ -1537,7 +1537,7 @@ class Component extends DCLogic {
       raf = requestAnimationFrame(tick);
       if (!dur) return;
       const vh = window.innerHeight;
-      target = this.clamp01(window.scrollY / (vh * 1.35)) * (dur - 0.05);
+      target = this.clamp01(window.scrollY / (vh * 1.85)) * (dur - 0.05);
       cur += (target - cur) * 0.1;
       const still = this.R.heroStill.current;
       if (still) still.style.opacity = String(this.clamp01(1 - target / 0.35));
