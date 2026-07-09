@@ -59,8 +59,7 @@ a:hover { color: #fcf4de; }
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,#0a0710 0%,#0a0710 40%,#241318 100%)"></div>
     <div ref="{{ R.heroPhoto }}" style="position:absolute;inset:0;transform-origin:50% 50%">
       <img ref="{{ R.heroL0 }}" src="img/plates/dust_master_2560.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;will-change:transform">
-      <img ref="{{ R.heroL1 }}" src="img/plates/dust_mid_2560.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;mix-blend-mode:screen;opacity:0;will-change:transform,opacity">
-      <img ref="{{ R.heroL2 }}" src="img/plates/dust_near_2560.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;mix-blend-mode:screen;opacity:0;will-change:transform,opacity">
+      <canvas ref="{{ R.heroGL }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
     </div>
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,3,8,0.16) 0%,rgba(6,3,8,0.04) 38%,rgba(5,2,8,0.34) 66%,rgba(4,1,6,0.7) 100%)"></div>
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 60%,rgba(3,1,4,0.38) 100%)"></div>
@@ -582,7 +581,7 @@ class Component extends DCLogic {
   ];
 
   R = (() => {
-    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','heroL0','heroL1','heroL2','ctaPlate','posDio','flowDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
+    const names = ['root','hero','heroPhoto','heroFlash','heroPlate','heroL0','heroGL','ctaPlate','posDio','flowDust','skyDust','stackPlate','ind','indEcom','indS0','indS1','indS2','indS3','indS4','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
     const o = {};
     for (const n of names) o[n] = React.createRef();
     return o;
@@ -1522,33 +1521,107 @@ class Component extends DCLogic {
   }
 
   setupScrub() {
-    /* 2.5D dolly: three native-res stills diverge with scroll (Codrops layered-zoom pattern).
-       at rest only the approved master shows; depth layers bloom in additively as you dive */
-    const L0 = this.R.heroL0.current, L1 = this.R.heroL1.current, L2 = this.R.heroL2.current;
-    if (!L0 || this.reduced) return;
-    if (CSS.supports('mix-blend-mode', 'plus-lighter')) {
-      if (L1) L1.style.mixBlendMode = 'plus-lighter';
-      if (L2) L2.style.mixBlendMode = 'plus-lighter';
+    /* real-time dust volume: ~26k GPU point sprites in true 3D, camera translates
+       THROUGH the cloud with scroll. every particle is pixel-sharp at native res —
+       nothing here is ever encoded, scaled or compressed */
+    const canvas = this.R.heroGL.current;
+    const back = this.R.heroL0.current;
+    if (!canvas || this.reduced) return;
+    const gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false });
+    if (!gl) return;
+    const VS = 'attribute vec3 aPos;attribute vec3 aCol;attribute vec2 aSiz;' +
+      'uniform float uZ,uT,uAsp,uY;varying vec3 vCol;varying float vA;' +
+      'void main(){' +
+      'float wob=sin(uT*0.00018*aSiz.y+aSiz.y*6.28)*0.05;' +
+      'vec3 p=vec3(aPos.x+wob,aPos.y+uY,aPos.z);' +
+      'float vz=uZ-p.z;' +
+      'if(vz<0.06){gl_Position=vec4(2.0,2.0,2.0,1.0);gl_PointSize=0.0;vA=0.0;vCol=aCol;return;}' +
+      'gl_Position=vec4(p.x/(vz*uAsp)*1.2,p.y/vz*1.2,0.0,1.0);' +
+      'gl_PointSize=min(aSiz.x/vz,140.0);' +
+      'float tw=0.72+0.28*sin(uT*0.0011*fract(aSiz.y*7.31)+aSiz.y*9.4);' +
+      'float nearF=smoothstep(0.06,0.5,vz);' +
+      'float farF=1.0-smoothstep(5.0,10.5,vz);' +
+      'vA=tw*nearF*farF;vCol=aCol;}';
+    const FS = 'precision mediump float;varying vec3 vCol;varying float vA;' +
+      'void main(){vec2 q=gl_PointCoord-0.5;float d=length(q);' +
+      'float a=smoothstep(0.5,0.08,d)*vA;' +
+      'gl_FragColor=vec4(vCol*a,0.0);}';
+    const sh = (type, src) => { const h = gl.createShader(type); gl.shaderSource(h, src); gl.compileShader(h); return h; };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS));
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+    const N = 26000;
+    const pos = new Float32Array(N * 3), col = new Float32Array(N * 3), siz = new Float32Array(N * 2);
+    const palette = [[1.0, 0.97, 0.88], [0.96, 0.85, 0.62], [0.95, 0.73, 0.61], [0.88, 0.78, 0.60]];
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    for (let i = 0; i < N; i++) {
+      const tail = Math.random() < 0.14;
+      const z = tail ? rnd(-10.0, -6.5) : rnd(-6.5, 1.5);
+      const depthT = (1.5 - z) / 11.5;
+      const spread = 0.55 + depthT * 2.6;
+      const g = (Math.random() + Math.random() + Math.random()) / 3 - 0.5;
+      const g2 = (Math.random() + Math.random() + Math.random()) / 3 - 0.5;
+      pos[i * 3] = g * spread * 3.4;
+      pos[i * 3 + 1] = g2 * spread * 1.7 - 0.12;
+      pos[i * 3 + 2] = z;
+      const c = palette[Math.random() < 0.62 ? 0 : Math.random() < 0.6 ? 1 : Math.random() < 0.55 ? 2 : 3];
+      const lum = rnd(0.5, 1.0) * (tail ? 0.6 : 1.0);
+      col[i * 3] = c[0] * lum; col[i * 3 + 1] = c[1] * lum; col[i * 3 + 2] = c[2] * lum;
+      const big = Math.random() < 0.045;
+      siz[i * 2] = (big ? rnd(26, 70) : rnd(2.2, 7.5)) * (window.devicePixelRatio > 1.5 ? 2 : 1);
+      siz[i * 2 + 1] = Math.random();
     }
+    const buf = (data, loc, n) => {
+      const b = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, b);
+      gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, n, gl.FLOAT, false, 0, 0);
+    };
+    buf(pos, gl.getAttribLocation(prog, 'aPos'), 3);
+    buf(col, gl.getAttribLocation(prog, 'aCol'), 3);
+    buf(siz, gl.getAttribLocation(prog, 'aSiz'), 2);
+    const U = {
+      uZ: gl.getUniformLocation(prog, 'uZ'),
+      uT: gl.getUniformLocation(prog, 'uT'),
+      uAsp: gl.getUniformLocation(prog, 'uAsp'),
+      uY: gl.getUniformLocation(prog, 'uY')
+    };
+    gl.blendFunc(gl.ONE, gl.ONE);
+    gl.enable(gl.BLEND);
+    gl.disable(gl.DEPTH_TEST);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const resize = () => {
+      canvas.width = canvas.clientWidth * dpr;
+      canvas.height = canvas.clientHeight * dpr;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform1f(U.uAsp, canvas.width / canvas.height);
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
     let cur = 0, raf = 0;
-    const tick = () => {
+    const tick = (t) => {
       raf = requestAnimationFrame(tick);
       const vh = window.innerHeight;
+      if (window.scrollY > vh * 2.4 || document.hidden) return;
       const p = this.clamp01(window.scrollY / (vh * 1.85));
-      cur += (p - cur) * 0.12;
-      const e = cur < 0.001 ? 0 : cur;
-      L0.style.transform = 'scale(' + (1 + 0.08 * e).toFixed(4) + ')';
-      if (L1) {
-        L1.style.opacity = (Math.min(1, e * 5) * 0.85).toFixed(3);
-        L1.style.transform = 'scale(' + (1 + 0.18 * e).toFixed(4) + ') translateY(' + (3 * e).toFixed(2) + '%)';
-      }
-      if (L2) {
-        L2.style.opacity = Math.min(1, e * 5).toFixed(3);
-        L2.style.transform = 'scale(' + (1 + 0.42 * e).toFixed(4) + ') translateY(' + (7 * e).toFixed(2) + '%)';
-      }
+      cur += (p - cur) * 0.1;
+      /* camera flies from in front of the cloud to beyond its dense core */
+      const camZ = 2.6 - cur * 9.2;
+      if (back) back.style.transform = 'scale(' + (1 + 0.1 * cur).toFixed(4) + ')';
+      gl.uniform1f(U.uZ, camZ);
+      gl.uniform1f(U.uT, t);
+      gl.uniform1f(U.uY, -cur * 0.55);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.POINTS, 0, N);
     };
     raf = requestAnimationFrame(tick);
-    this.cleanups.push(() => cancelAnimationFrame(raf));
+    this.cleanups.push(() => { cancelAnimationFrame(raf); ro.disconnect(); });
   }
 
   setupPlates() {
