@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@200;300&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: "Panchang"; src: url("fonts/panchang-600.woff2") format("woff2"); font-weight: 500 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Panchang"; src: url("fonts/panchang-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Instrument Sans"; src: url("fonts/instrument-sans-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Instrument Sans"; src: url("fonts/instrument-sans-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Instrument Sans"; src: url("fonts/instrument-sans-italic-400.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Instrument Sans"; src: url("fonts/instrument-sans-italic-500.woff2") format("woff2"); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("fonts/geist-mono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+html, body { margin: 0; padding: 0; background: #04060a; color: #eaf0f6; font-family: "Instrument Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+::selection { background: rgba(159,192,221,0.3); color: #eaf0f6; }
+a { color: #9fc0dd; }
+a:hover { color: #d6e6f5; }
+@keyframes letterRise { from { transform: translateY(110%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes dustFloat { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(10px, -28px); } }
+@keyframes heroPan { from { transform: translate3d(-1.1%,0,0); } to { transform: translate3d(1.1%,0,0); } }
+@keyframes brandSwap { from { opacity: 0.35; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</helmet>
+<div ref="{{ R.root }}" style="min-height:100vh;background:#04060a;color:#eaf0f6;overflow-x:clip">
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid rgba(28,38,50,0.6);background:rgba(4,6,10,0.7);backdrop-filter:blur(12px)">
+  <div style="max-width:1200px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px">
+    <a href="#" style="display:inline-flex;align-items:baseline;gap:6px;text-decoration:none;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;font-size:16px;letter-spacing:0.24em;color:#eaf0f6">VELARI <span style="font-family:'Geist Mono',monospace;font-size:12px;font-weight:400;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">Systems</span></a>
+    <nav aria-label="Primary" style="display:flex;align-items:center;gap:32px">
+      <a href="#systems" style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:11px;text-transform:uppercase;letter-spacing:0.3em;color:#8fa9bf;text-decoration:none;transition:color 0.15s" style-hover="color:#eaf0f6">Systems</a>
+      <a href="#proof" style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:11px;text-transform:uppercase;letter-spacing:0.3em;color:#8fa9bf;text-decoration:none;transition:color 0.15s" style-hover="color:#eaf0f6">Proof</a>
+      <a href="#process" style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:11px;text-transform:uppercase;letter-spacing:0.3em;color:#8fa9bf;text-decoration:none;transition:color 0.15s" style-hover="color:#eaf0f6">Process</a>
+    </nav>
+    <a href="#start" style="display:inline-flex;align-items:center;border-radius:999px;border:1px solid rgba(255,255,255,0.16);padding:9px 18px;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.2em;color:#c8d6e3;text-decoration:none;transition:border-color 0.15s,color 0.15s" style-hover="border-color:rgba(255,255,255,0.45);color:#eaf0f6">Start a Project</a>
+  </div>
+</header>
+
+<section ref="{{ R.hero }}" data-screen-label="Hero" onMouseMove="{{ heroMove }}" aria-label="Velari Systems — Bay Area web systems" style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;z-index:0">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,#04060a 0%,#04060a 40%,#0a1e3d 100%)"></div>
+    <div ref="{{ R.heroPhoto }}" style="position:absolute;inset:0;transform-origin:50% 78%">
+      <div style="position:absolute;inset:0"><img src="img/sfbay_hero_3840.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%;opacity:0.96;filter:saturate(1.02) brightness(0.96) contrast(1.1)"></div>
+    </div>
+    <div ref="{{ R.heroFlash }}" style="position:absolute;inset:0;transform-origin:50% 78%">
+      <div style="position:absolute;inset:0"><img src="img/sfbay_hero_3840.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%;opacity:0.98;filter:saturate(1.08) brightness(1.24) contrast(1.08);mask-image:radial-gradient(280px circle at var(--fx,-400px) var(--fy,-400px),rgba(0,0,0,0.85),transparent 72%);-webkit-mask-image:radial-gradient(280px circle at var(--fx,-400px) var(--fy,-400px),rgba(0,0,0,0.85),transparent 72%)"></div>
+    </div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(2,6,12,0.16) 0%,rgba(2,6,12,0.04) 38%,rgba(1,6,14,0.34) 66%,rgba(0,4,10,0.7) 100%)"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 60%,rgba(0,2,6,0.38) 100%)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,6,10,0.36) 0%,rgba(4,6,10,0.1) 40%,transparent 60%)"></div>
+    <canvas ref="{{ R.fog }}" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+    <div ref="{{ R.heroDarken }}" style="position:absolute;inset:0;background:#04060a;opacity:0"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:112px;background:linear-gradient(to bottom,transparent,#04060a)"></div>
+  </div>
+
+  <div ref="{{ R.heroTitle }}" style="position:relative;z-index:10;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;width:100%;max-width:1200px;margin:0 auto;min-height:100vh;box-sizing:border-box;padding:88px 40px clamp(36px,9vh,110px);text-shadow:0 2px 24px rgba(0,0,0,0.55)">
+    <p style="display:flex;align-items:center;gap:12px;margin:0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#8fa9bf"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#9fc0dd"></span>Bay Area Web Systems</p>
+    <h1 aria-label="Websites that operate like business systems." style="margin:14px 0 0;text-align:left">
+      <span aria-hidden="true" style="display:block;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;font-size:clamp(1.7rem,2.9vw,2.7rem);line-height:1.16;letter-spacing:0.18em;color:#eaf0f6"><span style="display:inline-block;white-space:nowrap"><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.150s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">W</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.175s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">E</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.200s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">B</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.225s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">S</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.250s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">I</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.275s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">T</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.300s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">E</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.325s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">S</span></span></span><span style="display:inline-block;width:0.34em"></span><span style="display:inline-block;white-space:nowrap"><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.350s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">T</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.375s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">H</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.400s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">A</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.425s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">T</span></span></span><span style="display:inline-block;width:0.34em"></span><span style="display:inline-block;white-space:nowrap"><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.450s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">O</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.475s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">P</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.500s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">E</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.525s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">R</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.550s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">A</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.575s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">T</span></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.12em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.55s cubic-bezier(0.22,1,0.36,1) 0.600s backwards;transition:transform 0.14s,color 0.14s,text-shadow 0.14s" style-hover="transform:translateY(-0.09em);color:#9fc0dd;text-shadow:0 0 28px rgba(159,192,221,0.45)">E</span></span></span></span>
+      <span aria-hidden="true" style="display:block;margin-top:8px;font-family:'Instrument Sans',sans-serif;font-weight:500;font-style:italic;font-size:clamp(1.45rem,2.5vw,2.25rem);line-height:1.2;color:#9fc0dd"><span style="display:inline-block;overflow:hidden;padding-bottom:0.14em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.6s cubic-bezier(0.22,1,0.36,1) 0.72s backwards">like</span></span><span style="display:inline-block;width:0.26em"></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.14em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.6s cubic-bezier(0.22,1,0.36,1) 0.82s backwards">business</span></span><span style="display:inline-block;width:0.26em"></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.14em;vertical-align:bottom"><span style="display:inline-block;animation:letterRise 0.6s cubic-bezier(0.22,1,0.36,1) 0.92s backwards">systems.</span></span></span>
+    </h1>
+    <p style="margin:14px 0 0;max-width:46ch;text-align:left;font-size:14px;line-height:1.7;color:#8fa9bf;animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 1.15s backwards">Design, infrastructure, and automation shipped as one system — not a template with a contact form.</p>
+    <div style="margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;text-shadow:none;animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 1.3s backwards">
+      <a href="#start" style="display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 24px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.22em;color:#f0e2bd;text-decoration:none;border:1px solid rgba(232,213,163,0.5);background:rgba(232,213,163,0.07);transition:background 0.15s,box-shadow 0.15s,border-color 0.15s" style-hover="background:rgba(232,213,163,0.16);border-color:rgba(232,213,163,0.85);box-shadow:0 0 28px rgba(232,213,163,0.22)">Start a Project</a>
+      <a href="#systems" style="display:inline-flex;align-items:center;gap:8px;font-family:'Geist Mono',monospace;font-size:14px;text-transform:uppercase;letter-spacing:0.1em;color:#9fc0dd;text-decoration:none;transition:gap 0.15s" style-hover="gap:12px">View Systems <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <canvas ref="{{ R.heroDust }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10"></canvas>
+</section>
+
+<section ref="{{ R.pos }}" id="systems" data-screen-label="Positioning — VELARI" style="position:relative;height:340vh;background:linear-gradient(to bottom,#04060a 0%,#0d0812 35%,#170e16 68%,#20131c 100%)">
+  <div style="position:sticky;top:0;height:100vh;overflow:hidden">
+    <canvas ref="{{ R.deepDust }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas>
+    <canvas ref="{{ R.shards }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas>
+
+    <p ref="{{ R.stmt1 }}" style="position:absolute;left:0;right:0;top:50%;margin:0;padding:0 40px;text-align:center;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:100;text-transform:uppercase;letter-spacing:0.3em;line-height:1.12;font-size:clamp(2.2rem,4.8vw,4.1rem);color:#f4f1ea;text-shadow:0 0 70px rgba(232,213,163,0.22);opacity:0;transform:translateY(-50%)">We build <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0.01em;color:#e8d5a3">websites.</em></p>
+    <p ref="{{ R.stmt2 }}" style="position:absolute;left:0;right:0;top:50%;margin:0;padding:0 40px;text-align:center;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:100;text-transform:uppercase;letter-spacing:0.3em;line-height:1.12;font-size:clamp(2.2rem,4.8vw,4.1rem);color:#f4f1ea;text-shadow:0 0 70px rgba(232,213,163,0.22);opacity:0;transform:translateY(-50%)">And the systems <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0.01em;color:#e8d5a3">behind</em> them.</p>
+
+    <div ref="{{ R.act3 }}" style="position:relative;height:100%;max-width:1200px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);gap:56px;align-items:center;opacity:0">
+      <div>
+        <p style="display:flex;align-items:center;gap:12px;margin:0;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#9fc0dd"></span>What we actually build</p>
+        <h2 style="margin:20px 0 0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#eaf0f6">Not just websites. <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#9fc0dd">Operating</em> layers.</h2>
+        <p style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.7;color:#8fa9bf">Brand to backend — one studio.</p>
+        <ol style="margin:40px 0 0;padding:0;list-style:none">
+          <li ref="{{ R.row0 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1c2632;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">01</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#eaf0f6">Interface</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#6f8496">designed to sell</span></li>
+          <li ref="{{ R.row1 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1c2632;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">02</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#eaf0f6">Branding</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#6f8496">logo, palette, voice</span></li>
+          <li ref="{{ R.row2 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1c2632;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">03</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#eaf0f6">AI</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#6f8496">intake that thinks</span></li>
+          <li ref="{{ R.row3 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1c2632;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">04</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#eaf0f6">Automation</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#6f8496">follow-up that runs itself</span></li>
+          <li ref="{{ R.row4 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1c2632;border-bottom:1px solid #1c2632;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">05</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#eaf0f6">Admin</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#6f8496">the owner’s control room</span></li>
+        </ol>
+      </div>
+      <div style="perspective:1100px">
+        <div style="position:relative;margin:0 auto;height:420px;width:100%;max-width:460px">
+          <div ref="{{ R.plane0 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:5;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#8fa9bf">Interface</span><span style="display:flex;gap:6px"><span style="height:6px;width:6px;border-radius:999px;background:#2e3d4e"></span><span style="height:6px;width:6px;border-radius:999px;background:#2e3d4e"></span><span style="height:6px;width:6px;border-radius:999px;background:#2e3d4e"></span></span></div>
+            <div style="position:relative;margin:0 16px;height:74px;border-radius:8px;overflow:hidden;background:radial-gradient(120% 160% at 20% 0%,#16304a 0%,#0a1220 60%);border:1px solid rgba(255,255,255,0.06)">
+              <div style="position:absolute;left:12px;top:16px;height:7px;width:46%;border-radius:999px;background:rgba(234,240,246,0.85)"></div>
+              <div style="position:absolute;left:12px;top:30px;height:5px;width:30%;border-radius:999px;background:rgba(159,192,221,0.5)"></div>
+              <div style="position:absolute;left:12px;top:46px;height:14px;width:52px;border-radius:999px;border:1px solid rgba(232,213,163,0.6)"></div>
+              <div style="position:absolute;right:-14px;top:10px;height:80px;width:80px;border-radius:999px;background:radial-gradient(circle,rgba(159,192,221,0.25),transparent 70%)"></div>
+            </div>
+          </div>
+          <div ref="{{ R.plane1 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:4;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span ref="{{ R.planeLab1 }}" style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#8fa9bf;opacity:0">Branding</span></div>
+            <div style="margin:0 16px;display:flex;align-items:center;gap:12px">
+              <span style="display:flex;height:34px;width:34px;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(232,213,163,0.5);font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:12px;letter-spacing:0.1em;color:#e8d5a3">A</span>
+              <div style="display:flex;flex-direction:column;gap:6px"><div style="height:7px;width:110px;border-radius:999px;background:rgba(234,240,246,0.8)"></div><div style="height:5px;width:70px;border-radius:999px;background:rgba(143,169,191,0.5)"></div></div>
+              <div style="margin-left:auto;display:flex;gap:6px"><span style="height:16px;width:16px;border-radius:999px;background:#9db8a1"></span><span style="height:16px;width:16px;border-radius:999px;background:#e8d5a3"></span><span style="height:16px;width:16px;border-radius:999px;background:#6f8fb4"></span></div>
+            </div>
+          </div>
+          <div ref="{{ R.plane2 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:3;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span ref="{{ R.planeLab2 }}" style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#8fa9bf;opacity:0">AI</span></div>
+            <div style="margin:0 16px;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:8px;border-radius:6px;border:1px solid rgba(124,92,255,0.35);background:rgba(124,92,255,0.08);padding:6px 10px"><span style="height:5px;width:5px;border-radius:999px;background:#9d85ff"></span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:#c9bfff">inquiry → summary → routed</span></div>
+              <div style="height:5px;width:55%;border-radius:999px;background:rgba(124,92,255,0.25)"></div>
+            </div>
+          </div>
+          <div ref="{{ R.plane3 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:2;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span ref="{{ R.planeLab3 }}" style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#8fa9bf;opacity:0">Automation</span></div>
+            <div style="margin:0 16px;display:flex;align-items:center;gap:10px">
+              <span style="position:relative;display:inline-block;height:16px;width:30px;border-radius:999px;background:rgba(159,192,221,0.35)"><span style="position:absolute;right:2px;top:2px;height:12px;width:12px;border-radius:999px;background:#9fc0dd"></span></span>
+              <span style="border-radius:6px;border:1px solid #1c2632;background:#0d141d;padding:4px 10px;font-family:'Geist Mono',monospace;font-size:9px;color:#8fa9bf">follow-up sent · 9:00 AM</span>
+            </div>
+          </div>
+          <div ref="{{ R.plane4 }}" style="position:absolute;left:0;right:0;top:0;height:132px;border-radius:14px;border:1px solid rgba(46,61,78,0.6);background:rgba(10,15,22,0.95);overflow:hidden;transform:rotateX(54deg) rotateZ(-6deg);transform-origin:50% 100%;z-index:1;box-shadow:0 -1px 0 rgba(255,255,255,0.07),0 18px 40px -24px rgba(0,0,0,0.85)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px"><span ref="{{ R.planeLab4 }}" style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#8fa9bf;opacity:0">Admin</span></div>
+            <div style="margin:0 16px;display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;gap:8px"><div style="height:5px;width:36px;border-radius:999px;background:rgba(159,192,221,0.5)"></div><div style="height:5px;flex:1;border-radius:999px;background:rgba(28,38,50,0.8)"></div></div>
+              <div style="display:flex;gap:8px"><div style="height:5px;width:36px;border-radius:999px;background:rgba(28,38,50,0.8)"></div><div style="height:5px;flex:1;border-radius:999px;background:rgba(28,38,50,0.6)"></div></div>
+              <div style="display:flex;gap:8px"><div style="height:5px;width:36px;border-radius:999px;background:rgba(28,38,50,0.8)"></div><div style="height:5px;flex:1;border-radius:999px;background:rgba(28,38,50,0.5)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proof" data-screen-label="Proof Wall" style="position:relative;padding:160px 0;background:linear-gradient(to bottom,#20131c 0%,rgba(32,19,28,0) 18%),linear-gradient(to top,#140b20 0%,rgba(20,11,32,0) 20%),radial-gradient(130% 90% at 70% 8%,#16304a 0%,#150e26 55%,#0a0812 100%)">
+  <div style="position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:0 40px">
+    <header data-drift="1" style="margin-bottom:64px;will-change:transform">
+      <p data-reveal="1" data-delay="0" style="display:flex;align-items:center;gap:12px;margin:0;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496;opacity:0;transform:translateY(12px)"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#9fc0dd"></span>Proof, not promises</p>
+      <h2 data-reveal="1" data-delay="0.08" style="margin:20px 0 0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#eaf0f6;opacity:0;transform:translateX(72px)"><em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#eaf0f6">Every</em> feature here has <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#9fc0dd">shipped</em> in production.</h2>
+      <p data-reveal="1" data-delay="0.16" style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.7;color:#8fa9bf;opacity:0;transform:translateY(14px)">Brand, website, AI intake, and admin — delivered as one package, not à la carte.</p>
+    </header>
+    <div ref="{{ R.proofWrap }}" style="display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:64px;align-items:center">
+      <div style="position:relative;perspective:1400px">
+        <div ref="{{ R.backA }}" aria-hidden="true" style="position:absolute;left:-32px;top:24px;height:70%;width:55%;border-radius:14px;border:1px solid rgba(28,38,50,0.6);background:rgba(13,20,29,0.5);transform:translateY(40px) rotate(-2deg)"></div>
+        <div ref="{{ R.backB }}" aria-hidden="true" style="position:absolute;right:-24px;top:56px;height:58%;width:42%;border-radius:14px;border:1px solid rgba(28,38,50,0.4);background:rgba(13,20,29,0.3);transform:translateY(64px) rotate(1.5deg)"></div>
+        <div ref="{{ R.proofTilt }}" style="position:relative;transform-style:preserve-3d;transform:rotateY(-10deg) rotateX(5deg)">
+          <div style="overflow:hidden;border-radius:14px;border:1px solid #1c2632;background:#0a0f16">
+            <div style="display:flex;align-items:center;gap:8px;border-bottom:1px solid #1c2632;background:#0d141d;padding:10px 16px">
+              <span style="display:flex;gap:6px"><span style="height:8px;width:8px;border-radius:999px;background:#2e3d4e"></span><span style="height:8px;width:8px;border-radius:999px;background:#2e3d4e"></span><span style="height:8px;width:8px;border-radius:999px;background:#2e3d4e"></span></span>
+              <span style="margin-left:12px;border-radius:6px;border:1px solid #1c2632;padding:2px 12px;font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">admin.marinridgewellness.com</span>
+            </div>
+            <div style="display:grid;grid-template-columns:112px minmax(0,1fr)">
+              <aside style="border-right:1px solid #1c2632;background:rgba(13,20,29,0.6);padding:12px">
+                <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">Marin Ridge</p>
+                <nav style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+                  <p style="margin:0;border-radius:6px;background:#111a26;padding:4px 8px;font-family:'Geist Mono',monospace;font-size:10px;color:#eaf0f6">Overview</p>
+                  <p style="margin:0;padding:4px 8px;font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">Brand</p>
+                  <p style="margin:0;padding:4px 8px;font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">Website</p>
+                  <p style="margin:0;padding:4px 8px;font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">AI Intake</p>
+                  <p style="margin:0;padding:4px 8px;font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">Admin</p>
+                </nav>
+              </aside>
+              <div style="padding:16px">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#8fa9bf">Deliverables · Complete System</p>
+                  <p style="margin:0;display:flex;align-items:center;gap:6px;font-family:'Geist Mono',monospace;font-size:10px;color:#9fc0dd"><span style="display:inline-block;height:6px;width:6px;border-radius:999px;background:#9fc0dd;box-shadow:0 0 8px #9fc0dd"></span> live</p>
+                </div>
+                <div style="margin-top:12px;display:flex;flex-direction:column;gap:6px">
+                  <div ref="{{ R.arriv }}" style="overflow:hidden;max-height:0;opacity:0;transform:translateY(-14px);transition:max-height 0.55s cubic-bezier(0.22,1,0.36,1),opacity 0.55s cubic-bezier(0.22,1,0.36,1),transform 0.55s cubic-bezier(0.22,1,0.36,1)">
+                    <div style="display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;border-radius:6px;border:1px solid rgba(159,192,221,0.5);background:#111a26;padding:8px 12px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#9fc0dd">LIVE</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#eaf0f6">New inquiry — Cole Valley Physio</span><span ref="{{ R.arrivStatus }}" style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#8fa9bf;transition:color 0.5s">New</span></div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;border-radius:6px;border:1px solid #1c2632;background:rgba(13,20,29,0.4);padding:8px 12px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">BRD</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#eaf0f6">Identity — logo suite, palette, voice</span><span style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#8fa9bf">Delivered</span></div>
+                  <div style="display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;border-radius:6px;border:1px solid rgba(159,192,221,0.4);background:#111a26;padding:8px 12px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">WEB</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#eaf0f6">marinridgewellness.com</span><span style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#9fc0dd">Live</span></div>
+                  <div style="display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;border-radius:6px;border:1px solid #1c2632;background:rgba(13,20,29,0.4);padding:8px 12px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">AI</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#eaf0f6">Intake summaries + routing</span><span style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#8fa9bf">Active</span></div>
+                  <div style="display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;border-radius:6px;border:1px solid #1c2632;background:rgba(13,20,29,0.4);padding:8px 12px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">AUTO</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#eaf0f6">Follow-up sequences</span><span style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#8fa9bf">Running</span></div>
+                  <div style="display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;border-radius:6px;border:1px solid #1c2632;background:rgba(13,20,29,0.4);padding:8px 12px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">ADM</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#eaf0f6">Owner dashboard + training</span><span style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#8fa9bf">Handed off</span></div>
+                </div>
+                <p ref="{{ R.proofCount }}" style="margin:12px 0 0;text-align:right;font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">one package · one point of contact</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:14px">
+        <p data-reveal="1" data-delay="0.2" style="margin:0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#6f8496;opacity:0;transform:translateY(12px)">Selected work · live systems</p>
+        <div data-reveal="1" data-delay="0.3" style="position:relative;height:296px;opacity:0;transform:translateY(12px)">
+          <div style="position:absolute;inset:0;opacity:{{ projOp0 }};pointer-events:{{ projPe0 }};transition:opacity 0.45s cubic-bezier(0.22,1,0.36,1)"><div style="display:flex;flex-direction:column;height:100%;border-radius:14px;border:1px solid #1c2632;background:#0a0f16;overflow:hidden">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1c2632;padding:10px 14px"><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:12px;text-transform:uppercase;letter-spacing:0.18em;color:#eaf0f6">Velar Nights</span><span style="font-family:'Geist Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:#9fc0dd">live</span></div>
+          <div style="flex:1;padding:14px;display:flex;flex-direction:column;gap:8px"><p style="margin:0;font-family:'Geist Mono',monospace;font-size:10px;color:#8fa9bf">TONIGHT · <span style="color:#eaf0f6">214</span> on guestlist</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;border-radius:6px;border:1px solid #1c2632;background:#0d141d;padding:6px 10px"><span style="font-family:'Geist Mono',monospace;font-size:9px;color:#8fa9bf">VIP tables</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:#9fc0dd">9 / 12</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;border-radius:6px;border:1px solid #1c2632;background:#0d141d;padding:6px 10px"><span style="font-family:'Geist Mono',monospace;font-size:9px;color:#8fa9bf">Door revenue</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:#9fc0dd">tracking</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;border-radius:6px;border:1px solid rgba(124,92,255,0.35);background:rgba(124,92,255,0.07);padding:6px 10px"><span style="font-family:'Geist Mono',monospace;font-size:9px;color:#c9bfff">Staff on shift</span><span style="font-family:'Geist Mono',monospace;font-size:9px;color:#c9bfff">6</span></div></div>
+          <p style="margin:0;border-top:1px solid #1c2632;padding:8px 14px;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#6f8496">venue ops platform · multi-system</p>
+        </div></div>
+          <div style="position:absolute;inset:0;opacity:{{ projOp1 }};pointer-events:{{ projPe1 }};transition:opacity 0.45s cubic-bezier(0.22,1,0.36,1)"><div style="display:flex;flex-direction:column;height:100%;border-radius:14px;border:1px solid #1c2632;background:#0a0f16;overflow:hidden">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1c2632;padding:10px 14px"><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:12px;text-transform:uppercase;letter-spacing:0.18em;color:#eaf0f6">Whitelabel Framework</span><span style="font-family:'Geist Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:#e8d5a3">product</span></div>
+          <div style="flex:1;padding:14px;display:flex;flex-direction:column;gap:8px"><div style="display:flex;gap:6px">
+              <span style="display:inline-flex;align-items:center;gap:5px;border-radius:999px;border:1px solid #1c2632;padding:3px 8px;font-family:'Geist Mono',monospace;font-size:8px;color:#8fa9bf"><span style="height:6px;width:6px;border-radius:999px;background:#9db8a1"></span>brand A</span>
+              <span style="display:inline-flex;align-items:center;gap:5px;border-radius:999px;border:1px solid #1c2632;padding:3px 8px;font-family:'Geist Mono',monospace;font-size:8px;color:#8fa9bf"><span style="height:6px;width:6px;border-radius:999px;background:#e8d5a3"></span>brand B</span>
+              <span style="display:inline-flex;align-items:center;gap:5px;border-radius:999px;border:1px solid #1c2632;padding:3px 8px;font-family:'Geist Mono',monospace;font-size:8px;color:#8fa9bf"><span style="height:6px;width:6px;border-radius:999px;background:#6f8fb4"></span>brand C</span>
+            </div>
+            <div style="border-radius:8px;border:1px solid #1c2632;background:#0d141d;padding:10px;display:flex;flex-direction:column;gap:6px"><div style="height:5px;width:55%;border-radius:999px;background:rgba(234,240,246,0.75)"></div><div style="height:5px;width:35%;border-radius:999px;background:rgba(143,169,191,0.45)"></div><div style="margin-top:2px;height:12px;width:44px;border-radius:999px;border:1px solid rgba(232,213,163,0.55)"></div></div>
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:9px;color:#8fa9bf">same system · reskinned in config</p></div>
+          <p style="margin:0;border-top:1px solid #1c2632;padding:8px 14px;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#6f8496">one storefront · any brand</p>
+        </div></div>
+          <div style="position:absolute;inset:0;opacity:{{ projOp2 }};pointer-events:{{ projPe2 }};transition:opacity 0.45s cubic-bezier(0.22,1,0.36,1)"><div style="display:flex;flex-direction:column;height:100%;border-radius:14px;border:1px solid #1c2632;background:#0a0f16;overflow:hidden">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1c2632;padding:10px 14px"><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:12px;text-transform:uppercase;letter-spacing:0.18em;color:#eaf0f6">velarisystems.com</span><span style="font-family:'Geist Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:#9fc0dd">live</span></div>
+          <div style="flex:1;padding:14px;display:flex;flex-direction:column;gap:8px"><div style="position:relative;flex:1;min-height:96px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);background:radial-gradient(130% 160% at 30% 0%,#16304a 0%,#070d18 65%)">
+              <span style="position:absolute;left:12px;bottom:26px;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;font-size:13px;letter-spacing:0.3em;color:#eaf0f6">VELARI</span>
+              <span style="position:absolute;left:12px;bottom:12px;font-family:'Instrument Sans',sans-serif;font-style:italic;font-size:9px;color:#9fc0dd">like business systems.</span>
+              <span style="position:absolute;right:16px;top:12px;height:3px;width:3px;border-radius:999px;background:#e8d5a3;opacity:0.8"></span>
+              <span style="position:absolute;right:34px;top:26px;height:2px;width:2px;border-radius:999px;background:#e8d5a3;opacity:0.6"></span>
+              <span style="position:absolute;right:24px;top:44px;height:2.5px;width:2.5px;border-radius:999px;background:#e8d5a3;opacity:0.7"></span>
+            </div>
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:9px;color:#8fa9bf">fog, dust + AI intake — in production</p></div>
+          <p style="margin:0;border-top:1px solid #1c2632;padding:8px 14px;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#6f8496">this site · built on our stack</p>
+        </div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button onClick="{{ pickProj0 }}" aria-label="Velar Nights" style="height:6px;width:22px;border-radius:999px;border:none;padding:0;cursor:pointer;background:{{ projDot0 }};transition:background 0.3s"></button>
+          <button onClick="{{ pickProj1 }}" aria-label="Whitelabel Framework" style="height:6px;width:22px;border-radius:999px;border:none;padding:0;cursor:pointer;background:{{ projDot1 }};transition:background 0.3s"></button>
+          <button onClick="{{ pickProj2 }}" aria-label="velarisystems.com" style="height:6px;width:22px;border-radius:999px;border:none;padding:0;cursor:pointer;background:{{ projDot2 }};transition:background 0.3s"></button>
+        </div>
+      </div</ul>
+    </div>
+  </div>
+</section>
+
+<section id="ai" data-screen-label="AI — Quiet Intelligence" style="position:relative;padding:160px 0;background:linear-gradient(to bottom,#140b20 0%,rgba(20,11,32,0) 20%),linear-gradient(to top,#070610 0%,rgba(7,6,16,0) 18%),radial-gradient(120% 100% at 65% 45%,#351751 0%,#1a0f2e 45%,#0a0814 100%)">
+  <div style="position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:0 40px">
+    <header data-drift="1" style="margin-bottom:64px;will-change:transform">
+      <p data-reveal="1" data-delay="0" style="display:flex;align-items:center;gap:12px;margin:0;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496;opacity:0;transform:translateY(12px)"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#7c5cff"></span>Applied, not hyped</p>
+      <h2 data-reveal="1" data-delay="0.08" style="margin:20px 0 0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#eaf0f6;opacity:0;transform:translateX(-72px)">AI where it <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#9d85ff">actually helps</em>.</h2>
+      <p data-reveal="1" data-delay="0.16" style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.7;color:#8fa9bf;opacity:0;transform:translateY(14px)">Applied to intake, routing, and follow-up — where it removes hours, not where it looks impressive.</p>
+    </header>
+    <div style="display:grid;grid-template-columns:300px minmax(0,1fr);gap:48px;align-items:start">
+      <div style="position:sticky;top:112px">
+        <div data-reveal="1" data-delay="0" style="border-radius:14px;border:1px solid #1c2632;background:rgba(10,15,22,0.7);padding:20px;opacity:0;transform:translateY(18px)">
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">Pipeline</p>
+          <div style="margin-top:16px;display:flex;flex-direction:column">
+            <div ref="{{ R.node0 }}" style="border-radius:6px;border:1px solid #1c2632;padding:8px 12px;font-family:'Geist Mono',monospace;font-size:11px;color:#8fa9bf;transition:all 0.5s">Intake</div>
+            <div ref="{{ R.conn0 }}" style="margin:0 auto;height:16px;width:1px;background:rgba(124,92,255,0.5);transition:background 0.5s"></div>
+            <div ref="{{ R.node1 }}" style="border-radius:6px;border:1px solid rgba(124,92,255,0.6);padding:8px 12px;font-family:'Geist Mono',monospace;font-size:11px;color:#eaf0f6;background:rgba(124,92,255,0.12);box-shadow:0 0 20px rgba(124,92,255,0.18);transition:all 0.5s">AI Summary</div>
+            <div ref="{{ R.conn1 }}" style="margin:0 auto;height:16px;width:1px;background:rgba(124,92,255,0.5);transition:background 0.5s"></div>
+            <div ref="{{ R.node2 }}" style="border-radius:6px;border:1px solid #1c2632;padding:8px 12px;font-family:'Geist Mono',monospace;font-size:11px;color:#8fa9bf;transition:all 0.5s">Routed Lead</div>
+            <div ref="{{ R.conn2 }}" style="margin:0 auto;height:16px;width:1px;background:#2e3d4e;transition:background 0.5s"></div>
+            <div ref="{{ R.node3 }}" style="border-radius:6px;border:1px solid #1c2632;padding:8px 12px;font-family:'Geist Mono',monospace;font-size:11px;color:#8fa9bf;transition:all 0.5s">Admin Task</div>
+          </div>
+          <p style="margin:16px 0 0;border-left:1px solid rgba(124,92,255,0.4);padding-left:12px;font-family:'Geist Mono',monospace;font-size:11px;line-height:1.65;color:#8fa9bf">Inquiry: clinic portal + intake, ~$18k scope, wants a September launch — route: Consult</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div ref="{{ R.aiCard0 }}" data-reveal="1" data-delay="0" onMouseMove="{{ spotMove }}" onMouseLeave="{{ spotLeave }}" style="position:relative;border-radius:14px;border:1px solid rgba(124,92,255,0.4);background:rgba(10,15,22,0.7);padding:20px;transition:border-color 0.5s;opacity:0;transform:translateX(48px)">
+          <div aria-hidden="true" style="position:absolute;inset:0;border-radius:14px;pointer-events:none;opacity:var(--so,0);transition:opacity 0.2s;background:radial-gradient(260px circle at var(--sx,-999px) var(--sy,-999px),rgba(124,92,255,0.07),transparent 70%)"></div>
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#eaf0f6">Intake summaries</p>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">Every inquiry arrives condensed to what matters: scope, budget signal, timeline.</p>
+        </div>
+        <div ref="{{ R.aiCard1 }}" data-reveal="1" data-delay="0.06" onMouseMove="{{ spotMove }}" onMouseLeave="{{ spotLeave }}" style="position:relative;border-radius:14px;border:1px solid #1c2632;background:rgba(10,15,22,0.7);padding:20px;transition:border-color 0.5s;opacity:0;transform:translateX(48px)">
+          <div aria-hidden="true" style="position:absolute;inset:0;border-radius:14px;pointer-events:none;opacity:var(--so,0);transition:opacity 0.2s;background:radial-gradient(260px circle at var(--sx,-999px) var(--sy,-999px),rgba(124,92,255,0.07),transparent 70%)"></div>
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#eaf0f6">Lead qualification</p>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">Serious inquiries surface first; tire-kickers get a polite automated path.</p>
+        </div>
+        <div ref="{{ R.aiCard2 }}" data-reveal="1" data-delay="0.12" onMouseMove="{{ spotMove }}" onMouseLeave="{{ spotLeave }}" style="position:relative;border-radius:14px;border:1px solid #1c2632;background:rgba(10,15,22,0.7);padding:20px;transition:border-color 0.5s;opacity:0;transform:translateX(48px)">
+          <div aria-hidden="true" style="position:absolute;inset:0;border-radius:14px;pointer-events:none;opacity:var(--so,0);transition:opacity 0.2s;background:radial-gradient(260px circle at var(--sx,-999px) var(--sy,-999px),rgba(124,92,255,0.07),transparent 70%)"></div>
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#eaf0f6">Support assist</p>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">Draft replies grounded in your own docs — reviewed, never auto-sent.</p>
+        </div>
+        <div ref="{{ R.aiCard3 }}" data-reveal="1" data-delay="0.18" onMouseMove="{{ spotMove }}" onMouseLeave="{{ spotLeave }}" style="position:relative;border-radius:14px;border:1px solid #1c2632;background:rgba(10,15,22,0.7);padding:20px;transition:border-color 0.5s;opacity:0;transform:translateX(48px)">
+          <div aria-hidden="true" style="position:absolute;inset:0;border-radius:14px;pointer-events:none;opacity:var(--so,0);transition:opacity 0.2s;background:radial-gradient(260px circle at var(--sx,-999px) var(--sy,-999px),rgba(124,92,255,0.07),transparent 70%)"></div>
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#eaf0f6">Knowledge search</p>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">Staff ask in plain language; the system finds the policy, price, or precedent.</p>
+        </div>
+        <div ref="{{ R.aiCard4 }}" data-reveal="1" data-delay="0.24" onMouseMove="{{ spotMove }}" onMouseLeave="{{ spotLeave }}" style="position:relative;border-radius:14px;border:1px solid #1c2632;background:rgba(10,15,22,0.7);padding:20px;transition:border-color 0.5s;opacity:0;transform:translateX(48px)">
+          <div aria-hidden="true" style="position:absolute;inset:0;border-radius:14px;pointer-events:none;opacity:var(--so,0);transition:opacity 0.2s;background:radial-gradient(260px circle at var(--sx,-999px) var(--sy,-999px),rgba(124,92,255,0.07),transparent 70%)"></div>
+          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#eaf0f6">Quote summarization</p>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">Long requirement threads collapse into a one-screen scope you can price.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="whitelabel" ref="{{ R.wlWrap }}" data-screen-label="White Label" style="position:relative;padding:160px 0;background:linear-gradient(to bottom,#070610 0%,#04060a 32%,#04060a 68%,#0d0a10 100%)">
+  <div style="position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:0 40px">
+    <header data-drift="1" style="margin-bottom:64px;will-change:transform">
+      <p data-reveal="1" data-delay="0" style="display:flex;align-items:center;gap:12px;margin:0;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496;opacity:0;transform:translateY(12px)"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#9fc0dd"></span>One studio · every discipline</p>
+      <h2 data-reveal="1" data-delay="0.08" style="margin:20px 0 0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#eaf0f6;opacity:0;transform:translateX(72px)">Websites. AI. Branding. <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#9fc0dd">One package.</em></h2>
+      <p data-reveal="1" data-delay="0.16" style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.7;color:#8fa9bf;opacity:0;transform:translateY(14px)">A complete system — site, brand, and automation — configured to your business instead of engineered from zero.</p>
+    </header>
+    <div role="tablist" aria-label="Studio disciplines" style="margin-bottom:32px;display:flex;flex-wrap:wrap;gap:8px">
+      <button ref="{{ R.tab0 }}" role="tab" onClick="{{ pick0 }}" style="border-radius:999px;border:1px solid rgba(255,255,255,0.28);background:rgba(255,255,255,0.06);padding:9px 20px;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.18em;color:#eaf0f6;cursor:pointer;transition:border-color 0.15s,background 0.15s,color 0.15s">01 · Web Design</button>
+      <button ref="{{ R.tab1 }}" role="tab" onClick="{{ pick1 }}" style="border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:transparent;padding:9px 20px;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.18em;color:#6f8496;cursor:pointer;transition:border-color 0.15s,background 0.15s,color 0.15s">02 · AI Integration</button>
+      <button ref="{{ R.tab2 }}" role="tab" onClick="{{ pick2 }}" style="border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:transparent;padding:9px 20px;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.18em;color:#6f8496;cursor:pointer;transition:border-color 0.15s,background 0.15s,color 0.15s">03 · Branding</button>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,0.8fr);gap:32px;align-items:start">
+      <div ref="{{ R.wlMock }}" style="overflow:hidden;border-radius:14px;border:1px solid #1c2632;background:#0a0f16">
+        <div style="display:{{ show0 }}">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1c2632;padding:12px 20px">
+            <span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:17px;letter-spacing:0.04em;color:#eaf0f6">Alder &amp; Sage</span>
+            <span style="border-radius:999px;border:1px solid #9db8a1;color:#9db8a1;padding:4px 12px;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em">Wellness clinic</span>
+          </div>
+          <div style="padding:24px 20px;background:rgba(157,184,161,0.08)">
+            <p style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:22px;letter-spacing:0.02em;color:#eaf0f6">Care that starts before the first visit.</p>
+            <p style="margin:4px 0 0;font-family:'Geist Mono',monospace;font-size:11px;color:#8fa9bf">Designed, built, and shipped by Velari.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px">
+            <div style="border-radius:6px;border:1px solid #1c2632;background:#0d141d;padding:12px"><div style="height:56px;border-radius:4px;background:rgba(157,184,161,0.16)"></div><p style="margin:10px 0 0;font-size:12px;color:#eaf0f6">Initial consult</p><button style="margin-top:8px;width:100%;border-radius:999px;border:1px solid #1c2632;background:transparent;padding:4px 0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:#8fa9bf;cursor:pointer">Inquire</button></div>
+            <div style="border-radius:6px;border:1px solid #1c2632;background:#0d141d;padding:12px"><div style="height:56px;border-radius:4px;background:rgba(157,184,161,0.16)"></div><p style="margin:10px 0 0;font-size:12px;color:#eaf0f6">Recovery program</p><button style="margin-top:8px;width:100%;border-radius:999px;border:1px solid #1c2632;background:transparent;padding:4px 0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:#8fa9bf;cursor:pointer">Inquire</button></div>
+            <div style="border-radius:6px;border:1px solid #1c2632;background:#0d141d;padding:12px"><div style="height:56px;border-radius:4px;background:rgba(157,184,161,0.16)"></div><p style="margin:10px 0 0;font-size:12px;color:#eaf0f6">Wellness plan</p><button style="margin-top:8px;width:100%;border-radius:999px;border:1px solid #1c2632;background:transparent;padding:4px 0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:#8fa9bf;cursor:pointer">Inquire</button></div>
+          </div>
+        </div>
+        <div style="display:{{ show1 }}">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1c2632;padding:12px 20px">
+            <span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.14em;color:#eaf0f6">Inbox · AI triage</span>
+            <span style="display:flex;align-items:center;gap:6px;font-family:'Geist Mono',monospace;font-size:10px;color:#9d85ff"><span style="display:inline-block;height:6px;width:6px;border-radius:999px;background:#9d85ff;box-shadow:0 0 8px #9d85ff"></span> live</span>
+          </div>
+          <div style="padding:20px;display:flex;flex-direction:column;gap:10px">
+            <div style="border-radius:8px;border:1px solid #1c2632;background:#0d141d;padding:12px 14px;font-size:12px;line-height:1.6;color:#8fa9bf">“Hi — we run a small clinic in Marin and need online intake, scheduling, and a patient portal. Budget around $18k, hoping for a September launch…”</div>
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#9d85ff">↓ ai.summarize()</p>
+            <div style="border-radius:8px;border:1px solid rgba(124,92,255,0.4);background:rgba(124,92,255,0.08);padding:12px 14px">
+              <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;line-height:1.7;color:#dcd4ff">Scope: portal + intake · ~$18k · Sept start</p>
+              <p style="margin:6px 0 0;font-family:'Geist Mono',monospace;font-size:10px;color:#8fa9bf">→ routed: Consult · reply drafted for review</p>
+            </div>
+          </div>
+        </div>
+        <div style="display:{{ show2 }}">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1c2632;padding:12px 20px">
+            <span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.14em;color:#eaf0f6">Brand system · Alder &amp; Sage</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">v1.0</span>
+          </div>
+          <div style="padding:24px 20px;display:flex;flex-direction:column;gap:18px">
+            <p style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;font-size:27px;text-transform:uppercase;letter-spacing:0.3em;color:#eaf0f6">Alder &amp; Sage</p>
+            <div style="display:flex;gap:10px"><span style="height:28px;width:28px;border-radius:999px;background:#9db8a1"></span><span style="height:28px;width:28px;border-radius:999px;background:#eaf0f6"></span><span style="height:28px;width:28px;border-radius:999px;background:#0d141d;border:1px solid #2e3d4e"></span><span style="height:28px;width:28px;border-radius:999px;background:#c9b078"></span><span style="height:28px;width:28px;border-radius:999px;background:#6f8fb4"></span></div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <p style="margin:0;font-size:15px;color:#c8d6e3"><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;letter-spacing:0.1em">AA</span><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496"> — display · thin grotesque</span></p>
+              <p style="margin:0;font-size:15px;font-style:italic;color:#c8d6e3">Aa<span style="font-family:'Geist Mono',monospace;font-size:10px;font-style:normal;color:#6f8496"> — body · Instrument Sans</span></p>
+              <p style="margin:0;font-family:'Geist Mono',monospace;font-size:13px;color:#c8d6e3">00<span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496"> — data · Geist Mono</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="border-radius:14px;border:1px solid #1c2632;background:#0d141d;padding:20px;font-family:'Geist Mono',monospace;font-size:12px;line-height:1.65;color:#8fa9bf">
+        <div style="display:{{ show0 }}">
+          <p style="margin:0;color:#6f8496">// package.site</p>
+          <p style="margin:0">{</p>
+          <p style="margin:0;padding-left:16px">pages: <span style="color:#eaf0f6">6</span>, storefront: <span style="color:#eaf0f6">true</span>,</p>
+          <p style="margin:0;padding-left:16px">intake: <span style="color:#eaf0f6">"routed"</span>, cms: <span style="color:#eaf0f6">"owner-editable"</span></p>
+          <p style="margin:0">}</p>
+          <p style="margin:16px 0 0;color:#6f8496">// designed once · configured per client</p>
+        </div>
+        <div style="display:{{ show1 }}">
+          <p style="margin:0;color:#6f8496">// package.ai</p>
+          <p style="margin:0">{</p>
+          <p style="margin:0;padding-left:16px">summarize: <span style="color:#eaf0f6">true</span>, qualify: <span style="color:#eaf0f6">true</span>,</p>
+          <p style="margin:0;padding-left:16px">route: <span style="color:#dcd4ff">"consult"</span>, drafts: <span style="color:#eaf0f6">"review-first"</span></p>
+          <p style="margin:0">}</p>
+          <p style="margin:16px 0 0;color:#6f8496">// applied where it removes hours</p>
+        </div>
+        <div style="display:{{ show2 }}">
+          <p style="margin:0;color:#6f8496">// package.brand</p>
+          <p style="margin:0">{</p>
+          <p style="margin:0;padding-left:16px">logo: <span style="color:#eaf0f6">"suite"</span>, palette: <span style="color:#eaf0f6">5</span>,</p>
+          <p style="margin:0;padding-left:16px">type: <span style="color:#eaf0f6">"display + body + mono"</span>, voice: <span style="color:#eaf0f6">"calm, clinical"</span></p>
+          <p style="margin:0">}</p>
+          <p style="margin:16px 0 0;color:#6f8496">// one identity · every surface</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" data-screen-label="Process" style="position:relative;padding:160px 0;background:linear-gradient(to bottom,#0d0a10 0%,#150e26 42%,#2a2113 100%)">
+  <div style="position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:0 40px">
+    <header data-drift="1" style="margin-bottom:64px;will-change:transform">
+      <h2 data-reveal="1" data-delay="0" style="margin:0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#eaf0f6;opacity:0;transform:translateX(-72px)"><em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#eaf0f6">Five</em> stages. One <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#eaf0f6">system</em>.</h2>
+      <p data-reveal="1" data-delay="0.08" style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.7;color:#8fa9bf;opacity:0;transform:translateY(14px)">Scoped in one call. Live in weeks, not quarters.</p>
+    </header>
+    <div ref="{{ R.rail }}" style="position:relative;margin-left:24px;padding-left:48px">
+      <div aria-hidden="true" style="position:absolute;left:0;top:8px;bottom:8px;width:1px;background:#1c2632"></div>
+      <div ref="{{ R.beam }}" aria-hidden="true" style="position:absolute;left:0;top:8px;bottom:8px;width:1px;transform-origin:top;transform:scaleY(0);background:linear-gradient(to bottom,transparent,#9fc0dd);box-shadow:0 0 12px rgba(159,192,221,0.35)"></div>
+      <canvas ref="{{ R.processDust }}" aria-hidden="true" style="position:absolute;left:-48px;top:0;width:110px;height:100%;pointer-events:none"></canvas>
+      <div style="display:flex;flex-direction:column;gap:40px">
+        <div data-reveal="1" data-delay="0" style="position:relative;opacity:0;transform:translateX(-48px)">
+          <span style="position:absolute;left:-48px;top:6px;transform:translateX(-50%);display:flex;height:12px;width:12px;align-items:center;justify-content:center"><span ref="{{ R.dot0 }}" style="height:8px;width:8px;border-radius:999px;border:1px solid #2e3d4e;background:#0d141d;transition:all 0.5s"></span></span>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">01</span><h3 ref="{{ R.stTitle0 }}" style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#8fa9bf;transition:color 0.5s">Strategy</h3></div>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">We map the business before we touch the interface.</p>
+          <div style="margin-top:10px;display:inline-flex;border-radius:6px;border:1px solid #1c2632;background:#0a0f16;padding:4px 10px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">positioning.md · v3</span></div>
+        </div>
+        <div data-reveal="1" data-delay="0.05" style="position:relative;opacity:0;transform:translateX(-48px)">
+          <span style="position:absolute;left:-48px;top:6px;transform:translateX(-50%);display:flex;height:12px;width:12px;align-items:center;justify-content:center"><span ref="{{ R.dot1 }}" style="height:8px;width:8px;border-radius:999px;border:1px solid #2e3d4e;background:#0d141d;transition:all 0.5s"></span></span>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">02</span><h3 ref="{{ R.stTitle1 }}" style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#8fa9bf;transition:color 0.5s">Interface</h3></div>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">Every screen designed around how clients actually move.</p>
+          <div style="margin-top:10px;display:inline-flex;border-radius:6px;border:1px solid #1c2632;background:#0a0f16;padding:4px 10px"><span style="display:flex;align-items:center;gap:6px;font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">wireframe <span aria-hidden="true">→</span> final</span></div>
+        </div>
+        <div data-reveal="1" data-delay="0.1" style="position:relative;opacity:0;transform:translateX(-48px)">
+          <span style="position:absolute;left:-48px;top:6px;transform:translateX(-50%);display:flex;height:12px;width:12px;align-items:center;justify-content:center"><span ref="{{ R.dot2 }}" style="height:8px;width:8px;border-radius:999px;border:1px solid #2e3d4e;background:#0d141d;transition:all 0.5s"></span></span>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">03</span><h3 ref="{{ R.stTitle2 }}" style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#8fa9bf;transition:color 0.5s">Build</h3></div>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">Front end, backend, and automation as one connected system.</p>
+          <div style="margin-top:10px;display:inline-flex;border-radius:6px;border:1px solid #1c2632;background:#0a0f16;padding:4px 10px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">feat: intake routing wired to admin</span></div>
+        </div>
+        <div data-reveal="1" data-delay="0.15" style="position:relative;opacity:0;transform:translateX(-48px)">
+          <span style="position:absolute;left:-48px;top:6px;transform:translateX(-50%);display:flex;height:12px;width:12px;align-items:center;justify-content:center"><span ref="{{ R.dot3 }}" style="height:8px;width:8px;border-radius:999px;border:1px solid #2e3d4e;background:#0d141d;transition:all 0.5s"></span></span>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">04</span><h3 ref="{{ R.stTitle3 }}" style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#8fa9bf;transition:color 0.5s">Launch</h3></div>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">Shipped live and tested under real use.</p>
+          <div style="margin-top:10px;display:inline-flex;border-radius:6px;border:1px solid #1c2632;background:#0a0f16;padding:4px 10px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#9fc0dd">deploy: live</span></div>
+        </div>
+        <div data-reveal="1" data-delay="0.2" style="position:relative;opacity:0;transform:translateX(-48px)">
+          <span style="position:absolute;left:-48px;top:6px;transform:translateX(-50%);display:flex;height:12px;width:12px;align-items:center;justify-content:center"><span ref="{{ R.dot4 }}" style="height:8px;width:8px;border-radius:999px;border:1px solid #2e3d4e;background:#0d141d;transition:all 0.5s"></span></span>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">05</span><h3 ref="{{ R.stTitle4 }}" style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#8fa9bf;transition:color 0.5s">Improve</h3></div>
+          <p style="margin:6px 0 0;max-width:60ch;font-size:14px;color:#8fa9bf">Refined by what the system tells us.</p>
+          <div style="margin-top:10px;display:inline-flex;border-radius:6px;border:1px solid #1c2632;background:#0a0f16;padding:4px 10px"><span style="font-family:'Geist Mono',monospace;font-size:10px;color:#6f8496">inquiry response time ↓ 38%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="start" ref="{{ R.cta }}" data-screen-label="Final CTA" style="position:relative;overflow:hidden;background:linear-gradient(to top,#241a0e,#2a2113)">
+  <div ref="{{ R.ctaGlow }}" aria-hidden="true" style="pointer-events:none;position:absolute;left:0;right:0;bottom:0;height:60%;opacity:0.15;background:radial-gradient(90% 100% at 50% 100%,rgba(232,213,163,0.13) 0%,transparent 70%)"></div>
+  <div aria-hidden="true" style="pointer-events:none;position:absolute;inset:0;overflow:hidden">
+    <span style="position:absolute;left:55%;top:8%;width:1.5px;height:1.5px;border-radius:999px;background:#e8d5a3;opacity:0.18;animation:dustFloat 14s ease-in-out 0s infinite"></span>
+    <span style="position:absolute;left:92%;top:31%;width:2.5px;height:2.5px;border-radius:999px;background:#e8d5a3;opacity:0.26;animation:dustFloat 17s ease-in-out 1.4s infinite"></span>
+    <span style="position:absolute;left:89%;top:16%;width:3.5px;height:3.5px;border-radius:999px;background:#e8d5a3;opacity:0.34;animation:dustFloat 20s ease-in-out 2.8s infinite"></span>
+    <span style="position:absolute;left:86%;top:39%;width:1.5px;height:1.5px;border-radius:999px;background:#e8d5a3;opacity:0.42;animation:dustFloat 23s ease-in-out 4.2s infinite"></span>
+    <span style="position:absolute;left:83%;top:24%;width:2.5px;height:2.5px;border-radius:999px;background:#e8d5a3;opacity:0.18;animation:dustFloat 26s ease-in-out 5.6s infinite"></span>
+    <span style="position:absolute;left:80%;top:9%;width:3.5px;height:3.5px;border-radius:999px;background:#e8d5a3;opacity:0.26;animation:dustFloat 14s ease-in-out 7s infinite"></span>
+    <span style="position:absolute;left:77%;top:32%;width:1.5px;height:1.5px;border-radius:999px;background:#e8d5a3;opacity:0.34;animation:dustFloat 17s ease-in-out 8.4s infinite"></span>
+    <span style="position:absolute;left:74%;top:17%;width:2.5px;height:2.5px;border-radius:999px;background:#e8d5a3;opacity:0.42;animation:dustFloat 20s ease-in-out 0s infinite"></span>
+    <span style="position:absolute;left:71%;top:40%;width:3.5px;height:3.5px;border-radius:999px;background:#e8d5a3;opacity:0.18;animation:dustFloat 23s ease-in-out 1.4s infinite"></span>
+    <span style="position:absolute;left:68%;top:25%;width:1.5px;height:1.5px;border-radius:999px;background:#e8d5a3;opacity:0.26;animation:dustFloat 26s ease-in-out 2.8s infinite"></span>
+    <span style="position:absolute;left:65%;top:10%;width:2.5px;height:2.5px;border-radius:999px;background:#e8d5a3;opacity:0.34;animation:dustFloat 14s ease-in-out 4.2s infinite"></span>
+    <span style="position:absolute;left:62%;top:33%;width:3.5px;height:3.5px;border-radius:999px;background:#e8d5a3;opacity:0.42;animation:dustFloat 17s ease-in-out 5.6s infinite"></span>
+  </div>
+  <div style="position:relative;z-index:10;max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;padding:160px 40px;text-align:center">
+    <p data-reveal="1" data-delay="0" style="display:flex;align-items:center;gap:12px;margin:0;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496;opacity:0;transform:translateY(12px)"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#e8d5a3"></span>Start the build</p>
+    <h2 aria-label="Build the system behind the brand." style="margin:24px 0 0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#eaf0f6">
+      <span aria-hidden="true" data-wr-group="1"><span style="display:inline-block;overflow:hidden;padding-bottom:0.08em;vertical-align:bottom"><span data-wr="1" data-delay="0" style="display:inline-block;transform:translateY(110%);opacity:0">Build</span></span><span style="display:inline-block;width:0.28em"></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.08em;vertical-align:bottom"><span data-wr="1" data-delay="0.075" style="display:inline-block;transform:translateY(110%);opacity:0">the</span></span><span style="display:inline-block;width:0.28em"></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.08em;vertical-align:bottom"><span data-wr="1" data-delay="0.15" style="display:inline-block;transform:translateY(110%);opacity:0">system</span></span><span style="display:inline-block;width:0.28em"></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.08em;vertical-align:bottom"><span data-wr="1" data-delay="0.225" style="display:inline-block;transform:translateY(110%);opacity:0">behind</span></span><span style="display:inline-block;width:0.28em"></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.08em;vertical-align:bottom"><span data-wr="1" data-delay="0.3" style="display:inline-block;transform:translateY(110%);opacity:0">the</span></span><span style="display:inline-block;width:0.28em"></span><span style="display:inline-block;overflow:hidden;padding-bottom:0.08em;vertical-align:bottom"><span data-wr="1" data-delay="0.375" style="display:inline-block;transform:translateY(110%);opacity:0"><em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#e8d5a3">brand.</em></span></span></span>
+    </h2>
+    <div data-reveal="1" data-delay="0.35" style="margin-top:40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;opacity:0;transform:translateY(14px)">
+      <a href="mailto:hello@velarisystems.com?subject=Project%20inquiry" style="display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 24px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.22em;color:#f0e2bd;text-decoration:none;border:1px solid rgba(232,213,163,0.5);background:rgba(232,213,163,0.07);transition:background 0.15s,box-shadow 0.15s,border-color 0.15s" style-hover="background:rgba(232,213,163,0.16);border-color:rgba(232,213,163,0.85);box-shadow:0 0 28px rgba(232,213,163,0.22)">Start a Project</a>
+      <a href="mailto:hello@velarisystems.com?subject=Build%20review" style="display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:1px solid rgba(255,255,255,0.16);padding:11px 22px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.22em;color:#c8d6e3;text-decoration:none;transition:border-color 0.15s,color 0.15s" style-hover="border-color:rgba(255,255,255,0.45);color:#eaf0f6">Request a Build Review</a>
+    </div>
+    <p data-reveal="1" data-delay="0.5" style="margin:32px 0 0;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496;opacity:0;transform:translateY(10px)">response within 24h · scoped in one call</p>
+  </div>
+  <div aria-hidden="true" style="overflow:hidden;border-top:1px solid rgba(28,38,50,0.6);border-bottom:1px solid rgba(28,38,50,0.6);padding:16px 0">
+    <div style="display:flex;width:max-content;white-space:nowrap;animation:marquee 32s linear infinite">
+      <span style="margin:0 32px;display:inline-flex;align-items:center;gap:32px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#6f8496">Systems, not templates <span style="color:rgba(111,132,150,0.5)">·</span></span>
+      <span style="margin:0 32px;display:inline-flex;align-items:center;gap:32px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#6f8496">Configured, not rebuilt <span style="color:rgba(111,132,150,0.5)">·</span></span>
+      <span style="margin:0 32px;display:inline-flex;align-items:center;gap:32px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#6f8496">Automation with a job to do <span style="color:rgba(111,132,150,0.5)">·</span></span>
+      <span style="margin:0 32px;display:inline-flex;align-items:center;gap:32px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#6f8496">Built for Bay Area operators <span style="color:rgba(111,132,150,0.5)">·</span></span>
+      <span style="margin:0 32px;display:inline-flex;align-items:center;gap:32px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#6f8496">Systems, not templates <span style="color:rgba(111,132,150,0.5)">·</span></span>
+      <span style="margin:0 32px;display:inline-flex;align-items:center;gap:32px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#6f8496">Configured, not rebuilt <span style="color:rgba(111,132,150,0.5)">·</span></span>
+      <span style="margin:0 32px;display:inline-flex;align-items:center;gap:32px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#6f8496">Automation with a job to do <span style="color:rgba(111,132,150,0.5)">·</span></span>
+      <span style="margin:0 32px;display:inline-flex;align-items:center;gap:32px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#6f8496">Built for Bay Area operators <span style="color:rgba(111,132,150,0.5)">·</span></span>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top:1px solid rgba(28,38,50,0.6);background:#04060a">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:32px 40px">
+    <p style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;font-size:13px;letter-spacing:0.24em;color:#eaf0f6">VELARI <span style="margin-left:4px;font-family:'Geist Mono',monospace;font-size:10px;font-weight:400;text-transform:uppercase;letter-spacing:0.35em;color:#6f8496">Systems</span></p>
+    <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;color:#6f8496">Bay Area, CA · hello@velarisystems.com</p>
+    <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;color:#6f8496">© 2026 Velari Systems</p>
+  </div>
+</footer>
+
+<canvas ref="{{ R.ambient }}" aria-hidden="true" style="position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1"></canvas>
+<div aria-hidden="true" style="pointer-events:none;position:fixed;inset:0;z-index:3;mix-blend-mode:overlay;opacity:0.025;background-image:url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22128%22%20height%3D%22128%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.9%22%20numOctaves%3D%222%22%20stitchTiles%3D%22stitch%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22128%22%20height%3D%22128%22%20filter%3D%22url%28%23n%29%22%2F%3E%3C%2Fsvg%3E);background-size:128px 128px"></div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440, &quot;height&quot;: 900}, &quot;fogDensity&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1.35, &quot;min&quot;: 0, &quot;max&quot;: 2.5, &quot;step&quot;: 0.05, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Hero atmosphere&quot;}, &quot;contourLines&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0.4, &quot;min&quot;: 0, &quot;max&quot;: 1, &quot;step&quot;: 0.05, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Hero atmosphere&quot;}, &quot;flashlightRadius&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 280, &quot;min&quot;: 120, &quot;max&quot;: 520, &quot;step&quot;: 20, &quot;unit&quot;: &quot;px&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Hero atmosphere&quot;}}">
+class Component extends DCLogic {
+  state = { brand: 0, project: 0 };
+
+  BRANDS = [
+    { key: 'alder', name: 'Alder & Sage', category: 'Wellness clinic', accent: '#9db8a1', tagline: 'Care that starts before the first visit.', items: ['Initial consult', 'Recovery program', 'Wellness plan'], logo: { fontFamily: "'Panchang', sans-serif", fontWeight: 500, textTransform: 'lowercase', letterSpacing: '-0.02em', fontSize: 18, color: '#eaf0f6' } },
+    { key: 'fogline', name: 'Fog Line Supply', category: 'Specialty retail', accent: '#d9a441', tagline: 'Gear for gray-sky mornings.', items: ['Field jacket', 'Canvas tote', 'Enamel mug'], logo: { fontFamily: "'Geist Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: 16, color: '#eaf0f6' } },
+    { key: 'meridian', name: 'Meridian West', category: 'Consultancy', accent: '#6f8fb4', tagline: 'Operations, made legible.', items: ['Ops audit', 'Growth sprint', 'Advisory retainer'], logo: { fontFamily: "'Panchang', sans-serif", fontWeight: 700, fontSize: 18, color: '#eaf0f6' } },
+  ];
+
+  R = (() => {
+    const names = ['root','hero','heroPhoto','heroFlash','heroDarken','heroTitle','fog','heroDust','pos','stmt1','stmt2','act3','plane0','plane1','plane2','plane3','plane4','planeLab1','planeLab2','planeLab3','planeLab4','row0','row1','row2','row3','row4','deepDust','shards','proofWrap','proofTilt','backA','backB','arriv','arrivStatus','proofCount','node0','node1','node2','node3','conn0','conn1','conn2','aiCard0','aiCard1','aiCard2','aiCard3','aiCard4','wlWrap','wlMock','tab0','tab1','tab2','rail','beam','processDust','dot0','dot1','dot2','dot3','dot4','stTitle0','stTitle1','stTitle2','stTitle3','stTitle4','cta','ctaGlow','ambient'];
+    const o = {};
+    for (const n of names) o[n] = React.createRef();
+    return o;
+  })();
+
+  cleanups = [];
+  fogOutV = 0;
+  cv = 0;
+  exV = 0;
+  litStage = -1;
+  beamP = 0;
+  aiActive = 0;
+  proofPlaying = false;
+  proofTimers = [];
+  wlInView = false;
+  wlInteracted = false;
+  _lastBrand = 0;
+
+  hexToRgba(hex, a) {
+    const n = parseInt(hex.slice(1), 16);
+    return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+  mixHex(hexA, hexB, t) {
+    const a = parseInt(hexA.slice(1), 16), b = parseInt(hexB.slice(1), 16);
+    const ch = (sa, sb) => Math.round(sa * t + sb * (1 - t));
+    const r = ch((a >> 16) & 255, (b >> 16) & 255), g = ch((a >> 8) & 255, (b >> 8) & 255), bl = ch(a & 255, b & 255);
+    return 'rgb(' + r + ',' + g + ',' + bl + ')';
+  }
+  makeGlowSprite(rgb) {
+    const c = document.createElement('canvas');
+    c.width = c.height = 64;
+    const x = c.getContext('2d');
+    const g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0, 'rgba(255,250,235,0.95)');
+    g.addColorStop(0.15, 'rgba(' + rgb + ',0.85)');
+    g.addColorStop(0.4, 'rgba(' + rgb + ',0.22)');
+    g.addColorStop(1, 'rgba(' + rgb + ',0)');
+    x.fillStyle = g;
+    x.fillRect(0, 0, 64, 64);
+    return c;
+  }
+  clamp01(v) { return Math.min(1, Math.max(0, v)); }
+  map(v, a, b) { return this.clamp01((v - a) / (b - a)); }
+
+  renderVals() {
+    this.kickBoot(60);
+    const pj = this.state.project;
+    return {
+      projOp0: pj === 0 ? '1' : '0',
+      projOp1: pj === 1 ? '1' : '0',
+      projOp2: pj === 2 ? '1' : '0',
+      projPe0: pj === 0 ? 'auto' : 'none',
+      projPe1: pj === 1 ? 'auto' : 'none',
+      projPe2: pj === 2 ? 'auto' : 'none',
+      projDot0: pj === 0 ? '#e8d5a3' : '#2e3d4e',
+      projDot1: pj === 1 ? '#e8d5a3' : '#2e3d4e',
+      projDot2: pj === 2 ? '#e8d5a3' : '#2e3d4e',
+      pickProj0: () => this.pickProj(0),
+      pickProj1: () => this.pickProj(1),
+      pickProj2: () => this.pickProj(2),
+      R: this.R,
+      show0: this.state.brand === 0 ? 'block' : 'none',
+      show1: this.state.brand === 1 ? 'block' : 'none',
+      show2: this.state.brand === 2 ? 'block' : 'none',
+      pick0: () => this.pick(0),
+      pick1: () => this.pick(1),
+      pick2: () => this.pick(2),
+      heroMove: (e) => {
+        const el = this.R.hero.current;
+        if (!el || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+        const rect = el.getBoundingClientRect();
+        el.style.setProperty('--fx', (e.clientX - rect.left) + 'px');
+        el.style.setProperty('--fy', (e.clientY - rect.top) + 'px');
+      },
+      spotMove: (e) => {
+        const el = e.currentTarget;
+        const rect = el.getBoundingClientRect();
+        el.style.setProperty('--sx', (e.clientX - rect.left) + 'px');
+        el.style.setProperty('--sy', (e.clientY - rect.top) + 'px');
+        el.style.setProperty('--so', '1');
+      },
+      spotLeave: (e) => { e.currentTarget.style.setProperty('--so', '0'); },
+    };
+  }
+
+  pick(i) { this.wlInteracted = true; this.setState({ brand: i }); }
+
+  pickProj(i) { this.projPicked = true; this.setState({ project: i }); }
+
+  setupCarousel() {
+    const t = setInterval(() => {
+      if (this.projInView && !this.projPicked && !document.hidden) {
+        this.setState((s) => ({ project: (s.project + 1) % 3 }));
+      }
+    }, 3600);
+    this.cleanups.push(() => clearInterval(t));
+  }
+
+  componentDidMount() {
+    this.kickBoot(0);
+  }
+
+  kickBoot(delay) {
+    if (!this._wd) {
+      /* immortal watchdog: survives the runtime's remount dance; idles
+         when the root is out of the document, revives stale systems */
+      this._wd = setInterval(() => {
+        const root = this.R.root.current;
+        if (!root || !root.isConnected || document.hidden) return;
+        if (Date.now() - (this._lastBeat || 0) > 2200) this.boot();
+      }, 1100);
+    }
+    if (this._bootKick) return;
+    this._bootKick = true;
+    setTimeout(() => this.boot(), delay);
+  }
+
+  boot() {
+    for (const fn of this.cleanups) { try { fn(); } catch (e) {} }
+    this.cleanups = [];
+    try {
+      this.setupReveals();
+      this.setupFog();
+      this.setupDust(this.R.heroDust.current, { direction: 'rise', deep: false, count: 70 });
+      this.setupDust(this.R.deepDust.current, { direction: 'sink', deep: true, count: 36 });
+      this.setupShards();
+      this.setupAmbient();
+      this.setupScroll();
+      this.setupAI();
+      this.setupProof();
+      this.setupWL();
+      this.setupProcessDust();
+      this.setupCarousel();
+      this.applyFlashlight();
+    } catch (e) { console.error('[velari] boot failed:', e); }
+    this._lastBeat = Date.now();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._watchdog);
+    this._bootKick = false;
+    for (const fn of this.cleanups) { try { fn(); } catch (e) {} }
+    this.cleanups = [];
+  }
+
+  componentDidUpdate() {
+    if (this._lastBrand !== this.state.brand) {
+      this._lastBrand = this.state.brand;
+      const mock = this.R.wlMock.current;
+      if (mock) {
+        mock.style.animation = 'none';
+        void mock.offsetWidth;
+        mock.style.animation = 'brandSwap 500ms cubic-bezier(0.22,1,0.36,1)';
+      }
+      [this.R.tab0, this.R.tab1, this.R.tab2].forEach((r, i) => {
+        const el = r.current; if (!el) return;
+        const on = i === this.state.brand;
+        el.style.borderColor = on ? 'rgba(255,255,255,0.28)' : 'rgba(255,255,255,0.1)';
+        el.style.background = on ? 'rgba(255,255,255,0.06)' : 'transparent';
+        el.style.color = on ? '#eaf0f6' : '#6f8496';
+      });
+    }
+    this.applyFlashlight();
+  }
+
+  applyFlashlight() {
+    const wrap = this.R.heroFlash.current;
+    if (!wrap) return;
+    const img = wrap.querySelector('img');
+    if (!img) return;
+    const r = Math.round(this.props.flashlightRadius ?? 280);
+    const m = 'radial-gradient(' + r + 'px circle at var(--fx,-400px) var(--fy,-400px),rgba(0,0,0,0.85),transparent 72%)';
+    img.style.maskImage = m;
+    img.style.webkitMaskImage = m;
+  }
+
+  setupReveals() {
+    this._revealed = new WeakSet();
+  }
+
+  revealOne(el, delay, wr) {
+    el.style.transition = (wr
+      ? 'transform 0.6s cubic-bezier(0.22,1,0.36,1) ' + delay + 's, opacity 0.6s cubic-bezier(0.22,1,0.36,1) ' + delay + 's'
+      : 'transform 0.65s cubic-bezier(0.22,1,0.36,1) ' + delay + 's, opacity 0.65s cubic-bezier(0.22,1,0.36,1) ' + delay + 's');
+    requestAnimationFrame(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translate(0,0)';
+    });
+  }
+
+  checkReveals(vh) {
+    const els = document.querySelectorAll('[data-reveal],[data-wr-group]');
+    for (const el of els) {
+      if (this._revealed.has(el)) continue;
+      const r = el.getBoundingClientRect();
+      if (r.top < vh - 60 && r.bottom > 0) {
+        this._revealed.add(el);
+        if (el.hasAttribute('data-wr-group')) {
+          el.querySelectorAll('[data-wr]').forEach((w) => this.revealOne(w, parseFloat(w.getAttribute('data-delay') || '0'), true));
+        } else {
+          this.revealOne(el, parseFloat(el.getAttribute('data-delay') || '0'), false);
+        }
+      }
+    }
+  }
+
+    setupFog() {
+    const canvas = this.R.fog.current;
+    if (!canvas) return;
+    const gl = canvas.getContext('webgl', { premultipliedAlpha: false, antialias: false });
+    if (!gl || gl.isContextLost()) return;
+    const VERT = 'attribute vec2 p; void main(){ gl_Position=vec4(p,0.,1.); }';
+    const FRAG = 'precision highp float;\n' +
+      'uniform vec2 uRes; uniform float uTime;\n' +
+      'uniform float uDensity, uLines, uFogOut;\n' +
+      'float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }\n' +
+      'float noise(vec2 p){ vec2 i=floor(p),f=fract(p); f=f*f*(3.-2.*f);\n' +
+      '  return mix(mix(hash(i),hash(i+vec2(1,0)),f.x), mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y); }\n' +
+      'float fbm(vec2 p){ float v=0.,a=.5; mat2 r=mat2(1.6,1.2,-1.2,1.6);\n' +
+      '  for(int i=0;i<5;i++){ v+=a*noise(p); p=r*p; a*=.5; } return v; }\n' +
+      'void main(){\n' +
+      '  vec2 uv = gl_FragCoord.xy/uRes;\n' +
+      '  vec2 asp = vec2(uRes.x/uRes.y,1.);\n' +
+      '  float ts = uTime*0.55;\n' +
+      '  vec2 q1 = uv*asp*3.0 + vec2(ts*0.12, ts*0.015);\n' +
+      '  vec2 q2 = uv*asp*5.5 + vec2(ts*0.28,-ts*0.03)+40.0;\n' +
+      '  float fog = fbm(q1 + fbm(q1+fbm(q1+ts*0.05)))*0.6 + fbm(q2+fbm(q2)*0.7)*0.4;\n' +
+      '  float band = smoothstep(1.05, 0.45, uv.y);\n' +
+      '  float fogA = pow(smoothstep(0.15,0.9,fog),1.3)*mix(0.28,1.0,band)*uDensity;\n' +
+      '  vec2 s = uv*asp*2.2 + vec2(ts*0.03,0.);\n' +
+      '  float field = fbm(s + fbm(s)*0.8 + ts*0.02);\n' +
+      '  float iso = abs(fract(field*11.0)-0.5);\n' +
+      '  float line = (1.0-smoothstep(0.0,0.05,iso)) * smoothstep(0.35,0.75,uv.y) * uLines * 0.45 * (0.75+0.25*noise(s*8.0+ts*0.6));\n' +
+      '  vec3 col = vec3(0.66,0.74,0.82)*fogA + vec3(0.85,0.95,1.0)*line;\n' +
+      '  float alpha = clamp(fogA+line,0.,1.)*(1.0-uFogOut);\n' +
+      '  gl_FragColor = vec4(col, alpha);\n' +
+      '}';
+    const compile = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    const lp = gl.getAttribLocation(prog, 'p');
+    gl.enableVertexAttribArray(lp);
+    gl.vertexAttribPointer(lp, 2, gl.FLOAT, false, 0, 0);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.clearColor(0, 0, 0, 0);
+    const U = {
+      uRes: gl.getUniformLocation(prog, 'uRes'),
+      uTime: gl.getUniformLocation(prog, 'uTime'),
+      uDensity: gl.getUniformLocation(prog, 'uDensity'),
+      uLines: gl.getUniformLocation(prog, 'uLines'),
+      uFogOut: gl.getUniformLocation(prog, 'uFogOut'),
+    };
+    const resize = () => {
+      canvas.width = Math.max(2, Math.floor(canvas.clientWidth * 0.6));
+      canvas.height = Math.max(2, Math.floor(canvas.clientHeight * 0.6));
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    let visible = true;
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; });
+    io.observe(canvas);
+    const renderFrame = (t) => {
+      gl.uniform2f(U.uRes, canvas.width, canvas.height);
+      gl.uniform1f(U.uTime, t * 0.001);
+      gl.uniform1f(U.uDensity, Number(this.props.fogDensity ?? 1.35));
+      gl.uniform1f(U.uLines, Number(this.props.contourLines ?? 0));
+      gl.uniform1f(U.uFogOut, this.clamp01(this.fogOutV));
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    };
+    let raf = 0, last = 0;
+    const draw = (t) => {
+      raf = requestAnimationFrame(draw);
+      if (!visible || document.hidden) return;
+      if (t - last < 33) return;
+      last = t;
+      renderFrame(t);
+    };
+    renderFrame(0);
+    raf = requestAnimationFrame(draw);
+    this.cleanups.push(() => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); });
+  }
+
+  setupDust(canvas, opts) {
+    if (!canvas) return;
+    const dx = canvas.getContext('2d');
+    if (!dx) return;
+    const deep = opts.deep;
+    const sprites = [
+      this.makeGlowSprite('244,214,140'),
+      this.makeGlowSprite('236,188,110'),
+      this.makeGlowSprite('252,244,222'),
+      this.makeGlowSprite('236,178,158'),
+    ];
+    const motes = Array.from({ length: opts.count }, () => {
+      const z = Math.random();
+      return {
+        x: Math.random(), y: Math.random(), z: z,
+        tw: Math.random() * 6.28,
+        c: Math.random() < 0.4 ? 0 : (Math.random() < 0.45 ? 1 : (Math.random() < 0.5 ? 3 : 2)),
+        st: Math.random() < 0.18,
+        ox: 0, oy: 0,
+      };
+    });
+    let mx = -1e4, my = -1e4;
+    const onMove = (e) => {
+      const r = canvas.getBoundingClientRect();
+      mx = (e.clientX - r.left) / r.width;
+      my = (e.clientY - r.top) / r.height;
+    };
+    window.addEventListener('mousemove', onMove, { passive: true });
+    this.cleanups.push(() => window.removeEventListener('mousemove', onMove));
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const resize = () => { canvas.width = canvas.clientWidth * dpr; canvas.height = canvas.clientHeight * dpr; };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    let visible = true;
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; });
+    io.observe(canvas);
+    let raf = 0;
+    const draw = (t) => {
+      raf = requestAnimationFrame(draw);
+      if (!visible || document.hidden) return;
+      const W = canvas.width, H = canvas.height;
+      dx.clearRect(0, 0, W, H);
+      dx.globalCompositeOperation = 'lighter';
+      for (const m of motes) {
+        /* layered curl flow — near motes drift faster (parallax) */
+        const spd = 0.35 + m.z * 1.15;
+        const fang = Math.sin(m.x * 3.8 + t * 0.00014 + m.tw * 0.7) * 1.9 + Math.cos(m.y * 2.9 - t * 0.00011 + m.tw) * 1.5;
+        m.x += (Math.cos(fang) * 0.00013 + Math.sin(t * 0.00006 + m.tw) * 0.00005) * spd;
+        m.y += (Math.sin(fang) * 0.00009 + (opts.direction === 'sink' ? 0.000026 : -0.000034)) * spd;
+        if (m.y < -0.06) { m.y = 1.05; m.x = Math.random(); }
+        if (m.y > 1.06) { m.y = -0.05; m.x = Math.random(); }
+        if (m.x < -0.06) m.x = 1.05; else if (m.x > 1.06) m.x = -0.05;
+        let X = m.x * W, Y = m.y * H;
+        /* cursor aura: dust stirs away and lights up */
+        const dxm = X - mx * W, dym = Y - my * H;
+        const d2 = dxm * dxm + dym * dym;
+        const R = 180 * dpr;
+        let prox = 0;
+        if (d2 < R * R) {
+          const d = Math.sqrt(d2) || 1;
+          prox = 1 - d / R;
+          const f = prox * 26 * dpr * (0.4 + m.z);
+          m.ox += ((dxm / d) * f - m.ox) * 0.09;
+          m.oy += ((dym / d) * f - m.oy) * 0.09;
+        } else { m.ox *= 0.95; m.oy *= 0.95; }
+        X += m.ox; Y += m.oy;
+        /* depth of field: far = tiny sharp spark, near = large soft bokeh */
+        const breathe = 0.5 + 0.5 * Math.sin(t * 0.00055 + m.tw);
+        const sz = (3 + m.z * m.z * 30) * dpr;
+        const aBase = (0.16 + 0.5 * breathe) * (1 - m.z * 0.62) * (deep ? 0.55 : 1);
+        const a = Math.min(1, aBase * (1 + prox * 1.6));
+        dx.globalAlpha = a;
+        dx.drawImage(sprites[m.c], X - sz / 2, Y - sz / 2, sz, sz);
+        /* bright core */
+        dx.globalAlpha = Math.min(1, a * 1.4);
+        dx.fillStyle = 'rgba(255,246,220,1)';
+        dx.beginPath();
+        dx.arc(X, Y, (0.4 + (1 - m.z) * 0.9) * dpr, 0, 6.2832);
+        dx.fill();
+        /* occasional crystal glint — 4-ray star */
+        if (m.st && breathe > 0.9) {
+          const gA = (breathe - 0.9) / 0.1;
+          const L = sz * (0.9 + gA * 0.9);
+          dx.globalAlpha = gA * 0.7 * (1 - m.z * 0.4);
+          dx.strokeStyle = 'rgba(255,242,205,1)';
+          dx.lineWidth = 0.7 * dpr;
+          dx.beginPath();
+          dx.moveTo(X - L, Y); dx.lineTo(X + L, Y);
+          dx.moveTo(X, Y - L); dx.lineTo(X, Y + L);
+          dx.stroke();
+        }
+      }
+      dx.globalCompositeOperation = 'source-over';
+      dx.globalAlpha = 1;
+    };
+    raf = requestAnimationFrame(draw);
+    this.cleanups.push(() => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); });
+  }
+
+  setupShards() {
+    const canvas = this.R.shards.current;
+    if (!canvas) return;
+    const dx = canvas.getContext('2d');
+    if (!dx) return;
+    const count = 420;
+    const spriteGold = this.makeGlowSprite('242,220,160');
+    const spriteBlue = this.makeGlowSprite('246,240,224');
+    const center = [0.5, 0.46];
+    const targetsText = 'VELARI';
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    const smooth = (a, b, x) => { const t = Math.min(Math.max((x - a) / (b - a), 0), 1); return t * t * (3 - 2 * t); };
+    const shards = Array.from({ length: count }, (_, i) => {
+      const ang = (i / count) * Math.PI * 2;
+      const ring = 0.2 + (i % 3) * 0.055;
+      return {
+        x: Math.random(), y: -Math.random() * 1.5,
+        fall: 0.0005 + Math.random() * 0.0008,
+        sway: Math.random() * 6.28,
+        tx: 0.5 + Math.cos(ang) * ring * 0.9,
+        ty: 0.5 + Math.sin(ang) * ring * 0.75,
+        s: 1.5 + Math.random() * 3.2,
+        rot: Math.random() * 6.28,
+        vr: (Math.random() - 0.5) * 0.03,
+        sides: 3 + ((Math.random() * 3) | 0),
+        tw: Math.random() * 6.28,
+        g: Math.random() < 0.8,
+      };
+    });
+    const buildGlyphTargets = (text) => {
+      const off = document.createElement('canvas');
+      off.width = 900; off.height = 220;
+      const c = off.getContext('2d');
+      c.fillStyle = '#fff';
+      c.font = '900 150px Arial, sans-serif';
+      try { c.letterSpacing = '18px'; } catch (e) {}
+      c.textAlign = 'center';
+      c.textBaseline = 'middle';
+      c.fillText(text, 450, 116);
+      const d = c.getImageData(0, 0, 900, 220).data;
+      const on = (x, y) => x >= 0 && x < 900 && y >= 0 && y < 220 && d[(y * 900 + x) * 4 + 3] > 128;
+      const edges = [], fills = [];
+      for (let y = 0; y < 220; y += 2)
+        for (let x = 0; x < 900; x += 2)
+          if (on(x, y)) {
+            if (!on(x - 3, y) || !on(x + 3, y) || !on(x, y - 3) || !on(x, y + 3)) edges.push([x / 900, y / 220]);
+            else fills.push([x / 900, y / 220]);
+          }
+      return { edges, fills };
+    };
+    const assignGlyphTargets = () => {
+      const pts = buildGlyphTargets(targetsText);
+      if (!pts.edges.length) return;
+      const nEdge = Math.floor(count * 0.68);
+      const es = Math.max(1, Math.floor(pts.edges.length / nEdge));
+      const fs = Math.max(1, Math.floor((pts.fills.length || 1) / (count - nEdge)));
+      for (let i = 0; i < count; i++) {
+        const p = i < nEdge
+          ? pts.edges[(i * es) % pts.edges.length]
+          : (pts.fills.length ? pts.fills[((i - nEdge) * fs) % pts.fills.length] : pts.edges[i % pts.edges.length]);
+        shards[i].tx = p[0];
+        shards[i].ty = p[1];
+      }
+    };
+    assignGlyphTargets();
+    document.fonts.ready.then(assignGlyphTargets);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const resize = () => { canvas.width = canvas.clientWidth * dpr; canvas.height = canvas.clientHeight * dpr; };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    let visible = true;
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; });
+    io.observe(canvas);
+    const px = new Float32Array(count);
+    const py = new Float32Array(count);
+    const pulses = [];
+    let lastPulse = 0;
+    let raf = 0;
+    const draw = (t) => {
+      raf = requestAnimationFrame(draw);
+      if (!visible || document.hidden) return;
+      const W = canvas.width, H = canvas.height;
+      const cv = ease(this.clamp01(this.cv));
+      const out = this.clamp01(this.exV);
+      canvas.style.opacity = String(1 - out);
+      dx.clearRect(0, 0, W, H);
+      if (out >= 1) return;
+      const bw = W * 0.78;
+      const bh = bw * (220 / 900);
+      const bx = center[0] * W;
+      const by = center[1] * H;
+      const rise = out * out * H * 0.1;
+      for (let i = 0; i < count; i++) {
+        const q = shards[i];
+        const fang = Math.sin(q.x * 5.2 + t * 0.00016 + q.sway) * 1.8 + Math.cos(q.y * 3.6 - t * 0.00012) * 1.4;
+        q.x += (Math.cos(fang) * 0.00035 + Math.sin(t * 0.00007 + q.sway) * 0.00012) * (1 - cv);
+        q.y += (q.fall * 0.7 + Math.sin(fang) * 0.00028) * (1 - cv);
+        q.rot += q.vr * (1 - cv * 0.7);
+        if (q.y > 1.15 && cv < 0.05) { q.y = -0.1; q.x = Math.random(); }
+        const breathX = Math.sin(t * 0.0009 + q.tw * 3) * 1.1 * dpr * cv;
+        const breathY = Math.cos(t * 0.0011 + q.tw * 2) * 0.9 * dpr * cv;
+        px[i] = lerp(q.x * W, bx + (q.tx - 0.5) * bw, cv) + breathX;
+        py[i] = lerp(q.y * H, by + (q.ty - 0.5) * bh, cv) + breathY - rise * (0.5 + (i % 5) * 0.2);
+      }
+      if (cv > 0.45) {
+        /* the word itself, whisper-thin, breathing in under the dust */
+        const wA = Math.pow((cv - 0.45) / 0.55, 1.6) * (0.26 + 0.06 * Math.sin(t * 0.0007));
+        dx.globalCompositeOperation = 'lighter';
+        const coreR = bw * 0.09 * (1 + 0.1 * Math.sin(t * 0.0011));
+        const cg = dx.createRadialGradient(bx, by, 0, bx, by, coreR);
+        cg.addColorStop(0, 'rgba(255,248,228,' + Math.min(0.4, wA * 1.5).toFixed(3) + ')');
+        cg.addColorStop(0.4, 'rgba(240,200,160,' + Math.min(0.14, wA * 0.5).toFixed(3) + ')');
+        cg.addColorStop(1, 'rgba(220,160,140,0)');
+        dx.globalAlpha = 1;
+        dx.fillStyle = cg;
+        dx.beginPath();
+        dx.arc(bx, by, coreR, 0, 6.2832);
+        dx.fill();
+        dx.globalAlpha = wA;
+        dx.fillStyle = 'rgba(240,226,189,1)';
+        const fpx = Math.round(bw / 7.2);
+        dx.font = '100 ' + fpx + 'px Archivo, "Helvetica Neue", sans-serif';
+        try { dx.letterSpacing = Math.round(bw * 0.03) + 'px'; } catch (e) {}
+        dx.textAlign = 'center';
+        dx.textBaseline = 'middle';
+        dx.fillText('VELARI', bx + Math.round(bw * 0.015), by);
+        try { dx.letterSpacing = '0px'; } catch (e) {}
+        dx.globalCompositeOperation = 'source-over';
+      }
+            const glow = smooth(0.82, 1, cv);
+      dx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < count; i++) {
+        const q = shards[i];
+        const pulse = 0.55 + 0.45 * Math.abs(Math.sin(t * 0.0015 + q.tw));
+        const s = q.s * dpr * (1.8 + glow * 1.5) * (0.8 + 0.4 * pulse);
+        dx.globalAlpha = pulse * (0.4 + 0.6 * cv) * (0.75 + glow * 0.25);
+        dx.drawImage(q.g ? spriteGold : spriteBlue, px[i] - s / 2, py[i] - s / 2, s, s);
+        const burst = Math.sin(t * 0.0021 + q.tw * 7) > 0.975 ? 1.55 : 1;
+        dx.globalAlpha = pulse * (0.45 + 0.55 * cv);
+        dx.fillStyle = q.g ? 'rgba(255,244,214,1)' : 'rgba(228,242,255,1)';
+        dx.beginPath();
+        dx.arc(px[i], py[i], (0.6 + q.s * 0.3 + glow * 0.9) * dpr * burst, 0, 6.2832);
+        dx.fill();
+        if (cv > 0.3) {
+          for (let hd = 0; hd < 2; hd++) {
+            const oa = t * (0.0004 + hd * 0.0003) + q.tw * (hd + 1) * 2;
+            const orad = (6 + hd * 6 + (i % 4)) * dpr;
+            dx.globalAlpha = 0.13 * cv * pulse;
+            dx.fillStyle = hd === 0 ? 'rgba(242,220,160,1)' : 'rgba(236,182,162,1)';
+            dx.beginPath();
+            dx.arc(px[i] + Math.cos(oa) * orad, py[i] + Math.sin(oa) * orad * 0.7, 0.7 * dpr, 0, 6.2832);
+            dx.fill();
+          }
+        }
+      }
+      dx.globalCompositeOperation = 'source-over';
+      dx.globalAlpha = 1;
+    };
+    raf = requestAnimationFrame(draw);
+    this.cleanups.push(() => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); });
+  }
+
+  setupAmbient() {
+    const canvas = this.R.ambient.current;
+    if (!canvas) return;
+    const dx = canvas.getContext('2d');
+    if (!dx) return;
+    const spriteGold = this.makeGlowSprite('242,220,160');
+    const spriteBlue = this.makeGlowSprite('246,240,224');
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const resize = () => { canvas.width = window.innerWidth * dpr; canvas.height = window.innerHeight * dpr; };
+    resize();
+    window.addEventListener('resize', resize);
+    const spriteRose = this.makeGlowSprite('236,178,158');
+    const N = 100;
+    const ps = Array.from({ length: N }, () => {
+      const z = 0.25 + Math.pow(Math.random(), 1.6) * 1.55; // depth: few foreground, many deep
+      return {
+        x: Math.random(), y: Math.random(), z,
+        vx: (Math.random() - 0.5) * 0.00005,
+        vy: (Math.random() - 0.5) * 0.00004 - 0.00001,
+        r: (0.45 + Math.random() * 0.9) * z,
+        tw: Math.random() * 6.28,
+        g: Math.random() < 0.62 ? 0 : (Math.random() < 0.55 ? 1 : 2),
+        ox: 0, oy: 0,
+      };
+    });
+    let lastY = window.scrollY, vel = 0;
+    let mx = -1e4, my = -1e4;
+    const onMove = (e) => { mx = e.clientX * dpr; my = e.clientY * dpr; };
+    window.addEventListener('mousemove', onMove, { passive: true });
+    let raf = 0;
+    const draw = (t) => {
+      raf = requestAnimationFrame(draw);
+      this._lastBeat = Date.now();
+      if (document.hidden) return;
+      const W = canvas.width, H = canvas.height;
+      dx.clearRect(0, 0, W, H);
+      const R = 130 * dpr;
+      const sy = window.scrollY;
+      vel += ((sy - lastY) - vel) * 0.12; // smoothed scroll velocity
+      lastY = sy;
+      const push = vel * dpr / Math.max(1, H); // normalized camera motion
+      const streak = Math.min(3.5, Math.abs(vel) * 0.03);
+      for (const p of ps) {
+        p.y -= push * p.z * 0.9; // parallax: near dust rushes past
+        const fang = Math.sin(p.x * 3.6 + t * 0.00013 + p.tw) * 1.8 + Math.cos(p.y * 2.8 - t * 0.0001) * 1.4;
+        p.x += p.vx + Math.cos(fang) * 0.00009;
+        p.y += p.vy + Math.sin(fang) * 0.00006;
+        if (p.x < 0) p.x = 1; else if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1; else if (p.y > 1) p.y = 0;
+        const X = p.x * W, Y = p.y * H;
+        const dxm = X - mx, dym = Y - my;
+        const d2 = dxm * dxm + dym * dym;
+        if (d2 < R * R) {
+          const d = Math.sqrt(d2) || 1;
+          const prox0 = 1 - d / R;
+          const f = prox0 * 16 * dpr;
+          p.ox += ((dxm / d) * f - p.ox) * 0.12;
+          p.oy += ((dym / d) * f - p.oy) * 0.12;
+          p.pr = (p.pr || 0) + (prox0 - (p.pr || 0)) * 0.1;
+        } else { p.ox *= 0.94; p.oy *= 0.94; p.pr = (p.pr || 0) * 0.92; }
+        const a = (0.07 + 0.3 * Math.abs(Math.sin(t * 0.0007 + p.tw))) * (1 + (p.pr || 0) * 1.8) * (0.55 + p.z * 0.45);
+        dx.globalAlpha = Math.min(1, a);
+        const sz = p.r * 7 * dpr;
+        const sh = sz * (1 + streak * p.z); // motion-streak with scroll velocity
+        const spr = p.g === 0 ? spriteGold : (p.g === 1 ? spriteBlue : spriteRose);
+        dx.drawImage(spr, X + p.ox - sz / 2, Y + p.oy - sh / 2, sz, sh);
+      }
+      dx.globalAlpha = 1;
+    };
+    raf = requestAnimationFrame(draw);
+    this.cleanups.push(() => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); window.removeEventListener('mousemove', onMove); });
+  }
+
+  setupScroll() {
+    let ticking = false;
+    const onFrame = () => {
+      ticking = false;
+      const vh = window.innerHeight;
+      const R = this.R;
+      const hero = R.hero.current;
+      if (hero) {
+        const r = hero.getBoundingClientRect();
+        const hp = this.clamp01(-r.top / r.height);
+        const tf = 'translateY(' + (-5 * hp) + '%)';
+        if (R.heroPhoto.current) R.heroPhoto.current.style.transform = tf;
+        if (R.heroFlash.current) R.heroFlash.current.style.transform = tf;
+        if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.15, 0.85) * 0.92);
+        this.fogOutV = this.map(hp, 0.1, 0.75);
+        if (R.heroTitle.current) {
+          const t = this.clamp01(hp / 0.5);
+          R.heroTitle.current.style.transform = 'translateY(' + (-44 * t) + 'px) scale(' + (1 - 0.08 * t) + ')';
+        }
+      }
+      const pos = R.pos.current;
+      if (pos) {
+        const r = pos.getBoundingClientRect();
+        const total = r.height - vh;
+        const p = this.clamp01(-r.top / total);
+        const stmt = (el, a, b, dir) => {
+          if (!el) return;
+          const t = Math.min(Math.max((p - a) / (b - a), 0), 1.45);
+          const scale = 2.6 - 1.6 * Math.min(t, 1);
+          const x = 34 * (1 - t);
+          const y = dir * 7 * (1 - t);
+          let o;
+          if (p < a) o = 0;
+          else if (p < a + 0.045) o = (p - a) / 0.045;
+          else if (p < b + 0.04) o = 1;
+          else if (p < b + 0.1) o = 1 - (p - (b + 0.04)) / 0.06;
+          else o = 0;
+          el.style.opacity = String(this.clamp01(o));
+          el.style.transform = 'translateY(-50%) translate(' + x + 'vw,' + y + 'vh) scale(' + scale + ')';
+          el.style.letterSpacing = (0.48 - 0.22 * Math.min(t, 1)).toFixed(3) + 'em';
+        };
+        stmt(R.stmt1.current, 0.04, 0.2, 1);
+        stmt(R.stmt2.current, 0.28, 0.44, -1);
+        this.cv = this.clamp01((p - 0.42) / 0.26);
+        this.exV = this.clamp01((p - 0.84) / 0.09);
+        const fo = this.map(p, 0.85, 0.91);
+        if (R.act3.current) {
+          R.act3.current.style.opacity = String(fo);
+          R.act3.current.style.transform = 'translateY(' + (24 * (1 - fo)) + 'px)';
+        }
+        const planes = [R.plane0, R.plane1, R.plane2, R.plane3, R.plane4];
+        for (let i = 0; i < 5; i++) {
+          const el = planes[i].current;
+          if (!el) continue;
+          const start = 0.85 + i * 0.02;
+          const t = this.clamp01((p - start) / 0.06);
+          el.style.top = (i * 62 * t) + 'px';
+          if (i > 0) {
+            const lab = R['planeLab' + i].current;
+            if (lab) lab.style.opacity = String(this.clamp01((p - (start + 0.04)) / 0.02));
+          }
+        }
+        const rows = [R.row0, R.row1, R.row2, R.row3, R.row4];
+        for (let i = 0; i < 5; i++) {
+          const el = rows[i].current;
+          if (!el) continue;
+          const seat = 0.88 + i * 0.018;
+          const t = this.clamp01((p - (seat - 0.02)) / 0.02);
+          el.style.opacity = String(0.15 + 0.85 * t);
+          el.style.transform = 'translateX(' + (-8 * (1 - t)) + 'px)';
+        }
+      }
+      const pw = R.proofWrap.current;
+      if (pw) {
+        const r = pw.getBoundingClientRect();
+        const denom = vh / 2 + r.height / 2;
+        const p = this.clamp01((vh - r.top) / denom);
+        if (R.proofTilt.current) R.proofTilt.current.style.transform = 'translateX(' + (70 * (1 - p)) + 'px) rotateY(' + (-10 * (1 - p)) + 'deg) rotateX(' + (5 * (1 - p)) + 'deg)';
+        if (R.backA.current) R.backA.current.style.transform = 'translateY(' + (40 - 52 * p) + 'px) rotate(-2deg)';
+        if (R.backB.current) R.backB.current.style.transform = 'translateY(' + (64 - 58 * p) + 'px) rotate(1.5deg)';
+      }
+      const rail = R.rail.current;
+      if (rail) {
+        const r = rail.getBoundingClientRect();
+        const p = this.clamp01((0.7 * vh - r.top) / (0.15 * vh + r.height));
+        if (R.beam.current) R.beam.current.style.transform = 'scaleY(' + p + ')';
+        this.beamP = p;
+        const lit = Math.min(4, Math.floor(p * 5 + 0.15));
+        if (lit !== this.litStage) {
+          this.litStage = lit;
+          for (let i = 0; i < 5; i++) {
+            const dot = R['dot' + i].current;
+            const title = R['stTitle' + i].current;
+            const on = i <= lit;
+            if (dot) {
+              dot.style.borderColor = on ? '#9fc0dd' : '#2e3d4e';
+              dot.style.background = on ? '#2c4257' : '#0d141d';
+              dot.style.boxShadow = on ? '0 0 10px rgba(159,192,221,0.45)' : 'none';
+            }
+            if (title) title.style.color = on ? '#eaf0f6' : '#8fa9bf';
+          }
+        }
+      }
+      const cta = R.cta.current;
+      if (cta) {
+        const r = cta.getBoundingClientRect();
+        const p = this.clamp01((vh - r.top) / r.height);
+        if (R.ctaGlow.current) R.ctaGlow.current.style.opacity = String(0.15 + 0.85 * this.clamp01(p / 0.85));
+      }
+      this.checkReveals(vh);
+      this.checkAI(vh);
+      this.checkProof(vh);
+      this.checkWL(vh);
+      const drifts = document.querySelectorAll('[data-drift]');
+      for (let i = 0; i < drifts.length; i++) {
+        const el = drifts[i];
+        const r = el.getBoundingClientRect();
+        const pp = this.clamp01((vh - r.top) / (vh + r.height));
+        const dir = i % 2 ? -1 : 1;
+        el.style.transform = 'translateX(' + (dir * (pp - 0.5) * 70).toFixed(1) + 'px)';
+      }
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(onFrame);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+    this.cleanups.push(() => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); });
+  }
+
+  setupAI() {
+    this.applyAi(0);
+  }
+
+  applyAi(idx) {
+    this.aiActive = idx;
+    const nodeMap = [1, 1, 2, 2, 3];
+    const active = nodeMap[idx];
+    for (let i = 0; i < 4; i++) {
+      const el = this.R['node' + i].current;
+      if (!el) continue;
+      const lit = i === active;
+      el.style.borderColor = lit ? 'rgba(124,92,255,0.6)' : '#1c2632';
+      el.style.color = lit ? '#eaf0f6' : '#8fa9bf';
+      el.style.background = lit ? 'rgba(124,92,255,0.12)' : 'transparent';
+      el.style.boxShadow = lit ? '0 0 20px rgba(124,92,255,0.18)' : 'none';
+    }
+    for (let i = 0; i < 3; i++) {
+      const el = this.R['conn' + i].current;
+      if (!el) continue;
+      el.style.background = (i === active || i === active - 1) ? 'rgba(124,92,255,0.5)' : '#2e3d4e';
+    }
+    for (let i = 0; i < 5; i++) {
+      const el = this.R['aiCard' + i].current;
+      if (el) el.style.borderColor = i === idx ? 'rgba(124,92,255,0.4)' : '#1c2632';
+    }
+  }
+
+  checkAI(vh) {
+    const cy = vh * 0.5;
+    for (let i = 0; i < 5; i++) {
+      const el = this.R['aiCard' + i].current;
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      if (r.top <= cy && r.bottom >= cy) {
+        if (i !== this.aiActive) this.applyAi(i);
+        return;
+      }
+    }
+  }
+
+    setupProof() {}
+
+  resetProof() {
+    this.proofTimers.forEach(clearTimeout);
+    this.proofTimers = [];
+    this.proofPlaying = false;
+    const arriv = this.R.arriv.current;
+    if (arriv) { arriv.style.maxHeight = '0'; arriv.style.opacity = '0'; arriv.style.transform = 'translateY(-14px)'; }
+    const st = this.R.arrivStatus.current;
+    if (st) { st.textContent = 'New'; st.style.color = '#8fa9bf'; }
+    const cnt = this.R.proofCount.current;
+    if (cnt) cnt.textContent = 'one package · one point of contact';
+  }
+
+  checkProof(vh) {
+    const t = this.R.proofWrap.current;
+    if (!t) return;
+    const r = t.getBoundingClientRect();
+    const overlap = Math.min(r.bottom, vh) - Math.max(r.top, 0);
+    this.projInView = overlap > 0;
+    if (overlap / r.height >= 0.45 && !this.proofPlaying) {
+      this.proofPlaying = true;
+      const cnt = this.R.proofCount.current;
+      if (cnt) cnt.textContent = 'new inquiry · routed automatically';
+      this.proofTimers.push(setTimeout(() => {
+        const arriv = this.R.arriv.current;
+        if (arriv) { arriv.style.maxHeight = '48px'; arriv.style.opacity = '1'; arriv.style.transform = 'translateY(0)'; }
+      }, 900));
+      this.proofTimers.push(setTimeout(() => {
+        const st = this.R.arrivStatus.current;
+        if (st) { st.textContent = 'Routed · Consult'; st.style.color = '#9fc0dd'; }
+      }, 1700));
+    } else if (overlap <= 0 && this.proofPlaying) {
+      this.resetProof();
+    }
+  }
+
+    setupProcessDust() {
+    const canvas = this.R.processDust.current;
+    if (!canvas) return;
+    const dx = canvas.getContext('2d');
+    if (!dx) return;
+    const sprite = this.makeGlowSprite('242,220,160');
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const resize = () => { canvas.width = canvas.clientWidth * dpr; canvas.height = canvas.clientHeight * dpr; };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    let visible = true;
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; });
+    io.observe(canvas);
+    const ps = [];
+    let raf = 0;
+    let lastP = 0;
+    const draw = (t) => {
+      raf = requestAnimationFrame(draw);
+      if (!visible || document.hidden) return;
+      const W = canvas.width, H = canvas.height;
+      dx.clearRect(0, 0, W, H);
+      const p = this.beamP || 0;
+      const headY = p * H;
+      const moving = Math.abs(p - lastP) > 0.0004;
+      lastP = lastP + (p - lastP) * 0.2;
+      if (p > 0.01 && p < 1 && ps.length < 90 && (moving || Math.random() < 0.3)) {
+        for (let k = 0; k < 2; k++) ps.push({ x: 48 * dpr, y: headY, vx: (Math.random() - 0.25) * 0.4 * dpr, vy: -(0.08 + Math.random() * 0.4) * dpr, life: 1, d: 0.5 + Math.random() * 0.5, tw: Math.random() * 6.28 });
+      }
+      dx.globalCompositeOperation = 'lighter';
+      for (let i = ps.length - 1; i >= 0; i--) {
+        const q = ps[i];
+        q.x += q.vx; q.y += q.vy;
+        q.vx *= 0.99; q.vy *= 0.995;
+        q.life -= 0.008;
+        if (q.life <= 0) { ps.splice(i, 1); continue; }
+        const a = q.life * q.d * (0.35 + 0.4 * Math.abs(Math.sin(t * 0.004 + q.tw)));
+        const sz = (3 + q.d * 8) * dpr * q.life;
+        dx.globalAlpha = a;
+        dx.drawImage(sprite, q.x - sz / 2, q.y - sz / 2, sz, sz);
+      }
+      dx.globalCompositeOperation = 'source-over';
+      dx.globalAlpha = 1;
+    };
+    raf = requestAnimationFrame(draw);
+    this.cleanups.push(() => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); });
+  }
+
+  setupWL() {
+    const t = setInterval(() => {
+      if (this.wlInView && !this.wlInteracted && !document.hidden) {
+        this.setState((s) => ({ brand: (s.brand + 1) % this.BRANDS.length }));
+      }
+    }, 4000);
+    this.cleanups.push(() => { clearInterval(t); });
+  }
+
+  checkWL(vh) {
+    const el = this.R.wlWrap.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    this.wlInView = r.top < vh * 0.75 && r.bottom > vh * 0.25;
+  }
+}
+</script>
+</body>
+</html>
