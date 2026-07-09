@@ -1171,7 +1171,7 @@ class Component extends DCLogic {
         const tf = 'translateY(' + (-5 * hp) + '%)';
         if (R.heroPhoto.current) R.heroPhoto.current.style.transform = tf;
         if (R.heroFlash.current) R.heroFlash.current.style.transform = tf;
-        if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.12, 0.68));
+        if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.3, 0.94) * 0.97);
         this.fogOutV = this.map(hp, 0.1, 0.75);
         if (R.heroTitle.current) {
           const t = this.clamp01(hp / 0.5);
@@ -1199,7 +1199,7 @@ class Component extends DCLogic {
           el.style.transform = 'translateY(-50%) translate(' + x + 'vw,' + y + 'vh) scale(' + scale + ')';
           el.style.letterSpacing = (0.48 - 0.22 * Math.min(t, 1)).toFixed(3) + 'em';
         };
-        stmt(R.stmt1.current, 0.04, 0.2, 1);
+        stmt(R.stmt1.current, 0.015, 0.17, 1);
         stmt(R.stmt2.current, 0.28, 0.44, -1);
         const dio = R.posDio.current;
         if (dio) {
@@ -1349,14 +1349,20 @@ class Component extends DCLogic {
     let visible = true;
     const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; });
     io.observe(canvas);
-    const sparks = Array.from({ length: 110 }, (_, i) => ({
-      p: i / 110 + Math.random() * 0.008,
-      j: (Math.random() - 0.5) * 30,
+    const STREAMS = [
+      { cx: 0.26, lag: 0.10, amp: 0.045, ph: 1.7 },
+      { cx: 0.52, lag: 0.0,  amp: 0.05,  ph: 3.9 },
+      { cx: 0.76, lag: 0.16, amp: 0.04,  ph: 0.6 }
+    ];
+    const sparks = Array.from({ length: 168 }, (_, i) => ({
+      st: i % 3,
+      p: Math.floor(i / 3) / 56 + Math.random() * 0.01,
+      j: (Math.random() - 0.5) * 34,
       z: Math.random(),
       tw: Math.random() * 6.28,
       dr: 0.25 + Math.random() * 0.75
     }));
-    const pathX = (pp, W) => W * 0.5 + Math.sin(pp * 8.5 + 1.7) * W * 0.05;
+    const pathX = (st, pp, W) => W * st.cx + Math.sin(pp * 8.5 + st.ph) * W * st.amp;
     let raf = 0;
     const draw = (t) => {
       raf = requestAnimationFrame(draw);
@@ -1370,10 +1376,12 @@ class Component extends DCLogic {
       if (head <= 0 || fade <= 0) return;
       dx.globalCompositeOperation = 'lighter';
       for (const sp of sparks) {
-        if (sp.p > head) continue;
-        const nearHead = 1 - Math.min(1, (head - sp.p) / 0.14);
+        const st = STREAMS[sp.st];
+        const sHead = this.clamp01(head * (1 + st.lag) - st.lag * 0.4);
+        if (sp.p > sHead) continue;
+        const nearHead = 1 - Math.min(1, (sHead - sp.p) / 0.14);
         const y = sp.p * H + Math.sin(t * 0.0004 * sp.dr + sp.tw) * 4 * dpr;
-        const x = pathX(sp.p, W) + sp.j * dpr * (0.4 + sp.z * 0.6) + Math.cos(t * 0.00035 * sp.dr + sp.tw) * 5 * dpr;
+        const x = pathX(st, sp.p, W) + sp.j * dpr * (0.4 + sp.z * 0.6) + Math.cos(t * 0.00035 * sp.dr + sp.tw) * 5 * dpr;
         const breathe = 0.5 + 0.5 * Math.sin(t * 0.0011 + sp.tw);
         const a = fade * (0.10 + 0.40 * breathe) * (0.35 + 0.65 * sp.z) * (0.5 + 0.9 * nearHead);
         const r = (0.5 + sp.z * 1.3) * dpr * (1 + nearHead * 0.9);
@@ -1391,14 +1399,29 @@ class Component extends DCLogic {
           dx.stroke();
         }
       }
-      const hy = head * H;
-      const hx = pathX(head, W);
-      const g = dx.createRadialGradient(hx, hy, 0, hx, hy, 26 * dpr);
-      g.addColorStop(0, 'rgba(255,250,236,' + (0.28 * fade).toFixed(3) + ')');
-      g.addColorStop(1, 'rgba(255,250,236,0)');
-      dx.globalAlpha = 1;
-      dx.fillStyle = g;
-      dx.beginPath(); dx.arc(hx, hy, 26 * dpr, 0, 6.2832); dx.fill();
+      for (const st of STREAMS) {
+        const sHead = this.clamp01(head * (1 + st.lag) - st.lag * 0.4);
+        if (sHead <= 0.005) continue;
+        const hy = sHead * H;
+        const hx = pathX(st, sHead, W);
+        const g = dx.createRadialGradient(hx, hy, 0, hx, hy, 24 * dpr);
+        g.addColorStop(0, 'rgba(255,250,236,' + (0.26 * fade).toFixed(3) + ')');
+        g.addColorStop(1, 'rgba(255,250,236,0)');
+        dx.globalAlpha = 1;
+        dx.fillStyle = g;
+        dx.beginPath(); dx.arc(hx, hy, 24 * dpr, 0, 6.2832); dx.fill();
+        /* landing pool: dust settles where phase two begins */
+        const land = this.clamp01((sHead - 0.72) / 0.28);
+        if (land > 0) {
+          const lx = pathX(st, 1, W), ly = H * 0.97;
+          const lr = (40 + 50 * land) * dpr;
+          const lg = dx.createRadialGradient(lx, ly, 0, lx, ly, lr);
+          lg.addColorStop(0, 'rgba(252,240,214,' + (0.20 * land * fade).toFixed(3) + ')');
+          lg.addColorStop(1, 'rgba(252,240,214,0)');
+          dx.fillStyle = lg;
+          dx.beginPath(); dx.ellipse(lx, ly, lr, lr * 0.35, 0, 0, 6.2832); dx.fill();
+        }
+      }
       dx.globalCompositeOperation = 'source-over';
     };
     raf = requestAnimationFrame(draw);
