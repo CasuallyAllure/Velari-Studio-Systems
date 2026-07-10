@@ -391,9 +391,20 @@ def build_stack(mats):
 
     Slabs are turned 45 deg so a corner faces camera (the reference's isometric
     read) while the props stay square to -Y, so the robot still looks at you.
+
+    Layer mapping (name -> layer index), derived straight from this builder
+    order -- do not hand-guess it elsewhere:
+      layer 0: slab_0 + control desk  (bottom)  -> img/plates/stack_slab_1.png
+      layer 1: slab_1 + gears + key              -> img/plates/stack_slab_2.png
+      layer 2: slab_2 + robot head                -> img/plates/stack_slab_3.png
+      layer 3: slab_3 + palette + brush           -> img/plates/stack_slab_4.png
+      layer 4: slab_4 + storefront screen (top)   -> img/plates/stack_slab_5.png
+    Threads and inter-layer spill lights span the whole stack and belong to no
+    single layer.
     """
     builders = [prop_control_desk, prop_gears, prop_robot, prop_palette, prop_storefront]
     objs = []
+    layers = [[] for _ in range(5)]
     base_z = -2 * PITCH
     for i, (hex_c, builder) in enumerate(zip(SLAB_COLORS, builders)):
         z = base_z + i * PITCH
@@ -401,18 +412,28 @@ def build_stack(mats):
         slab = new_cube(f"slab_{i}", (SLAB_W, SLAB_W, SLAB_T), (0, 0, z), mat, 0.075,
                         rotation=(0, 0, math.radians(45)))
         objs.append(slab)
+        layers[i].append(slab)
         top = z + SLAB_T / 2
-        objs += scale_props(builder(top, mats), top, PROP_SCALE)
+        props = scale_props(builder(top, mats), top, PROP_SCALE)
+        objs += props
+        layers[i] += props
+
+    for i, layer_objs in enumerate(layers):
+        for o in layer_objs:
+            o["stack_layer"] = i
 
     # Gold light threads. With the slabs turned 45 deg their left/right corners sit
     # at +/- half the diagonal, which is exactly where the reference's threads run.
     top_z = base_z + 4 * PITCH
     span = (top_z - base_z) + 0.10
     corner = (SLAB_W / 2) * math.sqrt(2) * 0.99
+    thread_objs = []
     for sx in (-corner, corner):
         t = new_cyl(f"thread_{sx:+.2f}", 0.005, span, (sx, 0.0, (top_z + base_z) / 2),
                     mats["thread"], verts=12)
+        t["stack_layer"] = "threads"
         objs.append(t)
+        thread_objs.append(t)
 
     # Warm spill between layers, as in the reference. Parented to the stack root so
     # the inter-layer glow turns with the slabs.
@@ -436,7 +457,7 @@ def build_stack(mats):
     for o in objs + spills:
         o.parent = root
 
-    return objs, (base_z, top_z), root
+    return objs, (base_z, top_z), root, layers, thread_objs, spills
 
 
 def build_world(bloom_x=0.06, bloom_y=0.97, bloom_radius=2.30, bloom_gain=1.60,
@@ -581,14 +602,20 @@ def build_lights():
     area("fill", (2.5, -5.0, -2.5), GOLD, 95, 5.0)
 
 
-def scene_bbox():
-    """World-space bbox of every mesh, so framing is measured, not guessed."""
+def scene_bbox(only_names=None):
+    """World-space bbox of every mesh, so framing is measured, not guessed.
+
+    `only_names`, if given, restricts the bbox to that set of object names --
+    used to auto-frame a single isolated layer instead of the whole stack.
+    """
     lo = Vector((1e9, 1e9, 1e9))
     hi = Vector((-1e9, -1e9, -1e9))
     for o in bpy.context.scene.objects:
         # Haze cube and dust motes must not drive framing: they are atmosphere,
         # not subject, and they would balloon the bbox and push the camera back.
         if o.type != "MESH" or o.name == "haze" or o.name.startswith("dust_"):
+            continue
+        if only_names is not None and o.name not in only_names:
             continue
         for corner in o.bound_box:
             w = o.matrix_world @ Vector(corner)
@@ -598,14 +625,14 @@ def scene_bbox():
 
 
 def build_camera(mode, frames, root, lens=45.0, margin=1.03, elevation=22.0,
-                 yaw=0.0, pivot_z=None):
+                 yaw=0.0, pivot_z=None, only_names=None):
     """Static camera; the STACK spins. Lights, haze and dust stay world-fixed.
 
     Distance is solved from the real bbox so the whole stack always fits.
     Elevation is what makes the slab tops and their props readable; a near-level
     camera renders the slabs as edge-on slivers and hides everything on them.
     """
-    lo, hi = scene_bbox()
+    lo, hi = scene_bbox(only_names)
     ctr = (lo + hi) / 2
     height = (hi.z - lo.z)
     if pivot_z is not None:
@@ -653,7 +680,7 @@ def build_camera(mode, frames, root, lens=45.0, margin=1.03, elevation=22.0,
     return cam
 
 
-def export_glb(path, draco=True):
+def export_glb(path, draco=True, mode="material"):
     """Export the stack as a web-ready GLB.
 
     Two things matter for the browser and neither is optional:
@@ -661,8 +688,16 @@ def export_glb(path, draco=True):
         add a 16-unit box and 70 spheres for nothing.
       - Draw calls, not triangles, are the real-time budget: under ~100 holds
         60fps on most devices. The authoring scene is ~130 separate objects, so
-        join by material. Flat-colour materials mean this collapses to one draw
-        call per colour, with no textures to compress.
+        by default we join by material. Flat-colour materials mean this
+        collapses to one draw call per colour, with no textures to compress.
+
+    `mode="layers"` instead groups by the `stack_layer` custom property set in
+    build_stack() -- 5 named nodes (layer_0..layer_4, bottom to top) plus a
+    `threads` node for the two gold verticals, which span every layer and
+    belong to none. Each node still carries multiple materials, so it exports
+    as multiple glTF primitives under one named mesh/node -- draw calls don't
+    collapse to 5, but scroll-driven JS can now show/hide/transform a whole
+    layer as one object.
     """
     for name in [o.name for o in bpy.context.scene.objects]:
         o = bpy.context.scene.objects.get(name)
@@ -684,16 +719,29 @@ def export_glb(path, draco=True):
                 o.modifiers.remove(mod)
         o.select_set(False)
 
-    by_material = {}
+    if mode == "layers":
+        def key_of(o):
+            v = o.get("stack_layer", "_none")
+            return str(v)
+
+        def name_of(key):
+            return "threads" if key == "threads" else f"layer_{key}"
+    else:
+        def key_of(o):
+            # Boolean cutters leave an empty (None) material slot on the
+            # target, so take the first slot that actually holds a material.
+            mat = next((m for m in o.data.materials if m is not None), None)
+            return mat.name if mat else "_none"
+
+        def name_of(key):
+            return f"stack_{key}"
+
+    by_key = {}
     for o in meshes:
-        # Boolean cutters leave an empty (None) material slot on the target, so
-        # take the first slot that actually holds a material.
-        mat = next((m for m in o.data.materials if m is not None), None)
-        key = mat.name if mat else "_none"
-        by_material.setdefault(key, []).append(o)
+        by_key.setdefault(key_of(o), []).append(o)
 
     merged = []
-    for mat_name, group in by_material.items():
+    for key, group in by_key.items():
         bpy.ops.object.select_all(action="DESELECT")
         for o in group:
             o.select_set(True)
@@ -701,10 +749,12 @@ def export_glb(path, draco=True):
         bpy.context.view_layer.objects.active = target
         if len(group) > 1:
             bpy.ops.object.join()
-        target.name = f"stack_{mat_name}"
-        target.data.name = f"stack_{mat_name}"  # glTF mesh name, not just the node
+        node_name = name_of(key)
+        target.name = node_name
+        target.data.name = node_name  # glTF mesh name, not just the node
         merged.append(target)
-    print(f"glb: {before} objects -> {len(merged)} draw calls (one per material)")
+    label = "layer group" if mode == "layers" else "material"
+    print(f"glb: {before} objects -> {len(merged)} nodes (one per {label})")
 
     bpy.ops.object.select_all(action="DESELECT")
     for o in merged:
@@ -759,7 +809,7 @@ def build_compositor():
     print("compositor: Glare/Bloom attached")
 
 
-def configure_render(res_x, samples, out, mode, frames, fps):
+def configure_render(res_x, samples, out, mode, frames, fps, transparent=False):
     scene = bpy.context.scene
     bpy.ops.preferences.addon_enable(module="cycles")
     scene.render.engine = "CYCLES"
@@ -802,7 +852,13 @@ def configure_render(res_x, samples, out, mode, frames, fps):
     scene.render.resolution_x = res_x
     scene.render.resolution_y = int(res_x * 9 / 16)
     scene.render.resolution_percentage = 100
-    scene.render.film_transparent = False
+    # film_transparent=True also silences the corner-bloom world shader: it's
+    # gated on Is Camera Ray, so background pixels that would show it become
+    # transparent instead. That's what "skip world bloom" means for --layer
+    # renders -- no separate code path needed.
+    scene.render.film_transparent = transparent
+    if transparent:
+        scene.render.image_settings.color_mode = "RGBA"
     scene.view_settings.view_transform = "AgX"
     scene.view_settings.look = "AgX - Base Contrast"
 
@@ -831,28 +887,47 @@ def main():
     ap.add_argument("--dust", type=int, default=70)
     ap.add_argument("--blend", default=None, help="save the built scene to a .blend and exit")
     ap.add_argument("--glb", default=None, help="export a web-ready GLB and exit")
+    ap.add_argument("--glb-mode", dest="glb_mode", choices=["material", "layers"], default="material",
+                    help="material: one draw call per colour (default). "
+                         "layers: 5 named nodes layer_0..layer_4 (bottom->top) + threads.")
     ap.add_argument("--no-draco", dest="draco", action="store_false", help="skip Draco compression")
     ap.add_argument("--haze", type=float, default=0.0)
     ap.add_argument("--yaw", type=float, default=0.0)
     ap.add_argument("--margin", type=float, default=1.03)
     ap.add_argument("--pivot-z", dest="pivot_z", type=float, default=None)
+    ap.add_argument("--layer", type=int, default=None, choices=[0, 1, 2, 3, 4],
+                    help="isolate one slab (0=bottom control desk .. 4=top screen): hide "
+                         "every other object, transparent film, auto-frame tight on just it.")
     a = ap.parse_args(argv)
 
     reset_scene()
     mats = build_materials()
-    _, z_range, root = build_stack(mats)
+    objs, z_range, root, layers, thread_objs, spills = build_stack(mats)
     build_world()
     if a.haze > 0:
         build_volume(a.haze)
     build_lights()
     if a.dust > 0:
         build_dust(a.dust)
+
+    only_names = None
+    if a.layer is not None:
+        keep = set(o.name for o in layers[a.layer])
+        only_names = keep
+        for o in objs:
+            if o.name not in keep:
+                o.hide_render = True
+        for o in spills:
+            o.hide_render = True
+        print(f"layer {a.layer}: isolating {len(keep)} objects -> {sorted(keep)}")
+
     build_camera(a.mode, a.frames, root, lens=a.lens, elevation=a.elev,
-                 yaw=a.yaw, margin=a.margin, pivot_z=a.pivot_z)
-    configure_render(a.res, a.samples, a.out, a.mode, a.frames, a.fps)
+                 yaw=a.yaw, margin=a.margin, pivot_z=a.pivot_z, only_names=only_names)
+    configure_render(a.res, a.samples, a.out, a.mode, a.frames, a.fps,
+                     transparent=(a.layer is not None))
 
     if a.glb:
-        export_glb(a.glb, draco=a.draco)
+        export_glb(a.glb, draco=a.draco, mode=a.glb_mode)
         return
 
     if a.blend:

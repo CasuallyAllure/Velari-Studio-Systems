@@ -97,14 +97,13 @@ a:hover { color: #fcf4de; }
       </video>
     </div>
 
-    <p ref="{{ R.stmt1 }}" style="position:absolute;left:0;right:0;top:50%;margin:0;padding:0 40px;text-align:center;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:100;text-transform:uppercase;letter-spacing:0.3em;line-height:1.12;font-size:clamp(2.2rem,4.8vw,4.1rem);color:#f4f1ea;text-shadow:0 0 70px rgba(232,213,163,0.22);opacity:0;transform:translateY(-50%)">We build <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0.01em;color:#e8d5a3">websites.</em></p>
-    <p ref="{{ R.stmt2 }}" style="position:absolute;left:0;right:0;top:50%;margin:0;padding:0 40px;text-align:center;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:100;text-transform:uppercase;letter-spacing:0.3em;line-height:1.12;font-size:clamp(2.2rem,4.8vw,4.1rem);color:#f4f1ea;text-shadow:0 0 70px rgba(232,213,163,0.22);opacity:0;transform:translateY(-50%)">And the systems <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0.01em;color:#e8d5a3">behind</em> them.</p>
+    <p ref="{{ R.stmt1 }}" style="position:absolute;left:0;right:0;top:50%;margin:0;padding:0 40px;text-align:center;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.3em;line-height:1.14;font-size:clamp(2.6rem,6vw,5.4rem);color:#f4f1ea;text-shadow:0 0 80px rgba(232,213,163,0.26);opacity:0;transform:translateY(-50%)"><span style="display:block">Not just websites.</span><em style="display:block;margin-top:0.18em;font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0.01em;font-size:0.88em;color:#e8d5a3">Operating layers.</em></p>
 
     <div ref="{{ R.act3 }}" style="position:relative;height:100%;max-width:1200px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);gap:56px;align-items:center;opacity:0">
       <div>
         <div ref="{{ R.act3Head }}" style="opacity:0;will-change:opacity,transform">
         <p style="display:flex;align-items:center;gap:12px;margin:0;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#f4d68c"></span>What we actually build</p>
-        <h2 style="margin:20px 0 0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#fcf4de">Not just websites. <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">Operating</em> layers.</h2>
+        <h2 style="margin:20px 0 0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#fcf4de">Every layer, built to <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">run itself.</em></h2>
         <p style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.7;color:#b3a08e">Brand to backend — one studio.</p>
         </div>
         <ol style="margin:40px 0 0;padding:0;list-style:none">
@@ -1263,8 +1262,7 @@ class Component extends DCLogic {
           el.style.transform = 'translateY(-50%) translate(' + x + 'vw,' + y + 'vh) scale(' + scale + ')';
           el.style.letterSpacing = (0.48 - 0.22 * Math.min(t, 1)).toFixed(3) + 'em';
         };
-        stmt(R.stmt1.current, 0.015, 0.15, 1);
-        stmt(R.stmt2.current, 0.22, 0.36, -1);
+        stmt(R.stmt1.current, 0.02, 0.26, 1);
         /* payoff only: the finished stack lifts into its glowing orbit at the very end */
         const dio = R.posDio.current;
         if (dio) {
@@ -1272,9 +1270,9 @@ class Component extends DCLogic {
           dio.style.opacity = String(late);
           dio.style.transform = 'translateX(' + (15 * late).toFixed(2) + 'vw) scale(' + (0.92 + 0.05 * late).toFixed(3) + ')';
         }
-        this.cv = this.clamp01((p - 0.42) / 0.26);
+        this.cv = this.clamp01((p - 0.34) / 0.3);
         this.exV = this.clamp01((p - 0.84) / 0.09);
-        const fo = this.map(p, 0.4, 0.48);
+        const fo = this.map(p, 0.32, 0.4);
         if (R.act3.current) {
           R.act3.current.style.opacity = String(fo);
           R.act3.current.style.transform = 'translateY(' + (24 * (1 - fo)) + 'px)';
