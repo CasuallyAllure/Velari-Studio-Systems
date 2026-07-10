@@ -31,3 +31,6 @@ dist-ssr
 
 # Vercel
 .vercel
+
+# 3D pipeline: large binary meshes stay local
+assets-3d/*.glb
