@@ -13,6 +13,7 @@ Usage:
 """
 import argparse
 import math
+import random
 import sys
 
 import bpy
@@ -26,8 +27,8 @@ GOLD_KEY = "F4D68C"    # warm gold key light (ref bloom #ECC889)
 BONE = "F5EFE2"        # rim highlight
 THREAD_CORE = "FFE3A0" # warm gold thread
 
-TERRACOTTA = "AF5B41"
-SAGE = "7B7746"
+TERRACOTTA = "A2563E"
+SAGE = "6F6B42"
 CREAM = "E8DCC4"
 GOLD = "E3AC68"
 DESK_BROWN = "A98653"
@@ -39,9 +40,9 @@ FACE_DARK = "4A2A22"
 SLAB_COLORS = [TERRACOTTA, SAGE, TERRACOTTA, SAGE, TERRACOTTA]  # bottom -> top
 
 SLAB_W = 2.0
-SLAB_T = 0.30
-PITCH = 1.46  # vertical distance between slab centers
-PROP_SCALE = 1.12  # props fill their slab without hitting the one above
+SLAB_T = 0.34
+PITCH = 1.16  # vertical distance between slab centers
+PROP_SCALE = 1.24  # props fill their slab without hitting the one above
 
 
 def srgb_to_linear(hex_str):
@@ -269,6 +270,20 @@ def prop_robot(z, mats):
                       rotation=(0, math.radians(90), 0))
         parts.append(ear)
 
+    # Back panel + cooling fins. Without these the 180 deg arc of the orbit shows
+    # a blank cream cube for a quarter of the loop.
+    back_y = 0.281
+    plate = new_cube("robot_back_plate", (0.40, 0.02, 0.30), (0, back_y, z + 0.27),
+                     mats["desk"], 0.010)
+    parts.append(plate)
+    for i in range(4):
+        fin = new_cube(f"robot_fin_{i}", (0.30, 0.018, 0.022),
+                       (0, back_y + 0.012, z + 0.16 + i * 0.072), mats["face_dark"], 0.005)
+        parts.append(fin)
+    for i, sx in enumerate((-0.13, 0.13)):
+        bolt = new_sphere(f"robot_bolt_{i}", 0.020, (sx, back_y + 0.010, z + 0.40), mats["gold"])
+        parts.append(bolt)
+
     ant = new_cyl("robot_antenna", 0.013, 0.18, (0.15, 0.05, z + 0.60), mats["cream"])
     bulb = new_sphere("robot_bulb", 0.044, (0.15, 0.05, z + 0.71), mats["gold_hot"])
     parts += [ant, bulb]
@@ -356,7 +371,7 @@ def build_materials():
         "olive_dab": matte_plastic("olive_dab", OLIVE_DAB),
         "face_dark": matte_plastic("face_dark", FACE_DARK, 0.5),
         "gold_hot": emissive("gold_hot", GOLD_KEY, 12.0),
-        "thread": emissive("thread", THREAD_CORE, 30.0),
+        "thread": emissive("thread", THREAD_CORE, 11.0),
     }
 
 
@@ -381,7 +396,7 @@ def build_stack(mats):
     for i, (hex_c, builder) in enumerate(zip(SLAB_COLORS, builders)):
         z = base_z + i * PITCH
         mat = mats["terracotta"] if hex_c == TERRACOTTA else mats["sage"]
-        slab = new_cube(f"slab_{i}", (SLAB_W, SLAB_W, SLAB_T), (0, 0, z), mat, 0.055,
+        slab = new_cube(f"slab_{i}", (SLAB_W, SLAB_W, SLAB_T), (0, 0, z), mat, 0.075,
                         rotation=(0, 0, math.radians(45)))
         objs.append(slab)
         top = z + SLAB_T / 2
@@ -393,34 +408,90 @@ def build_stack(mats):
     span = (top_z - base_z) + 0.10
     corner = (SLAB_W / 2) * math.sqrt(2) * 0.99
     for sx in (-corner, corner):
-        t = new_cyl(f"thread_{sx:+.2f}", 0.006, span, (sx, 0.0, (top_z + base_z) / 2),
+        t = new_cyl(f"thread_{sx:+.2f}", 0.005, span, (sx, 0.0, (top_z + base_z) / 2),
                     mats["thread"], verts=12)
         objs.append(t)
 
-    # Warm spill between layers, as in the reference.
+    # Warm spill between layers, as in the reference. Parented to the stack root so
+    # the inter-layer glow turns with the slabs.
+    spills = []
     for i in range(4):
         z = base_z + i * PITCH + PITCH / 2
         light = bpy.data.lights.new(f"spill_{i}", type="POINT")
-        light.energy = 6.0
+        light.energy = 4.0
         light.color = srgb_to_linear(GOLD_KEY)[:3]
         light.shadow_soft_size = 0.28
         ob = bpy.data.objects.new(f"spill_{i}", light)
         ob.location = (0, 0, z)
         bpy.context.collection.objects.link(ob)
+        spills.append(ob)
 
-    return objs, (base_z, top_z)
+    # The STACK spins, not the camera. The live asset does this: world-fixed key,
+    # bloom and dust stay anchored while the object turns. Orbiting the camera
+    # instead drags the gold bloom and the dust across frame every loop.
+    root = bpy.data.objects.new("stack_root", None)
+    bpy.context.collection.objects.link(root)
+    for o in objs + spills:
+        o.parent = root
+
+    return objs, (base_z, top_z), root
 
 
-def build_world():
+def build_world(bloom_x=0.07, bloom_y=0.95, bloom_radius=0.72, bloom_gain=0.48,
+                aspect=16.0 / 9.0):
+    """Plum void with a soft gold bloom anchored in the frame's upper-left.
+
+    The live asset's corner glow is a screen-space radial falloff, not volumetric
+    scatter -- a light-position sweep showed the haze produces a flat full-frame
+    wash regardless of where the light sits. A `Window`-coordinate gradient places
+    it exactly and costs nothing to render. Only valid because the camera is now
+    static (the stack spins), so the glow stays put across the whole loop.
+
+    Gated on Is Camera Ray: a lit background otherwise illuminates the whole scene
+    and flattens the slabs. This makes it pure backdrop, contributing no light.
+    """
     world = bpy.data.worlds.new("Void")
     bpy.context.scene.world = world
     world.use_nodes = True
-    bg = world.node_tree.nodes["Background"]
-    bg.inputs[0].default_value = srgb_to_linear(VOID)
-    bg.inputs[1].default_value = 0.12
+    nt = world.node_tree
+    bg = nt.nodes["Background"]
+
+    texco = nt.nodes.new("ShaderNodeTexCoord")
+    mapping = nt.nodes.new("ShaderNodeMapping")
+    # Mapping applies SCALE before LOCATION, so the offset lives in scaled space:
+    # to centre the bloom on (bloom_x, bloom_y) the location must be -centre*scale.
+    # X is additionally scaled by the frame aspect, or the circle renders as an
+    # ellipse (Window coords run 0..1 on both axes regardless of 16:9).
+    sx = aspect / bloom_radius
+    sy = 1.0 / bloom_radius
+    mapping.inputs["Scale"].default_value = (sx, sy, 1.0)
+    mapping.inputs["Location"].default_value = (-bloom_x * sx, -bloom_y * sy, 0.0)
+
+    grad = nt.nodes.new("ShaderNodeTexGradient")
+    grad.gradient_type = "SPHERICAL"
+
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.color_ramp.interpolation = "EASE"
+    ramp.color_ramp.elements[0].position = 0.28          # falls to void by ~40% of frame
+    ramp.color_ramp.elements[0].color = srgb_to_linear(VOID)
+    ramp.color_ramp.elements[1].position = 1.0           # gold at the centre
+    ramp.color_ramp.elements[1].color = srgb_to_linear(GOLD_KEY)
+
+    # Backdrop only: black to every non-camera ray.
+    lp = nt.nodes.new("ShaderNodeLightPath")
+    mix = nt.nodes.new("ShaderNodeMixRGB")
+    mix.inputs["Color1"].default_value = (0.0, 0.0, 0.0, 1.0)
+
+    nt.links.new(texco.outputs["Window"], mapping.inputs["Vector"])
+    nt.links.new(mapping.outputs["Vector"], grad.inputs["Vector"])
+    nt.links.new(grad.outputs["Fac"], ramp.inputs["Fac"])
+    nt.links.new(ramp.outputs["Color"], mix.inputs["Color2"])
+    nt.links.new(lp.outputs["Is Camera Ray"], mix.inputs["Fac"])
+    nt.links.new(mix.outputs["Color"], bg.inputs["Color"])
+    bg.inputs["Strength"].default_value = bloom_gain
 
 
-def build_volume(density=0.0012):
+def build_volume(density=0.0015):
     """Thin haze so the gold key throws a visible bloom.
 
     Bounded in a cube, not the world. A world volume is unbounded, so every camera
@@ -449,7 +520,38 @@ def build_volume(density=0.0012):
     nt.links.new(scatter.outputs["Volume"], out.inputs["Volume"])
     vol.data.materials.append(mat)
     vol.visible_shadow = False
+    # A 16-unit cube around everything reads as an opaque grey box in the solid
+    # viewport. Draw it as bounds and hide it from viewports; it still renders.
+    vol.display_type = "BOUNDS"
+    vol.hide_viewport = True
     return vol
+
+
+def build_dust(count=70, seed=7):
+    """Gold dust motes suspended in the void, as in the live asset.
+
+    Deterministic seed so the same frame renders identically on every run.
+    Kept outside the stack's silhouette so they never read as surface noise.
+    """
+    rng = random.Random(seed)
+    mat = emissive("dust", GOLD, 2.2)
+    motes = []
+    for i in range(count):
+        angle = rng.uniform(0, 2 * math.pi)
+        radius = rng.uniform(2.6, 7.2)          # outside the stack, inside the haze cube
+        z = rng.uniform(-4.4, 4.4)
+        r = rng.uniform(0.004, 0.010)
+        bpy.ops.mesh.primitive_ico_sphere_add(
+            radius=r, subdivisions=1,
+            location=(math.cos(angle) * radius, math.sin(angle) * radius, z),
+        )
+        m = bpy.context.active_object
+        m.name = f"dust_{i:03d}"
+        m.data.materials.append(mat)
+        m.visible_shadow = False
+        motes.append(m)
+    print(f"dust: {count} motes")
+    return motes
 
 
 def build_lights():
@@ -465,10 +567,9 @@ def build_lights():
         bpy.context.collection.objects.link(ob)
         return ob
 
-    area("key", (-6.0, -4.5, 5.5), GOLD_KEY, 1150, 6.0)
-    area("bloom", (-13.0, -7.0, 8.0), GOLD_KEY, 2100, 14.0)
-    area("rim_a", (4.5, 5.0, 2.0), BONE, 380, 4.0)
+    area("key", (-6.0, -4.5, 5.5), GOLD_KEY, 1400, 6.0)
     area("rim_b", (-4.0, 5.5, -1.0), BONE, 170, 3.5)
+    area("rim_a", (4.5, 5.0, 2.0), BONE, 380, 4.0)
     area("fill", (2.5, -5.0, -2.5), GOLD, 95, 5.0)
 
 
@@ -477,7 +578,9 @@ def scene_bbox():
     lo = Vector((1e9, 1e9, 1e9))
     hi = Vector((-1e9, -1e9, -1e9))
     for o in bpy.context.scene.objects:
-        if o.type != "MESH" or o.name == "haze":
+        # Haze cube and dust motes must not drive framing: they are atmosphere,
+        # not subject, and they would balloon the bbox and push the camera back.
+        if o.type != "MESH" or o.name == "haze" or o.name.startswith("dust_"):
             continue
         for corner in o.bound_box:
             w = o.matrix_world @ Vector(corner)
@@ -486,8 +589,9 @@ def scene_bbox():
     return lo, hi
 
 
-def build_camera(mode, frames, lens=45.0, margin=1.03, elevation=22.0, yaw=0.0, pivot_z=None):
-    """Camera on an empty that spins about Z. Empty rotation == orbit.
+def build_camera(mode, frames, root, lens=45.0, margin=1.03, elevation=22.0,
+                 yaw=0.0, pivot_z=None):
+    """Static camera; the STACK spins. Lights, haze and dust stay world-fixed.
 
     Distance is solved from the real bbox so the whole stack always fits.
     Elevation is what makes the slab tops and their props readable; a near-level
@@ -524,18 +628,20 @@ def build_camera(mode, frames, lens=45.0, margin=1.03, elevation=22.0, yaw=0.0, 
     track.track_axis = "TRACK_NEGATIVE_Z"
     track.up_axis = "UP_Y"
 
+    pivot.rotation_euler = (0, 0, 0)  # camera never moves
+
     if mode == "still":
-        # Face the robot: props front onto -Y, so a small yaw keeps the face read.
-        pivot.rotation_euler = (0, 0, math.radians(yaw))
+        # Props front onto -Y; yaw turns the STACK so the robot faces us.
+        root.rotation_euler = (0, 0, math.radians(yaw))
     else:
         # Seamless loop: key 0 deg at frame 1, 360 deg at frame N+1, render 1..N.
         # Blender 4.4+ moved Action.fcurves under slotted actions, so set the
         # interpolation default up front rather than walking the curve data.
         bpy.context.preferences.edit.keyframe_new_interpolation_type = "LINEAR"
-        pivot.rotation_euler = (0, 0, 0)
-        pivot.keyframe_insert("rotation_euler", frame=1)
-        pivot.rotation_euler = (0, 0, math.radians(360))
-        pivot.keyframe_insert("rotation_euler", frame=frames + 1)
+        root.rotation_euler = (0, 0, 0)
+        root.keyframe_insert("rotation_euler", frame=1)
+        root.rotation_euler = (0, 0, math.radians(360))
+        root.keyframe_insert("rotation_euler", frame=frames + 1)
     return cam
 
 
@@ -638,7 +744,9 @@ def main():
     ap.add_argument("--fps", type=int, default=24)
     ap.add_argument("--lens", type=float, default=45.0)
     ap.add_argument("--elev", type=float, default=22.0)
-    ap.add_argument("--haze", type=float, default=0.0012)
+    ap.add_argument("--dust", type=int, default=70)
+    ap.add_argument("--blend", default=None, help="save the built scene to a .blend and exit")
+    ap.add_argument("--haze", type=float, default=0.0015)
     ap.add_argument("--yaw", type=float, default=0.0)
     ap.add_argument("--margin", type=float, default=1.03)
     ap.add_argument("--pivot-z", dest="pivot_z", type=float, default=None)
@@ -646,14 +754,21 @@ def main():
 
     reset_scene()
     mats = build_materials()
-    _, z_range = build_stack(mats)
+    _, z_range, root = build_stack(mats)
     build_world()
     if a.haze > 0:
         build_volume(a.haze)
     build_lights()
-    build_camera(a.mode, a.frames, lens=a.lens, elevation=a.elev,
+    if a.dust > 0:
+        build_dust(a.dust)
+    build_camera(a.mode, a.frames, root, lens=a.lens, elevation=a.elev,
                  yaw=a.yaw, margin=a.margin, pivot_z=a.pivot_z)
     configure_render(a.res, a.samples, a.out, a.mode, a.frames, a.fps)
+
+    if a.blend:
+        bpy.ops.wm.save_as_mainfile(filepath=a.blend)
+        print(f"SAVED BLEND -> {a.blend}")
+        return
 
     if a.mode == "still":
         bpy.ops.render.render(write_still=True)
