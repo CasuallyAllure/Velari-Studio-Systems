@@ -34,3 +34,4 @@ dist-ssr
 
 # 3D pipeline: large binary meshes stay local
 assets-3d/*.glb
+assets-3d/frames/
