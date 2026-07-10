@@ -437,7 +437,7 @@ def build_stack(mats):
     return objs, (base_z, top_z), root
 
 
-def build_world(bloom_x=0.07, bloom_y=0.95, bloom_radius=0.72, bloom_gain=0.48,
+def build_world(bloom_x=0.06, bloom_y=0.97, bloom_radius=1.55, bloom_gain=0.52,
                 aspect=16.0 / 9.0):
     """Plum void with a soft gold bloom anchored in the frame's upper-left.
 
@@ -472,7 +472,7 @@ def build_world(bloom_x=0.07, bloom_y=0.95, bloom_radius=0.72, bloom_gain=0.48,
 
     ramp = nt.nodes.new("ShaderNodeValToRGB")
     ramp.color_ramp.interpolation = "EASE"
-    ramp.color_ramp.elements[0].position = 0.28          # falls to void by ~40% of frame
+    ramp.color_ramp.elements[0].position = 0.46          # void by frame centre; falloff never terminates in-frame
     ramp.color_ramp.elements[0].color = srgb_to_linear(VOID)
     ramp.color_ramp.elements[1].position = 1.0           # gold at the centre
     ramp.color_ramp.elements[1].color = srgb_to_linear(GOLD_KEY)
@@ -746,7 +746,7 @@ def main():
     ap.add_argument("--elev", type=float, default=22.0)
     ap.add_argument("--dust", type=int, default=70)
     ap.add_argument("--blend", default=None, help="save the built scene to a .blend and exit")
-    ap.add_argument("--haze", type=float, default=0.0015)
+    ap.add_argument("--haze", type=float, default=0.0)
     ap.add_argument("--yaw", type=float, default=0.0)
     ap.add_argument("--margin", type=float, default=1.03)
     ap.add_argument("--pivot-z", dest="pivot_z", type=float, default=None)
