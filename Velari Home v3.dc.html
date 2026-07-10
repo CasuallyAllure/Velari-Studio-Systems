@@ -92,7 +92,7 @@ a:hover { color: #fcf4de; }
 <section ref="{{ R.pos }}" id="systems" data-screen-label="Positioning — VELARI" style="position:relative;height:340vh;margin-top:-20vh;pointer-events:none;background:linear-gradient(to bottom,rgba(10,7,16,0) 0%,rgba(10,7,16,0) 5.8%,#0a0710 9%,#0d0812 35%,#170e16 68%,#20131c 100%)">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden">
     <div ref="{{ R.posDio }}" aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;will-change:opacity,transform">
-      <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(70vh,44vw);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen">
+      <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(70vh,44vw);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(140% 140% at 78% 62%, black 55%, transparent 98%);mask-image:radial-gradient(140% 140% at 78% 62%, black 55%, transparent 98%)">
         <source src="img/plates/stack_orbit_1440.mp4" type="video/mp4">
       </video>
     </div>
@@ -1268,7 +1268,7 @@ class Component extends DCLogic {
         /* payoff only: the finished stack lifts into its glowing orbit at the very end */
         const dio = R.posDio.current;
         if (dio) {
-          const late = this.map(p, 0.87, 0.93);
+          const lr = this.map(p, 0.83, 0.96); const late = lr * lr * (3 - 2 * lr);
           dio.style.opacity = String(late);
           dio.style.transform = 'translateX(' + (15 * late).toFixed(2) + 'vw) scale(' + (0.92 + 0.05 * late).toFixed(3) + ')';
         }
