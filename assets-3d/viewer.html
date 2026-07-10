@@ -73,7 +73,11 @@ composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight),
 const draco = new DRACOLoader().setDecoderPath('https://unpkg.com/three@0.170.0/examples/jsm/libs/draco/');
 const loader = new GLTFLoader().setDRACOLoader(draco);
 
-loader.load('./stack.glb', (gltf) => {
+// ?glb=stack_layers.glb to preview the per-layer export; defaults to the
+// per-material stack.glb this viewer has always shown.
+const glbPath = new URLSearchParams(location.search).get('glb') || './stack.glb';
+
+loader.load(glbPath, (gltf) => {
   const root = gltf.scene;
   scene.add(root);
 
@@ -86,10 +90,21 @@ loader.load('./stack.glb', (gltf) => {
   controls.update();
 
   let calls = 0, tris = 0;
-  root.traverse(o => { if (o.isMesh) { calls++; tris += o.geometry.index.count/3; } });
-  hud.textContent = `drag to orbit · scroll to zoom
-${calls} draw calls · ${tris.toLocaleString()} tris · 184 KB`;
-}, undefined, (e) => fail('Failed to load stack.glb\n\n' + e));
+  const nodeNames = [];
+  root.traverse(o => {
+    if (o.isMesh) { calls++; tris += o.geometry.index.count/3; }
+    if (o !== root && o.name) nodeNames.push(o.name);
+  });
+  console.log(`${glbPath}: nodes =`, nodeNames);
+
+  const label = `${glbPath.replace('./', '')} · ${calls} draw calls · ${tris.toLocaleString()} tris`;
+  hud.textContent = `drag to orbit · scroll to zoom\n${label} · …`;
+  fetch(glbPath, { method: 'HEAD' }).then(r => {
+    const bytes = r.headers.get('content-length');
+    const kb = bytes ? `${(bytes / 1024).toFixed(0)} KB` : '';
+    hud.textContent = `drag to orbit · scroll to zoom\n${label}${kb ? ' · ' + kb : ''}`;
+  }).catch(() => { hud.textContent = `drag to orbit · scroll to zoom\n${label}`; });
+}, undefined, (e) => fail('Failed to load ' + glbPath + '\n\n' + e));
 
 addEventListener('resize', () => {
   camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
