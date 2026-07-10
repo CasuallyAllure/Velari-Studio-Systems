@@ -36,3 +36,11 @@ dist-ssr
 assets-3d/frames/
 assets-3d/*.blend
 assets-3d/*.blend1
+
+# 3D pipeline: keep the 184K web GLB, drop the heavy generated artifacts
+assets-3d/stack_v1.glb
+assets-3d/stack_v2_4k.glb
+assets-3d/stack_raw.glb
+assets-3d/*.blend
+assets-3d/*.blend1
+assets-3d/frames/
