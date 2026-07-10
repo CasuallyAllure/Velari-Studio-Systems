@@ -35,9 +35,12 @@ a:hover { color: #fcf4de; }
 .hudTag.on { opacity: 1; transform: translateY(-50%); }
 .hudTag.on .hudLine { transform: scaleX(1); }
 .hudTag.on .hudDot { opacity: 1; }
+.hudHolo { display: inline-block; padding: 2px 6px; font-family: 'Geist Mono', monospace; font-size: 9.5px; letter-spacing: 0.2em; color: #f8e3ad; text-shadow: 0 0 7px rgba(244,214,140,0.85); border: 1px solid rgba(244,214,140,0.5); border-radius: 2px; background: linear-gradient(135deg, rgba(244,214,140,0.12), rgba(244,214,140,0.02)), repeating-linear-gradient(0deg, rgba(244,214,140,0.06) 0 1px, transparent 1px 3px); box-shadow: 0 0 12px -4px rgba(244,214,140,0.6), inset 0 0 8px rgba(244,214,140,0.08); transform: skewX(-6deg); }
+.hudTag.on .hudHolo { animation: hudFlicker 0.5s ease-out 1; }
+@keyframes hudFlicker { 0% { opacity: 0; } 25% { opacity: 0.9; } 40% { opacity: 0.35; } 60% { opacity: 1; } 75% { opacity: 0.7; } 100% { opacity: 1; } }
 @keyframes hudPulse { 0%, 100% { box-shadow: 0 0 6px rgba(244,214,140,0.5); } 50% { box-shadow: 0 0 14px rgba(244,214,140,1); } }
 @media (max-width: 1100px) { nav[aria-label="Primary"] { display: none !important; } }
-@media (prefers-reduced-motion: reduce) { .hudTag, .hudTag .hudLine, .hudTag .hudDot { opacity: 1 !important; transform: translateY(-50%) !important; transition: none; animation: none; } .hudTag .hudLine { transform: scaleX(1) !important; } }
+@media (prefers-reduced-motion: reduce) { .hudTag .hudHolo { animation: none !important; } .hudTag, .hudTag .hudLine, .hudTag .hudDot { opacity: 1 !important; transform: translateY(-50%) !important; transition: none; animation: none; } .hudTag .hudLine { transform: scaleX(1) !important; } }
 @media (prefers-reduced-motion: reduce) { .indChip { opacity: 1 !important; transform: none !important; transition: none; } }
 /* Narrow/portrait viewports: show artwork whole and smaller instead of crop-zooming.
    No effect at full desktop width. */
@@ -105,30 +108,30 @@ a:hover { color: #fcf4de; }
         <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(70vh,44vw);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(102% 112% at 50% 50%, black 50%, transparent 86%);mask-image:radial-gradient(102% 112% at 50% 50%, black 50%, transparent 86%)">
           <source src="img/plates/stack_orbit_1440.mp4" type="video/mp4">
         </video>
-        <div class="hudTag" data-chip="4" style="position:absolute;top:22%;left:7%;transform:translateY(-50%)">
-          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 05 ]</span>
-          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
-          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        <div class="hudTag" data-chip="4" style="position:absolute;top:22%;left:71%;transform:translateY(-50%)">
+          <span class="hudDot" aria-hidden="true" style="position:absolute;right:calc(100% + max(6.5%,22px));top:50%;width:3px;height:3px;margin-top:-1.5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 7px rgba(244,214,140,0.95)"></span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;right:100%;top:50%;width:max(6.5%,22px);height:1px;background:linear-gradient(to left,rgba(244,214,140,0.7),rgba(244,214,140,0.08));transform-origin:right center"></div>
+          <span class="hudHolo">[ 05 ]</span>
         </div>
-        <div class="hudTag" data-chip="3" style="position:absolute;top:37%;left:7%;transform:translateY(-50%)">
-          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 04 ]</span>
-          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
-          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        <div class="hudTag" data-chip="3" style="position:absolute;top:37%;left:71%;transform:translateY(-50%)">
+          <span class="hudDot" aria-hidden="true" style="position:absolute;right:calc(100% + max(6.5%,22px));top:50%;width:3px;height:3px;margin-top:-1.5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 7px rgba(244,214,140,0.95)"></span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;right:100%;top:50%;width:max(6.5%,22px);height:1px;background:linear-gradient(to left,rgba(244,214,140,0.7),rgba(244,214,140,0.08));transform-origin:right center"></div>
+          <span class="hudHolo">[ 04 ]</span>
         </div>
-        <div class="hudTag" data-chip="2" style="position:absolute;top:51%;left:7%;transform:translateY(-50%)">
-          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 03 ]</span>
-          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
-          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        <div class="hudTag" data-chip="2" style="position:absolute;top:51%;left:71%;transform:translateY(-50%)">
+          <span class="hudDot" aria-hidden="true" style="position:absolute;right:calc(100% + max(6.5%,22px));top:50%;width:3px;height:3px;margin-top:-1.5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 7px rgba(244,214,140,0.95)"></span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;right:100%;top:50%;width:max(6.5%,22px);height:1px;background:linear-gradient(to left,rgba(244,214,140,0.7),rgba(244,214,140,0.08));transform-origin:right center"></div>
+          <span class="hudHolo">[ 03 ]</span>
         </div>
-        <div class="hudTag" data-chip="1" style="position:absolute;top:65%;left:7%;transform:translateY(-50%)">
-          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 02 ]</span>
-          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
-          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        <div class="hudTag" data-chip="1" style="position:absolute;top:65%;left:71%;transform:translateY(-50%)">
+          <span class="hudDot" aria-hidden="true" style="position:absolute;right:calc(100% + max(6.5%,22px));top:50%;width:3px;height:3px;margin-top:-1.5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 7px rgba(244,214,140,0.95)"></span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;right:100%;top:50%;width:max(6.5%,22px);height:1px;background:linear-gradient(to left,rgba(244,214,140,0.7),rgba(244,214,140,0.08));transform-origin:right center"></div>
+          <span class="hudHolo">[ 02 ]</span>
         </div>
-        <div class="hudTag" data-chip="0" style="position:absolute;top:80%;left:7%;transform:translateY(-50%)">
-          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 01 ]</span>
-          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
-          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        <div class="hudTag" data-chip="0" style="position:absolute;top:80%;left:71%;transform:translateY(-50%)">
+          <span class="hudDot" aria-hidden="true" style="position:absolute;right:calc(100% + max(6.5%,22px));top:50%;width:3px;height:3px;margin-top:-1.5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 7px rgba(244,214,140,0.95)"></span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;right:100%;top:50%;width:max(6.5%,22px);height:1px;background:linear-gradient(to left,rgba(244,214,140,0.7),rgba(244,214,140,0.08));transform-origin:right center"></div>
+          <span class="hudHolo">[ 01 ]</span>
         </div>
       </div>
     </div>
