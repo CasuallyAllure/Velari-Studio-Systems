@@ -29,6 +29,15 @@ a:hover { color: #fcf4de; }
 @keyframes brandSwap { from { opacity: 0.35; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 .indChip { opacity: 0; transform: translateX(-14px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .indChip.on { opacity: 1; transform: none; }
+.hudTag { opacity: 0; transform: translateY(-50%) translateX(-14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.hudTag .hudLine { transform: scaleX(0); transition: transform 0.45s ease 0.12s; }
+.hudTag .hudDot { opacity: 0; transition: opacity 0.3s ease 0.5s; animation: hudPulse 2.2s ease-in-out 0.5s infinite; }
+.hudTag.on { opacity: 1; transform: translateY(-50%); }
+.hudTag.on .hudLine { transform: scaleX(1); }
+.hudTag.on .hudDot { opacity: 1; }
+@keyframes hudPulse { 0%, 100% { box-shadow: 0 0 6px rgba(244,214,140,0.5); } 50% { box-shadow: 0 0 14px rgba(244,214,140,1); } }
+@media (max-width: 1100px) { nav[aria-label="Primary"] { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .hudTag, .hudTag .hudLine, .hudTag .hudDot { opacity: 1 !important; transform: translateY(-50%) !important; transition: none; animation: none; } .hudTag .hudLine { transform: scaleX(1) !important; } }
 @media (prefers-reduced-motion: reduce) { .indChip { opacity: 1 !important; transform: none !important; transition: none; } }
 /* Narrow/portrait viewports: show artwork whole and smaller instead of crop-zooming.
    No effect at full desktop width. */
@@ -54,7 +63,7 @@ a:hover { color: #fcf4de; }
   </div>
 </header>
 
-<section ref="{{ R.hero }}" data-screen-label="Hero" onMouseMove="{{ heroMove }}" aria-label="Velari Systems — Bay Area web systems" style="position:relative;height:220vh">
+<section ref="{{ R.hero }}" data-screen-label="Hero" onMouseMove="{{ heroMove }}" aria-label="Velari Systems — Bay Area web systems" style="position:relative;height:180vh">
   <div aria-hidden="true" style="position:sticky;top:0;height:100vh;margin-bottom:-100vh;overflow:hidden;z-index:0">
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,#0a0710 0%,#0a0710 40%,#241318 100%)"></div>
     <div ref="{{ R.heroPhoto }}" style="position:absolute;inset:0;transform-origin:50% 50%">
@@ -92,16 +101,43 @@ a:hover { color: #fcf4de; }
 <section ref="{{ R.pos }}" id="systems" data-screen-label="Positioning — VELARI" style="position:relative;height:340vh;margin-top:-20vh;pointer-events:none;background:linear-gradient(to bottom,rgba(10,7,16,0) 0%,rgba(10,7,16,0) 5.8%,#0a0710 9%,#0d0812 35%,#170e16 68%,#20131c 100%)">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden">
     <div ref="{{ R.posDio }}" aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;will-change:opacity,transform">
-      <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(70vh,44vw);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(140% 140% at 78% 62%, black 55%, transparent 98%);mask-image:radial-gradient(140% 140% at 78% 62%, black 55%, transparent 98%)">
-        <source src="img/plates/stack_orbit_1440.mp4" type="video/mp4">
-      </video>
+      <div style="position:relative">
+        <video ref="{{ R.stackPlate }}" playsinline preload="metadata" poster="img/plates/stack_poster.jpg" style="height:min(70vh,44vw);aspect-ratio:16/9;object-fit:cover;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(102% 112% at 50% 50%, black 50%, transparent 86%);mask-image:radial-gradient(102% 112% at 50% 50%, black 50%, transparent 86%)">
+          <source src="img/plates/stack_orbit_1440.mp4" type="video/mp4">
+        </video>
+        <div class="hudTag" data-chip="4" style="position:absolute;top:22%;left:7%;transform:translateY(-50%)">
+          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 05 ]</span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
+          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        </div>
+        <div class="hudTag" data-chip="3" style="position:absolute;top:37%;left:7%;transform:translateY(-50%)">
+          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 04 ]</span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
+          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        </div>
+        <div class="hudTag" data-chip="2" style="position:absolute;top:51%;left:7%;transform:translateY(-50%)">
+          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 03 ]</span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
+          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        </div>
+        <div class="hudTag" data-chip="1" style="position:absolute;top:65%;left:7%;transform:translateY(-50%)">
+          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 02 ]</span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
+          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        </div>
+        <div class="hudTag" data-chip="0" style="position:absolute;top:80%;left:7%;transform:translateY(-50%)">
+          <span style="display:inline-block;border:1px solid rgba(244,214,140,0.45);background:rgba(13,8,18,0.7);padding:4px 9px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.24em;color:#f4d68c">[ 01 ]</span>
+          <div class="hudLine" aria-hidden="true" style="position:absolute;left:100%;top:50%;width:8%;min-width:26px;height:1px;background:linear-gradient(to right,rgba(244,214,140,0.85),rgba(244,214,140,0.1));transform-origin:left center"></div>
+          <span class="hudDot" aria-hidden="true" style="position:absolute;left:calc(100% + max(8%,26px));top:50%;width:4px;height:4px;margin:-2px 0 0 0;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.9)"></span>
+        </div>
+      </div>
     </div>
 
     <p ref="{{ R.stmt1 }}" style="position:absolute;left:0;right:0;top:50%;margin:0;padding:0 40px;text-align:center;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.3em;line-height:1.14;font-size:clamp(2.6rem,6vw,5.4rem);color:#f4f1ea;text-shadow:0 0 80px rgba(232,213,163,0.26);opacity:0;transform:translateY(-50%)"><span style="display:block">Not just websites.</span><em style="display:block;margin-top:0.18em;font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0.01em;font-size:0.88em;color:#e8d5a3">Operating layers.</em></p>
 
     <div ref="{{ R.act3 }}" style="position:relative;height:100%;max-width:1200px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);gap:56px;align-items:center;opacity:0">
       <div>
-        <div ref="{{ R.act3Head }}" style="opacity:0;will-change:opacity,transform">
+        <div ref="{{ R.act3Head }}" style="will-change:opacity,transform">
         <p style="display:flex;align-items:center;gap:12px;margin:0;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#f4d68c"></span>What we actually build</p>
         <h2 style="margin:20px 0 0;max-width:18ch;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;color:#fcf4de">Every layer, built to <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">run itself.</em></h2>
         <p style="margin:20px 0 0;max-width:60ch;font-size:16px;line-height:1.7;color:#b3a08e">Brand to backend — one studio.</p>
@@ -114,13 +150,7 @@ a:hover { color: #fcf4de; }
           <li ref="{{ R.row4 }}" style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #2a1a14;border-bottom:1px solid #2a1a14;padding:16px 0;opacity:0.15"><span style="font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e">05</span><span style="font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:300;font-size:20px;color:#fcf4de">Your business</span><span style="margin-left:auto;text-align:right;font-size:14px;color:#8f7d6e">the storefront on top — all of it yours</span></li>
         </ol>
       </div>
-      <div ref="{{ R.stackStill }}" aria-hidden="true" style="position:relative;width:min(100%,39vh);margin:0 auto;aspect-ratio:680/1290;will-change:opacity">
-        <img data-slab="0" src="img/plates/stack_slab_1.png" alt="" style="position:absolute;left:0;top:77.60%;width:100%;height:22.40%;opacity:0;will-change:opacity,transform">
-        <img data-slab="1" src="img/plates/stack_slab_2.png" alt="" style="position:absolute;left:0;top:61.09%;width:100%;height:18.37%;opacity:0;will-change:opacity,transform">
-        <img data-slab="2" src="img/plates/stack_slab_3.png" alt="" style="position:absolute;left:0;top:43.88%;width:100%;height:19.07%;opacity:0;will-change:opacity,transform">
-        <img data-slab="3" src="img/plates/stack_slab_4.png" alt="" style="position:absolute;left:0;top:26.05%;width:100%;height:19.69%;opacity:0;will-change:opacity,transform">
-        <img data-slab="4" src="img/plates/stack_slab_5.png" alt="" style="position:absolute;left:0;top:0.47%;width:100%;height:27.44%;opacity:0;will-change:opacity,transform">
-      </div>
+      <div aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -1233,7 +1263,7 @@ class Component extends DCLogic {
         const hp = this.clamp01(-r.top / r.height);
         const tf = 'translateY(' + (-5 * hp) + '%)';
         if (R.heroFlash.current) R.heroFlash.current.style.transform = tf;
-        if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.58, 0.92) * 0.97);
+        if (R.heroDarken.current) R.heroDarken.current.style.opacity = String(this.map(hp, 0.5, 0.86) * 0.97);
         this.fogOutV = this.map(hp, 0.55, 0.98);
         if (R.fog.current && !this.reduced) R.fog.current.style.transform = 'translateY(' + (hp * 58).toFixed(2) + 'vh)';
         if (R.heroTitle.current) {
@@ -1262,45 +1292,42 @@ class Component extends DCLogic {
           el.style.transform = 'translateY(-50%) translate(' + x + 'vw,' + y + 'vh) scale(' + scale + ')';
           el.style.letterSpacing = (0.48 - 0.22 * Math.min(t, 1)).toFixed(3) + 'em';
         };
-        stmt(R.stmt1.current, 0.02, 0.26, 1);
-        /* payoff only: the finished stack lifts into its glowing orbit at the very end */
+        stmt(R.stmt1.current, 0.0, 0.2, 1);
+        /* the stack holds the stage for the whole act; HUD tags lock on layer by layer */
+        const fo = this.map(p, 0.24, 0.32);
         const dio = R.posDio.current;
         if (dio) {
           const lr = this.map(p, 0.83, 0.96); const late = lr * lr * (3 - 2 * lr);
-          dio.style.opacity = String(late);
-          dio.style.transform = 'translateX(' + (15 * late).toFixed(2) + 'vw) scale(' + (0.92 + 0.05 * late).toFixed(3) + ')';
+          dio.style.opacity = String(Math.max(fo, late));
+          dio.style.transform = 'translateX(' + (26 * fo - 11 * late).toFixed(2) + 'vw) scale(' + (0.92 - 0.28 * fo + 0.33 * late).toFixed(3) + ')';
+          if (!this._hud) {
+            this._hud = [];
+            dio.querySelectorAll('.hudTag').forEach((el) => { this._hud[Number(el.dataset.chip)] = el; });
+          }
         }
         this.cv = this.clamp01((p - 0.34) / 0.3);
         this.exV = this.clamp01((p - 0.84) / 0.09);
-        const fo = this.map(p, 0.32, 0.4);
         if (R.act3.current) {
           R.act3.current.style.opacity = String(fo);
           R.act3.current.style.transform = 'translateY(' + (24 * (1 - fo)) + 'px)';
         }
-        if (R.act3Head.current) {
-          const ho = this.map(p, 0.87, 0.93);
-          R.act3Head.current.style.opacity = String(ho);
-          R.act3Head.current.style.transform = 'translateY(' + (14 * (1 - ho)).toFixed(1) + 'px)';
-        }
-        /* the stack assembles slab by slab: each band drops into place with its copy row */
+        /* rows and their lock-on chips light together, layer by layer */
         const rows = [R.row0, R.row1, R.row2, R.row3, R.row4];
-        const stk = R.stackStill.current;
-        if (stk && !this._slabs) this._slabs = Array.from(stk.querySelectorAll('[data-slab]'));
         for (let i = 0; i < 5; i++) {
-          const seat = 0.46 + i * 0.088;
+          const seat = 0.42 + i * 0.08;
           const t = this.clamp01((p - (seat - 0.05)) / 0.05);
           const el = rows[i].current;
           if (el) {
             el.style.opacity = String(0.15 + 0.85 * t);
             el.style.transform = 'translateX(' + (-8 * (1 - t)) + 'px)';
           }
-          const slab = this._slabs && this._slabs[i];
-          if (slab) {
-            slab.style.opacity = String(t);
-            slab.style.transform = 'translateY(' + (-34 * (1 - t)).toFixed(1) + 'px)';
-          }
+          if (this._hud && this._hud[i]) this._hud[i].classList.toggle('on', t > 0.6 && p < 0.97);
         }
-        if (stk) stk.style.opacity = String(1 - this.map(p, 0.86, 0.9));
+        if (R.act3Head.current) {
+          const ho = this.map(p, 0.87, 0.93);
+          R.act3Head.current.style.opacity = String(ho);
+          R.act3Head.current.style.transform = 'translateY(' + (14 * (1 - ho)).toFixed(1) + 'px)';
+        }
       }
       const ind = R.ind.current;
       if (ind) {
@@ -1617,7 +1644,7 @@ class Component extends DCLogic {
       raf = requestAnimationFrame(tick);
       const vh = window.innerHeight;
       if (window.scrollY > vh * 2.4 || document.hidden) return;
-      const p = this.clamp01(window.scrollY / (vh * 1.85));
+      const p = this.clamp01(window.scrollY / (vh * 1.45));
       cur += (p - cur) * 0.1;
       /* camera flies from in front of the cloud to beyond its dense core */
       const camZ = 2.6 - cur * 9.2;
