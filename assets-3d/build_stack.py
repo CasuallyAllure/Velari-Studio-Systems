@@ -645,6 +645,82 @@ def build_camera(mode, frames, root, lens=45.0, margin=1.03, elevation=22.0,
     return cam
 
 
+def export_glb(path, draco=True):
+    """Export the stack as a web-ready GLB.
+
+    Two things matter for the browser and neither is optional:
+      - Atmosphere (haze cube, dust motes) is render-only. Shipping it would
+        add a 16-unit box and 70 spheres for nothing.
+      - Draw calls, not triangles, are the real-time budget: under ~100 holds
+        60fps on most devices. The authoring scene is ~130 separate objects, so
+        join by material. Flat-colour materials mean this collapses to one draw
+        call per colour, with no textures to compress.
+    """
+    for name in [o.name for o in bpy.context.scene.objects]:
+        o = bpy.context.scene.objects.get(name)
+        if o and (o.name == "haze" or o.name.startswith("dust_")):
+            bpy.data.objects.remove(o, do_unlink=True)
+
+    meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
+    before = len(meshes)
+
+    # Bake the bevel/boolean modifiers down before joining.
+    bpy.ops.object.select_all(action="DESELECT")
+    for o in meshes:
+        bpy.context.view_layer.objects.active = o
+        o.select_set(True)
+        for mod in list(o.modifiers):
+            try:
+                bpy.ops.object.modifier_apply(modifier=mod.name)
+            except RuntimeError:
+                o.modifiers.remove(mod)
+        o.select_set(False)
+
+    by_material = {}
+    for o in meshes:
+        # Boolean cutters leave an empty (None) material slot on the target, so
+        # take the first slot that actually holds a material.
+        mat = next((m for m in o.data.materials if m is not None), None)
+        key = mat.name if mat else "_none"
+        by_material.setdefault(key, []).append(o)
+
+    merged = []
+    for mat_name, group in by_material.items():
+        bpy.ops.object.select_all(action="DESELECT")
+        for o in group:
+            o.select_set(True)
+        target = group[0]
+        bpy.context.view_layer.objects.active = target
+        if len(group) > 1:
+            bpy.ops.object.join()
+        target.name = f"stack_{mat_name}"
+        target.data.name = f"stack_{mat_name}"  # glTF mesh name, not just the node
+        merged.append(target)
+    print(f"glb: {before} objects -> {len(merged)} draw calls (one per material)")
+
+    bpy.ops.object.select_all(action="DESELECT")
+    for o in merged:
+        o.select_set(True)
+    bpy.context.view_layer.objects.active = merged[0]
+
+    kwargs = dict(
+        filepath=path,
+        export_format="GLB",
+        use_selection=True,
+        export_apply=True,
+        export_materials="EXPORT",
+        export_cameras=False,
+        export_lights=False,
+        export_animations=False,
+        export_yup=True,          # three.js is Y-up; Blender is Z-up
+    )
+    if draco:
+        kwargs["export_draco_mesh_compression_enable"] = True
+        kwargs["export_draco_mesh_compression_level"] = 6
+    bpy.ops.export_scene.gltf(**kwargs)
+    print(f"EXPORTED GLB -> {path}")
+
+
 def build_compositor():
     """Bloom on the gold threads and the robot's bulb, so light reads as light.
 
@@ -746,6 +822,8 @@ def main():
     ap.add_argument("--elev", type=float, default=22.0)
     ap.add_argument("--dust", type=int, default=70)
     ap.add_argument("--blend", default=None, help="save the built scene to a .blend and exit")
+    ap.add_argument("--glb", default=None, help="export a web-ready GLB and exit")
+    ap.add_argument("--no-draco", dest="draco", action="store_false", help="skip Draco compression")
     ap.add_argument("--haze", type=float, default=0.0)
     ap.add_argument("--yaw", type=float, default=0.0)
     ap.add_argument("--margin", type=float, default=1.03)
@@ -764,6 +842,10 @@ def main():
     build_camera(a.mode, a.frames, root, lens=a.lens, elevation=a.elev,
                  yaw=a.yaw, margin=a.margin, pivot_z=a.pivot_z)
     configure_render(a.res, a.samples, a.out, a.mode, a.frames, a.fps)
+
+    if a.glb:
+        export_glb(a.glb, draco=a.draco)
+        return
 
     if a.blend:
         bpy.ops.wm.save_as_mainfile(filepath=a.blend)
