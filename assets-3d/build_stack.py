@@ -635,6 +635,7 @@ def build_camera(mode, frames, root, lens=45.0, margin=1.03, elevation=22.0,
     lo, hi = scene_bbox(only_names)
     ctr = (lo + hi) / 2
     height = (hi.z - lo.z)
+    width = (hi.x - lo.x)
     if pivot_z is not None:
         ctr = Vector((ctr.x, ctr.y, pivot_z))
 
@@ -645,11 +646,19 @@ def build_camera(mode, frames, root, lens=45.0, margin=1.03, elevation=22.0,
     cam_data = bpy.data.cameras.new("Cam")
     cam_data.lens = lens
     sensor_h = cam_data.sensor_width * 9.0 / 16.0
-    half_fov = math.atan(sensor_h / (2.0 * lens))
+    half_fov_v = math.atan(sensor_h / (2.0 * lens))
+    half_fov_h = math.atan(cam_data.sensor_width / (2.0 * lens))
     # Tilting the camera up by `elevation` shrinks the vertical room the stack
     # projects into, so pay for it with a little extra distance.
     el = math.radians(elevation)
-    dist = (height * margin / 2.0) / math.tan(half_fov) / max(math.cos(el), 0.35)
+    dist_v = (height * margin / 2.0) / math.tan(half_fov_v) / max(math.cos(el), 0.35)
+    # World X maps straight to screen-horizontal regardless of elevation (the
+    # camera only tilts in the Y/Z plane), so no cos(el) term here. For the
+    # full stack this is always slack (it's tall, not wide) and dist_v wins;
+    # for a single isolated layer (--layer, wide+short) this is what stops the
+    # sides being cropped off.
+    dist_h = (width * margin / 2.0) / math.tan(half_fov_h)
+    dist = max(dist_v, dist_h)
 
     cam = bpy.data.objects.new("Cam", cam_data)
     cam.location = (0.0, -dist * math.cos(el), dist * math.sin(el))
