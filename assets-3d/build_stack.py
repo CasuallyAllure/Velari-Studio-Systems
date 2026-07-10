@@ -423,18 +423,33 @@ def build_world():
 def build_volume(density=0.0012):
     """Thin haze so the gold key throws a visible bloom.
 
-    Lives in the WORLD, not a mesh cube. A cube large enough to hold the beams is
-    also large enough to show its own silhouette; world volume is edge-free and
-    lets the key light fall off naturally into the void.
+    Bounded in a cube, not the world. A world volume is unbounded, so every camera
+    ray marches forever -- measured at 13.7s of a 31.5s frame. HALF must exceed the
+    frame's half-width at the stack (~6.2) so no edge is ever seen, and stay under
+    the orbit radius (~15.5) so the camera never enters the volume.
     """
-    world = bpy.context.scene.world
-    nt = world.node_tree
-    out = nt.nodes["World Output"]
+    HALF = 8.0
+    bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 0, 0))
+    vol = bpy.context.active_object
+    vol.name = "haze"
+    vol.scale = (HALF * 2, HALF * 2, HALF * 2)
+    bpy.ops.object.transform_apply(scale=True)
+
+    mat = bpy.data.materials.new("haze")
+    mat.use_nodes = True
+    nt = mat.node_tree
+    for n in list(nt.nodes):
+        if n.type != "OUTPUT_MATERIAL":
+            nt.nodes.remove(n)  # surface must be empty, else the cube renders solid
+    out = nt.nodes["Material Output"]
     scatter = nt.nodes.new("ShaderNodeVolumeScatter")
     scatter.inputs["Color"].default_value = srgb_to_linear(GOLD_KEY)
     scatter.inputs["Density"].default_value = density
     scatter.inputs["Anisotropy"].default_value = 0.45
     nt.links.new(scatter.outputs["Volume"], out.inputs["Volume"])
+    vol.data.materials.append(mat)
+    vol.visible_shadow = False
+    return vol
 
 
 def build_lights():
@@ -514,13 +529,13 @@ def build_camera(mode, frames, lens=45.0, margin=1.03, elevation=22.0, yaw=0.0, 
         pivot.rotation_euler = (0, 0, math.radians(yaw))
     else:
         # Seamless loop: key 0 deg at frame 1, 360 deg at frame N+1, render 1..N.
+        # Blender 4.4+ moved Action.fcurves under slotted actions, so set the
+        # interpolation default up front rather than walking the curve data.
+        bpy.context.preferences.edit.keyframe_new_interpolation_type = "LINEAR"
         pivot.rotation_euler = (0, 0, 0)
         pivot.keyframe_insert("rotation_euler", frame=1)
         pivot.rotation_euler = (0, 0, math.radians(360))
         pivot.keyframe_insert("rotation_euler", frame=frames + 1)
-        for fc in pivot.animation_data.action.fcurves:
-            for kp in fc.keyframe_points:
-                kp.interpolation = "LINEAR"
     return cam
 
 
@@ -588,8 +603,9 @@ def configure_render(res_x, samples, out, mode, frames, fps):
     # keeps the BVH resident between frames instead of rebuilding it 96 times.
     scene.render.use_persistent_data = True
 
-    scene.cycles.volume_step_rate = 5.0
-    scene.cycles.volume_max_steps = 48
+    scene.cycles.volume_bounces = 0
+    scene.cycles.volume_step_rate = float(__import__("os").environ.get("VSTEP","8.0"))
+    scene.cycles.volume_max_steps = int(__import__("os").environ.get("VMAX","24"))
     scene.cycles.max_bounces = 6
     scene.cycles.transmission_bounces = 2
 
@@ -622,6 +638,7 @@ def main():
     ap.add_argument("--fps", type=int, default=24)
     ap.add_argument("--lens", type=float, default=45.0)
     ap.add_argument("--elev", type=float, default=22.0)
+    ap.add_argument("--haze", type=float, default=0.0012)
     ap.add_argument("--yaw", type=float, default=0.0)
     ap.add_argument("--margin", type=float, default=1.03)
     ap.add_argument("--pivot-z", dest="pivot_z", type=float, default=None)
@@ -631,7 +648,8 @@ def main():
     mats = build_materials()
     _, z_range = build_stack(mats)
     build_world()
-    build_volume()
+    if a.haze > 0:
+        build_volume(a.haze)
     build_lights()
     build_camera(a.mode, a.frames, lens=a.lens, elevation=a.elev,
                  yaw=a.yaw, margin=a.margin, pivot_z=a.pivot_z)
