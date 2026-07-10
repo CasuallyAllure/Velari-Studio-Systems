@@ -25,6 +25,8 @@ from mathutils import Vector
 VOID = "0A0710"        # near-black plum, per spec (ref reads #120A19)
 GOLD_KEY = "F4D68C"    # warm gold key light (ref bloom #ECC889)
 BONE = "F5EFE2"        # rim highlight
+BLOOM_GOLD = "FFD26A"  # corner glow; hot + blue-light so AgX lands on #E6C487
+VOID_BG    = "160C22"  # backdrop plum; live asset measures rgb(17,10,26)
 THREAD_CORE = "FFE3A0" # warm gold thread
 
 TERRACOTTA = "A2563E"
@@ -437,8 +439,8 @@ def build_stack(mats):
     return objs, (base_z, top_z), root
 
 
-def build_world(bloom_x=0.06, bloom_y=0.97, bloom_radius=1.55, bloom_gain=0.52,
-                aspect=16.0 / 9.0):
+def build_world(bloom_x=0.06, bloom_y=0.97, bloom_radius=2.30, bloom_gain=1.60,
+                bloom_falloff=8.0, aspect=16.0 / 9.0):
     """Plum void with a soft gold bloom anchored in the frame's upper-left.
 
     The live asset's corner glow is a screen-space radial falloff, not volumetric
@@ -470,12 +472,17 @@ def build_world(bloom_x=0.06, bloom_y=0.97, bloom_radius=1.55, bloom_gain=0.52,
     grad = nt.nodes.new("ShaderNodeTexGradient")
     grad.gradient_type = "SPHERICAL"
 
-    ramp = nt.nodes.new("ShaderNodeValToRGB")
-    ramp.color_ramp.interpolation = "EASE"
-    ramp.color_ramp.elements[0].position = 0.46          # void by frame centre; falloff never terminates in-frame
-    ramp.color_ramp.elements[0].color = srgb_to_linear(VOID)
-    ramp.color_ramp.elements[1].position = 1.0           # gold at the centre
-    ramp.color_ramp.elements[1].color = srgb_to_linear(GOLD_KEY)
+    # Real light falls off like an inverse square: a small hot core, fast decay,
+    # then a long faint tail. A ColorRamp is spatially linear, so it yields either
+    # a visible disc rim or a flat wash. Raising Fac to a power gives the right
+    # curve, and the tail never terminates in frame.
+    power = nt.nodes.new("ShaderNodeMath")
+    power.operation = "POWER"
+    power.inputs[1].default_value = bloom_falloff
+
+    bloom_mix = nt.nodes.new("ShaderNodeMixRGB")
+    bloom_mix.inputs["Color1"].default_value = srgb_to_linear(VOID_BG)
+    bloom_mix.inputs["Color2"].default_value = srgb_to_linear(BLOOM_GOLD)
 
     # Backdrop only: black to every non-camera ray.
     lp = nt.nodes.new("ShaderNodeLightPath")
@@ -484,8 +491,9 @@ def build_world(bloom_x=0.06, bloom_y=0.97, bloom_radius=1.55, bloom_gain=0.52,
 
     nt.links.new(texco.outputs["Window"], mapping.inputs["Vector"])
     nt.links.new(mapping.outputs["Vector"], grad.inputs["Vector"])
-    nt.links.new(grad.outputs["Fac"], ramp.inputs["Fac"])
-    nt.links.new(ramp.outputs["Color"], mix.inputs["Color2"])
+    nt.links.new(grad.outputs["Fac"], power.inputs[0])
+    nt.links.new(power.outputs["Value"], bloom_mix.inputs["Fac"])
+    nt.links.new(bloom_mix.outputs["Color"], mix.inputs["Color2"])
     nt.links.new(lp.outputs["Is Camera Ray"], mix.inputs["Fac"])
     nt.links.new(mix.outputs["Color"], bg.inputs["Color"])
     bg.inputs["Strength"].default_value = bloom_gain
@@ -567,7 +575,7 @@ def build_lights():
         bpy.context.collection.objects.link(ob)
         return ob
 
-    area("key", (-6.0, -4.5, 5.5), GOLD_KEY, 1400, 6.0)
+    area("key", (-6.0, -4.5, 5.5), GOLD_KEY, 1180, 6.0)
     area("rim_b", (-4.0, 5.5, -1.0), BONE, 170, 3.5)
     area("rim_a", (4.5, 5.0, 2.0), BONE, 380, 4.0)
     area("fill", (2.5, -5.0, -2.5), GOLD, 95, 5.0)
@@ -796,7 +804,7 @@ def configure_render(res_x, samples, out, mode, frames, fps):
     scene.render.resolution_percentage = 100
     scene.render.film_transparent = False
     scene.view_settings.view_transform = "AgX"
-    scene.view_settings.look = "AgX - Medium High Contrast"
+    scene.view_settings.look = "AgX - Base Contrast"
 
     build_compositor()
     scene.render.image_settings.file_format = "PNG"
