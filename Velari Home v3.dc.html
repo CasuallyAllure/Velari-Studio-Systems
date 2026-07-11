@@ -158,111 +158,144 @@ a:hover { color: #fcf4de; }
   </div>
 </section>
 
-<section id="industries" ref="{{ R.ind }}" data-screen-label="Industries — Dioramas" aria-label="Industries we build for" style="position:relative;height:660vh;background:#0a0710">
+<section id="industries" ref="{{ R.ind }}" data-screen-label="Industries — Dioramas" aria-label="Industries we build for" style="position:relative;height:470vh;background:#0a0710">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden">
     <div style="position:absolute;left:0;right:0;top:88px;z-index:20;text-align:center;pointer-events:none">
       <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.42em;color:#8f7d6e">Built for the businesses that run on trust</p>
     </div>
     <div ref="{{ R.indEcom }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
-        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
-          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">01 — Online Commerce</p>
-          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">A storefront that runs <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">itself.</em></h3>
-          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Looks that sell — and the machine behind them: checkout, inventory, recovery.</p>
-          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Front end designed to sell</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Checkout + inventory, built in</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>AI wins back abandoned carts</li>
-          </ul>
+      <div style="position:absolute;inset:0;max-width:1100px;margin:0 auto;padding:0 40px;display:flex;flex-direction:column;justify-content:center">
+        <p data-ind-copy="1" style="display:flex;align-items:center;gap:12px;margin:0 0 34px;font-family:'Geist Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.35em;color:#8f7d6e"><span aria-hidden="true" style="display:inline-block;height:1px;width:24px;background:#f4d68c"></span>What we do — all of it, one studio</p>
+        <div class="indChip" style="display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:baseline;border-top:1px solid #2a1a14;padding:26px 0">
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.3em;color:#8f7d6e">01</span>
+          <div>
+            <h3 style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.13em;font-size:clamp(1.7rem,3.2vw,2.9rem);line-height:1.12;color:#fcf4de">Premium websites</h3>
+            <p style="margin:10px 0 0;max-width:58ch;font-size:14.5px;line-height:1.7;color:#b3a08e">Designed to sell — front end to checkout, built like a system.</p>
+          </div>
         </div>
-        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
-          <img src="img/dioramas/ecommerce_2560.jpg" alt="Miniature 3D online shop diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
-        </figure>
+        <div class="indChip" style="display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:baseline;border-top:1px solid #2a1a14;padding:26px 0">
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.3em;color:#8f7d6e">02</span>
+          <div>
+            <h3 style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.13em;font-size:clamp(1.7rem,3.2vw,2.9rem);line-height:1.12;color:#fcf4de">Brand &amp; media</h3>
+            <p style="margin:10px 0 0;max-width:58ch;font-size:14.5px;line-height:1.7;color:#b3a08e">Identity, photography, cinematic FPV drone film — the whole look.</p>
+          </div>
+        </div>
+        <div class="indChip" style="display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:baseline;border-top:1px solid #2a1a14;padding:26px 0">
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.3em;color:#8f7d6e">03</span>
+          <div>
+            <h3 style="margin:0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.13em;font-size:clamp(1.7rem,3.2vw,2.9rem);line-height:1.12;color:#fcf4de">AI, everywhere it counts</h3>
+            <p style="margin:10px 0 0;max-width:58ch;font-size:14.5px;line-height:1.7;color:#b3a08e">In your website — and in your business: agents that work like a personal assistant, 24/7.</p>
+          </div>
+        </div>
+        <div aria-hidden="true" style="border-top:1px solid #2a1a14"></div>
       </div>
     </div>
     <div ref="{{ R.indS0 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
-        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
-          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">02 — Property Management</p>
-          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Every door, <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">one dashboard.</em></h3>
-          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">A high-end property site with the operations built in — media, money, maintenance.</p>
-          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Cinematic listings + drone media</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Tenant portal: rent, tickets, logins</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Owner statements in real time</li>
-          </ul>
+      <div style="position:absolute;inset:0;max-width:1440px;margin:0 auto;padding:110px 40px 40px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,3.4vw,54px);align-items:center">
+        <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+          <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(244,214,140,0.18);aspect-ratio:16/9.4;box-shadow:0 34px 90px -34px rgba(244,214,140,0.4),0 18px 50px -20px rgba(0,0,0,0.85)">
+            <img src="img/dioramas/ecommerce_2560.jpg" alt="Miniature 3D online shop diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+            <div aria-hidden="true" style="position:absolute;inset:0;border-radius:20px;background:radial-gradient(120% 90% at 50% -10%,rgba(252,240,214,0.1) 0%,transparent 55%);pointer-events:none"></div>
+          </figure>
+          <div data-ind-copy="1" style="padding:0 6px">
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.32em;color:#f4d68c">01 — Online Commerce</p>
+            <h3 style="margin:10px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.12em;font-size:clamp(1.15rem,1.8vw,1.7rem);line-height:1.18;color:#fcf4de">A storefront that runs <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">itself.</em></h3>
+            <p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:#b3a08e">Looks that sell — and the machine behind them: checkout, inventory, recovery.</p>
+            <ul style="list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px">
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Front end designed to sell</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Checkout + inventory, built in</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>AI wins back abandoned carts</li>
+            </ul>
+          </div>
         </div>
-        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
-          <img src="img/dioramas/realestate_2560.jpg" alt="Miniature 3D house diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
-        </figure>
+        <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+          <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(244,214,140,0.18);aspect-ratio:16/9.4;box-shadow:0 34px 90px -34px rgba(244,214,140,0.4),0 18px 50px -20px rgba(0,0,0,0.85)">
+            <img src="img/dioramas/realestate_2560.jpg" alt="Miniature 3D house diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+            <div aria-hidden="true" style="position:absolute;inset:0;border-radius:20px;background:radial-gradient(120% 90% at 50% -10%,rgba(252,240,214,0.1) 0%,transparent 55%);pointer-events:none"></div>
+          </figure>
+          <div data-ind-copy="1" style="padding:0 6px">
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.32em;color:#f4d68c">02 — Property Management</p>
+            <h3 style="margin:10px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.12em;font-size:clamp(1.15rem,1.8vw,1.7rem);line-height:1.18;color:#fcf4de">Every door, <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">one dashboard.</em></h3>
+            <p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:#b3a08e">A high-end property site with the operations built in — media, money, maintenance.</p>
+            <ul style="list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px">
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Cinematic listings + drone media</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Tenant portal: rent, tickets, logins</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Owner statements in real time</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
     <div ref="{{ R.indS1 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
-        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
-          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">03 — Healthcare</p>
-          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Intake that never <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">sleeps.</em></h3>
-          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">A practice site that reassures — and answers when your front desk can’t.</p>
-          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Your practice, beautifully presented</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>24/7 AI intake + routing</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>After-hours calls become appointments</li>
-          </ul>
+      <div style="position:absolute;inset:0;max-width:1440px;margin:0 auto;padding:110px 40px 40px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,3.4vw,54px);align-items:center">
+        <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+          <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(244,214,140,0.18);aspect-ratio:16/9.4;box-shadow:0 34px 90px -34px rgba(244,214,140,0.4),0 18px 50px -20px rgba(0,0,0,0.85)">
+            <img src="img/dioramas/healthcare_2560.jpg" alt="Miniature 3D clinic diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+            <div aria-hidden="true" style="position:absolute;inset:0;border-radius:20px;background:radial-gradient(120% 90% at 50% -10%,rgba(252,240,214,0.1) 0%,transparent 55%);pointer-events:none"></div>
+          </figure>
+          <div data-ind-copy="1" style="padding:0 6px">
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.32em;color:#f4d68c">03 — Healthcare</p>
+            <h3 style="margin:10px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.12em;font-size:clamp(1.15rem,1.8vw,1.7rem);line-height:1.18;color:#fcf4de">Intake that never <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">sleeps.</em></h3>
+            <p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:#b3a08e">A practice site that reassures — and answers when your front desk can’t.</p>
+            <ul style="list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px">
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Your practice, beautifully presented</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>24/7 AI intake + routing</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>After-hours calls become appointments</li>
+            </ul>
+          </div>
         </div>
-        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
-          <img src="img/dioramas/healthcare_2560.jpg" alt="Miniature 3D clinic diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
-        </figure>
+        <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+          <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(244,214,140,0.18);aspect-ratio:16/9.4;box-shadow:0 34px 90px -34px rgba(244,214,140,0.4),0 18px 50px -20px rgba(0,0,0,0.85)">
+            <img src="img/dioramas/hospitality_2560.jpg" alt="Miniature 3D bistro diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+            <div aria-hidden="true" style="position:absolute;inset:0;border-radius:20px;background:radial-gradient(120% 90% at 50% -10%,rgba(252,240,214,0.1) 0%,transparent 55%);pointer-events:none"></div>
+          </figure>
+          <div data-ind-copy="1" style="padding:0 6px">
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.32em;color:#f4d68c">04 — Hospitality</p>
+            <h3 style="margin:10px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.12em;font-size:clamp(1.15rem,1.8vw,1.7rem);line-height:1.18;color:#fcf4de">Every table, every night, <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">booked.</em></h3>
+            <p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:#b3a08e">Own your reservations — no per-cover fees, no commissions on your regulars.</p>
+            <ul style="list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px">
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Direct reservations + waitlists</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Deposits that cut no-shows in half</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Custom rewards for your regulars</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
     <div ref="{{ R.indS2 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
-        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
-          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">04 — Hospitality</p>
-          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Every table, every night, <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">booked.</em></h3>
-          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Own your reservations — no per-cover fees, no commissions on your regulars.</p>
-          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Direct reservations + waitlists</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Deposits that cut no-shows in half</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Custom rewards for your regulars</li>
-          </ul>
+      <div style="position:absolute;inset:0;max-width:1440px;margin:0 auto;padding:110px 40px 40px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,3.4vw,54px);align-items:center">
+        <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+          <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(244,214,140,0.18);aspect-ratio:16/9.4;box-shadow:0 34px 90px -34px rgba(244,214,140,0.4),0 18px 50px -20px rgba(0,0,0,0.85)">
+            <img src="img/dioramas/trades_2560.jpg" alt="Miniature 3D construction diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+            <div aria-hidden="true" style="position:absolute;inset:0;border-radius:20px;background:radial-gradient(120% 90% at 50% -10%,rgba(252,240,214,0.1) 0%,transparent 55%);pointer-events:none"></div>
+          </figure>
+          <div data-ind-copy="1" style="padding:0 6px">
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.32em;color:#f4d68c">05 — Home Services</p>
+            <h3 style="margin:10px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.12em;font-size:clamp(1.15rem,1.8vw,1.7rem);line-height:1.18;color:#fcf4de">Dispatch while you <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">sleep.</em></h3>
+            <p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:#b3a08e">Quotes go out, jobs get booked, crews wake up scheduled.</p>
+            <ul style="list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px">
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Quotes out in minutes, not days</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Jobs booked straight to the calendar</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Every lead answered, even at 2 a.m.</li>
+            </ul>
+          </div>
         </div>
-        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
-          <img src="img/dioramas/hospitality_2560.jpg" alt="Miniature 3D bistro diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
-        </figure>
-      </div>
-    </div>
-    <div ref="{{ R.indS3 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
-        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
-          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">05 — Home Services</p>
-          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Dispatch while you <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">sleep.</em></h3>
-          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Quotes go out, jobs get booked, crews wake up scheduled.</p>
-          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Quotes out in minutes, not days</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Jobs booked straight to the calendar</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Every lead answered, even at 2 a.m.</li>
-          </ul>
+        <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+          <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(244,214,140,0.18);aspect-ratio:16/9.4;box-shadow:0 34px 90px -34px rgba(244,214,140,0.4),0 18px 50px -20px rgba(0,0,0,0.85)">
+            <img src="img/dioramas/law_2560.jpg" alt="Miniature 3D law office diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+            <div aria-hidden="true" style="position:absolute;inset:0;border-radius:20px;background:radial-gradient(120% 90% at 50% -10%,rgba(252,240,214,0.1) 0%,transparent 55%);pointer-events:none"></div>
+          </figure>
+          <div data-ind-copy="1" style="padding:0 6px">
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.32em;color:#f4d68c">06 — Professional</p>
+            <h3 style="margin:10px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.12em;font-size:clamp(1.15rem,1.8vw,1.7rem);line-height:1.18;color:#fcf4de">Client intake, privileged and <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">instant.</em></h3>
+            <p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:#b3a08e">Conflict checks and engagement letters before the second call.</p>
+            <ul style="list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px">
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>A practice site that signals trust</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Screened intake, conflicts flagged</li>
+            <li class="indChip" style="display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Consultations self-scheduled</li>
+            </ul>
+          </div>
         </div>
-        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
-          <img src="img/dioramas/trades_2560.jpg" alt="Miniature 3D construction diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
-        </figure>
-      </div>
-    </div>
-    <div ref="{{ R.indS4 }}" style="position:absolute;inset:0;opacity:0;will-change:opacity">
-      <div style="position:absolute;inset:0;max-width:1360px;margin:0 auto;padding:96px 40px 40px;display:grid;grid-template-columns:minmax(300px,30rem) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center">
-        <div data-ind-copy="1" style="background:rgba(13,8,18,0.78);border:1px solid rgba(232,213,163,0.13);border-radius:18px;padding:30px 32px;box-shadow:0 24px 60px -32px rgba(0,0,0,0.8)">
-          <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.35em;color:#f4d68c">06 — Professional</p>
-          <h3 style="margin:14px 0 0;font-family:'Archivo','Helvetica Neue',Helvetica,sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:0.14em;font-size:clamp(1.5rem,2.6vw,2.3rem);line-height:1.15;color:#fcf4de">Client intake, privileged and <em style="font-family:'Instrument Sans',sans-serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:#f4d68c">instant.</em></h3>
-          <p style="margin:14px 0 0;font-size:14px;line-height:1.7;color:#b3a08e">Conflict checks and engagement letters before the second call.</p>
-          <ul style="list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px">
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>A practice site that signals trust</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Screened intake, conflicts flagged</li>
-          <li class="indChip" style="display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.5;color:#d8c7ae"><span aria-hidden="true" style="width:5px;height:5px;border-radius:999px;background:#f4d68c;box-shadow:0 0 8px rgba(244,214,140,0.8);flex:none"></span>Consultations self-scheduled</li>
-          </ul>
-        </div>
-        <figure style="margin:0;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(232,213,163,0.14);aspect-ratio:21/9;max-height:56vh;box-shadow:0 40px 90px -50px rgba(244,214,140,0.28)">
-          <img src="img/dioramas/law_2560.jpg" alt="Miniature 3D law office diorama" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
-        </figure>
       </div>
     </div>
     <div aria-hidden="true" style="position:absolute;left:0;right:0;top:0;height:80px;background:linear-gradient(to bottom,#0a0710,transparent);z-index:10"></div>
@@ -1337,7 +1370,7 @@ class Component extends DCLogic {
         const r = ind.getBoundingClientRect();
         const total = Math.max(1, r.height - vh);
         const p = this.clamp01(-r.top / total);
-        const layers = [R.indEcom, R.indS0, R.indS1, R.indS2, R.indS3, R.indS4];
+        const layers = [R.indEcom, R.indS0, R.indS1, R.indS2];
         const n = layers.length;
         const fade = 0.14;
         for (let i = 0; i < n; i++) {
@@ -1354,20 +1387,21 @@ class Component extends DCLogic {
           el.style.opacity = String(o);
           el.style.visibility = o > 0.01 ? 'visible' : 'hidden';
           if (o > 0.01) {
-            const img = el.querySelector('img');
-            if (img && !this.reduced) {
-              const dir = i % 2 ? 1 : -1;
-              img.style.transform = 'translateX(' + (dir * (t - 0.5) * 3).toFixed(2) + '%) scale(1.06)';
+            const imgs = el.querySelectorAll('img');
+            for (let k = 0; k < imgs.length; k++) {
+              if (this.reduced) break;
+              const dir = k % 2 ? 1 : -1;
+              imgs[k].style.transform = 'translateX(' + (dir * (t - 0.5) * 2.4).toFixed(2) + '%) scale(1.05)';
             }
-            const copy = el.querySelector('[data-ind-copy]');
-            if (copy) {
-              const co = this.clamp01((t - 0.06) / 0.1) * this.clamp01((0.97 - t) / 0.08);
-              copy.style.opacity = String(co);
-              if (!this.reduced) copy.style.transform = 'translateY(' + (12 * (1 - this.clamp01(t * 5))).toFixed(1) + 'px)';
+            const copies = el.querySelectorAll('[data-ind-copy]');
+            for (let k = 0; k < copies.length; k++) {
+              const co = this.clamp01((t - 0.05 - k * 0.03) / 0.1) * this.clamp01((0.97 - t) / 0.08);
+              copies[k].style.opacity = String(co);
+              if (!this.reduced) copies[k].style.transform = 'translateY(' + (12 * (1 - this.clamp01(t * 5))).toFixed(1) + 'px)';
             }
             const chips = el.querySelectorAll('.indChip');
             for (let c = 0; c < chips.length; c++) {
-              chips[c].classList.toggle('on', t > 0.22 + c * 0.12 && t < 0.97);
+              chips[c].classList.toggle('on', t > 0.16 + c * 0.075 && t < 0.97);
             }
           }
         }
