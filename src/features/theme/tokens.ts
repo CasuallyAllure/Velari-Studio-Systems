@@ -3,15 +3,15 @@ import type { ThemeConfig } from '@/lib/types/theme';
 export const themes: Record<string, ThemeConfig> = {
   swedish_minimal: {
     name: 'swedish_minimal',
-    displayName: 'Swedish Minimal',
+    displayName: 'Velari Cinematic',
     colors: {
-      primary: '#4A90E2',      // Muted blue
-      secondary: '#171717',    // Near black
-      accent: '#4A90E2',       // Same as primary
-      background: '#FFFFFF',   // Pure white
-      foreground: '#171717',   // Near black
-      muted: '#F5F5F5',        // Light gray
-      border: '#E5E5E5',       // Border gray
+      primary: '#6FFF00',
+      secondary: '#010828',
+      accent: '#B2D770',
+      background: '#010828',
+      foreground: '#EFF4FF',
+      muted: '#071238',
+      border: '#24335C',
     },
     fonts: {
       sans: 'Inter, system-ui, sans-serif',

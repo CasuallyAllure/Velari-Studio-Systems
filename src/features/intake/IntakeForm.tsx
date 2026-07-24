@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { z } from 'zod';
 import { Button } from '@/components/ui/Button';
 import { Input, Textarea, Select } from '@/components/ui/Input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
-import { useTheme } from '@/features/theme/ThemeProvider';
+import { useTheme } from '@/features/theme/ThemeContext';
 import { submitIntake } from './api';
 import type { IntakeData, IntakeStep, Message } from '@/lib/types/intake';
 import {
@@ -27,7 +28,7 @@ export function IntakeForm({ conversationTranscript = [] }: IntakeFormProps) {
     goals: [],
   });
 
-  const updateField = (field: string, value: any) => {
+  const updateField = <K extends keyof IntakeData>(field: K, value: IntakeData[K]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error for this field
     if (errors[field]) {
@@ -61,11 +62,14 @@ export function IntakeForm({ conversationTranscript = [] }: IntakeFormProps) {
       }
       setErrors({});
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       const newErrors: Record<string, string> = {};
-      error.errors?.forEach((err: any) => {
-        newErrors[err.path[0]] = err.message;
-      });
+      if (error instanceof z.ZodError) {
+        error.issues.forEach((issue) => {
+          const field = issue.path[0];
+          if (typeof field === 'string') newErrors[field] = issue.message;
+        });
+      }
       setErrors(newErrors);
       return false;
     }
@@ -130,41 +134,52 @@ export function IntakeForm({ conversationTranscript = [] }: IntakeFormProps) {
 
   const goalOptions = [
     'New website',
-    'Customer portal',
-    'Booking system',
-    'AI integration',
-    'Email automation',
-    'CRM integration',
+    'Website redesign',
+    'Client or member portal',
+    'Payments or e-commerce',
+    'Admin dashboard',
+    'Booking or requests',
+    'AI website assistant',
+    'AI intake or automation',
+    'AI voice reception',
+    'Logo or brand identity',
+    'Marketing imagery or video',
+    'Custom integration',
   ];
 
   const industryOptions = [
-    'Service Business',
+    'Property Management',
+    'Restaurant or Hospitality',
+    'Gym or Studio',
+    'Dental or Medical',
+    'Law Firm',
+    'Trades or Transport',
     'E-commerce',
-    'SaaS/Tech',
-    'Healthcare',
-    'Real Estate',
+    'Technology or SaaS',
     'Professional Services',
     'Other',
   ];
 
   const budgetOptions = [
-    'Under $2,500',
-    '$2,500 - $5,000',
-    '$5,000 - $10,000',
+    '$999 - $2,999',
+    '$3,000 - $4,999',
+    '$5,000 - $9,999',
     '$10,000+',
+    'Not sure yet',
   ];
 
   const timelineOptions = [
-    'ASAP',
-    '1-2 months',
-    '3-6 months',
-    'Just exploring',
+    '2-3 weeks',
+    '4-6 weeks',
+    '5-8 weeks',
+    'Flexible / just exploring',
+    'Rush requested',
   ];
 
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Let's Build Your System</CardTitle>
+        <CardTitle>Build Your Starting Scope</CardTitle>
         <div className="flex gap-2 mt-4">
           {['contact', 'business', 'goals', 'budget'].map((s, i) => (
             <div
@@ -211,7 +226,7 @@ export function IntakeForm({ conversationTranscript = [] }: IntakeFormProps) {
                 type="tel"
                 value={formData.phone || ''}
                 onChange={(e) => updateField('phone', e.target.value)}
-                placeholder="+1 (555) 123-4567"
+                placeholder="(415) 555-0123"
               />
             </div>
           </div>

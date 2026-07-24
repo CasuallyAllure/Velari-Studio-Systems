@@ -1,35 +1,21 @@
-// ============================================================
-// MULTI-CLIENT REUSE: Brand Configuration
-// ============================================================
-// Change these values for each client deployment
-// ============================================================
+import { quoteConfig } from './quote';
 
 export const brand = {
   // ── COMPANY INFO ──
-  company_name: "Velari Studio Systems",
-  tagline: "Swedish-minimalist websites with built-in AI intake",
+  company_name: quoteConfig.canonicalContact.companyName,
+  tagline: "Cinematic digital worlds built to convert",
+  website: quoteConfig.canonicalContact.website,
   
   // ── CONTACT ──
-  email: "hello@velaristudiosystems.com",
-  phone: "+1 (555) 123-4567",
+  email: quoteConfig.canonicalContact.email,
+  phone: quoteConfig.canonicalContact.phone,
+  timezone: quoteConfig.canonicalContact.timezone,
   
   // ── SOCIAL ──
-  twitter: "@velaristudios",
-  linkedin: "velari-studio-systems",
+  twitter: "@velariss",
+  linkedin: "velari-systems",
   github: "CasuallyAllure",
   
   // ── DEFAULT THEME ──
   default_theme: "swedish_minimal" as const,
 } as const;
-
-// ── EXAMPLE: For Plumber Client ──
-// company_name: "Joe's Plumbing & Heating"
-// tagline: "24/7 emergency service with instant booking"
-// email: "service@joesplumbing.com"
-// default_theme: "industrial_services"
-
-// ── EXAMPLE: For SaaS Client ──
-// company_name: "Acme Software"
-// tagline: "API-first platform for modern teams"
-// email: "hello@acmesoftware.com"
-// default_theme: "modern_tech"

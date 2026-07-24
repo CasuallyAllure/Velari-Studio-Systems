@@ -1,5 +1,5 @@
 -- ============================================================
--- Velari Studio Systems — Supabase Database Schema
+-- Velari Systems — Supabase Database Schema
 -- ============================================================
 -- Run this in Supabase SQL Editor to create tables
 -- ============================================================

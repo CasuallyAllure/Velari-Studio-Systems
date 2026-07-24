@@ -2,9 +2,7 @@
 // TODO: INTEGRATION POINT — OpenAI
 // ============================================================
 // Description: Powers AI demo chat and future intake routing
-// Required env vars: 
-//   - VITE_OPENAI_API_KEY (sk-proj-...)
-//   - VITE_OPENAI_MODEL (gpt-4o-mini or gpt-4o)
+// Production credentials are server-only and must never be VITE_ prefixed.
 // Documentation: https://platform.openai.com/docs/api-reference
 // Cost: ~$0.0002 per conversation with gpt-4o-mini
 // ============================================================
@@ -16,18 +14,14 @@ export interface AIClient {
   getChatResponse(context: ConversationContext): Promise<AIResponse>;
 }
 
-// Automatically use mock if no API key, real if key exists
-export const aiClient: AIClient = 
-  import.meta.env.VITE_OPENAI_API_KEY 
-    ? createOpenAIClient() 
-    : mockAIClient;
+// Browser code always uses the mock until the server-side assistant endpoint is wired.
+export const aiClient: AIClient = mockAIClient;
 
 // FUTURE: Real OpenAI implementation (uncomment when ready)
-function createOpenAIClient(): AIClient {
+export function createServerAIClient(): AIClient {
   // const { OpenAI } = await import('openai');
   // const openai = new OpenAI({
-  //   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  //   dangerouslyAllowBrowser: true,  // OK for demo, move to edge function for production
+  //   apiKey: process.env.OPENAI_API_KEY,
   // });
   
   return {
@@ -35,7 +29,7 @@ function createOpenAIClient(): AIClient {
       // const systemPrompt = getSystemPrompt(context.theme);
       // 
       // const response = await openai.chat.completions.create({
-      //   model: import.meta.env.VITE_OPENAI_MODEL || 'gpt-4o-mini',
+      //   model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
       //   messages: [
       //     { role: 'system', content: systemPrompt },
       //     ...context.conversationHistory.map(msg => ({

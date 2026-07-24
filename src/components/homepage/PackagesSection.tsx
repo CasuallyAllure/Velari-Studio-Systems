@@ -5,18 +5,18 @@ import { Button } from '../ui/Button';
 import { packages } from '@/config/packages';
 
 export function PackagesSection() {
-  const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToEstimator = () => {
+    document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <Section id="packages">
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Packages</h2>
+          <h2 className="text-4xl font-bold mb-4">Choose Your Starting Point</h2>
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            Choose the package that fits your needs. All packages include clean code, 
-            documentation, and support.
+            Every engagement starts with a clear foundation, then adapts to the features
+            your business actually needs.
           </p>
         </div>
 
@@ -52,9 +52,9 @@ export function PackagesSection() {
                 <Button
                   variant={pkg.popular ? 'primary' : 'outline'}
                   className="w-full"
-                  onClick={scrollToContact}
+                  onClick={scrollToEstimator}
                 >
-                  Get Started
+                  Build My Estimate
                 </Button>
               </CardContent>
             </Card>

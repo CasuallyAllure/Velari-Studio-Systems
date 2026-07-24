@@ -8,9 +8,9 @@ export function ContactSection() {
     <Section id="contact" variant="muted">
       <Container size="md">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Let's Talk</h2>
+          <h2 className="text-4xl font-bold mb-4">Let&apos;s Review Your Scope</h2>
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            Ready to build your system? Book a free 30-minute discovery call.
+            Request an estimate, then choose a time for a short discovery call to confirm the details.
           </p>
         </div>
 
@@ -49,8 +49,8 @@ export function ContactSection() {
 
               <div>
                 <p className="text-sm text-foreground/60 mb-4">
-                  Or use the intake form above to tell us about your project.
-                  We'll get back to you within 24 hours.
+                  Use the questionnaire above to tell us about your project.
+                  We&apos;ll get back to you within one business day.
                 </p>
                 <button
                   onClick={() => {
@@ -63,7 +63,7 @@ export function ContactSection() {
                   }}
                   className="text-primary hover:underline text-sm font-medium"
                 >
-                  Go to Intake Form →
+                  Start My Estimate →
                 </button>
               </div>
             </div>

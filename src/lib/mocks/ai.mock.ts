@@ -24,7 +24,7 @@ const responseTemplates: Record<ThemeName, string[]> = {
 };
 
 const greetings: Record<ThemeName, string> = {
-  swedish_minimal: "Hello. I'm here to help you understand how Velari Studio Systems can support your project.",
+  swedish_minimal: "Hello. I'm here to help you understand how Velari Systems can support your project.",
   industrial_services: "Hey there. Let's talk about getting your business set up with a solid system.",
   modern_tech: "Welcome. I can help you explore how our platform can power your business operations.",
 };
@@ -67,10 +67,10 @@ export const mockAIClient: AIClient = {
     if (message.includes('cost') || message.includes('price') || message.includes('budget')) {
       return {
         content: context.theme === 'swedish_minimal'
-          ? "Our packages start at $2,500 for a starter site. The Studio System (site + portal + automations) is $7,500. We can discuss what fits your needs best."
+          ? "Signature Landing projects start at $999, Business Platforms start at $2,999, and AI-Integrated Platforms start at $4,999. Your exact estimate depends on the features you choose."
           : context.theme === 'industrial_services'
-          ? "We've got packages from $2,500 to $7,500 depending on what you need. Most service businesses go with the Studio System at $7,500 — includes booking, dispatch, and customer portal."
-          : "Our pricing ranges from $2,500 for a basic site to $7,500 for the full platform with integrations. We can customize based on your technical requirements.",
+          ? "A Signature Landing starts at $999. If you need customer accounts, payments, bookings, or a dashboard, a Business Platform starts at $2,999."
+          : "Signature Landing projects start at $999, Business Platforms at $2,999, and AI-Integrated Platforms at $4,999. Integrations and specialized workflows are scoped separately.",
       };
     }
     
@@ -78,10 +78,10 @@ export const mockAIClient: AIClient = {
     if (message.includes('how long') || message.includes('timeline') || message.includes('when')) {
       return {
         content: context.theme === 'swedish_minimal'
-          ? "Typically 2-4 weeks for a starter site, 4-8 weeks for the full Studio System. We'll provide a detailed timeline during our discovery call."
+          ? "A Signature Landing typically takes 2-3 weeks, a Business Platform 4-6 weeks, and an AI-Integrated Platform 5-8 weeks after we receive the required materials."
           : context.theme === 'industrial_services'
-          ? "We can usually get you up and running in 2-4 weeks for a basic site, 4-8 weeks for the full system with booking and dispatch."
-          : "Standard delivery is 2-4 weeks for basic implementation, 4-8 weeks for full platform with integrations. We can expedite if needed.",
+          ? "A website usually takes 2-3 weeks. A system with accounts, booking, payments, or dispatch usually takes 4-6 weeks after we have your content and access."
+          : "Standard delivery is 2-3 weeks for a Signature Landing, 4-6 weeks for a Business Platform, and 5-8 weeks for an AI-Integrated Platform.",
       };
     }
     
