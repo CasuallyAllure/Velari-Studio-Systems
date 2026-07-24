@@ -1,66 +1,87 @@
-import { Check } from 'lucide-react';
-import { Section, Container } from '../layout/Section';
-import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
-import { Button } from '../ui/Button';
+import { useState } from 'react';
+import { ArrowRight, Check } from 'lucide-react';
 import { packages } from '@/config/packages';
 
 export function PackagesSection() {
+  const [activePackage, setActivePackage] = useState(0);
+
   const scrollToEstimator = () => {
-    document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const selectedPackage = packages[activePackage];
+
   return (
-    <Section id="packages">
-      <Container>
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Choose Your Starting Point</h2>
-          <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            Every engagement starts with a clear foundation, then adapts to the features
-            your business actually needs.
+    <section id="packages" className="velari-lower velari-packages">
+      <div className="velari-shell">
+        <header className="velari-section-heading">
+          <div>
+            <p className="velari-kicker">Choose your starting point</p>
+            <h2 className="velari-title">
+              Start with the right foundation.
+              <em>Build only what helps.</em>
+            </h2>
+          </div>
+          <p className="velari-section-heading__copy">
+            These are starting scopes—not boxes. Brand identity, photography, content,
+            commerce, and custom integrations can be layered in where they make sense.
           </p>
+        </header>
+
+        <div className="package-stage velari-glass">
+          <div className="package-stage__tabs" role="tablist" aria-label="Choose a starting package">
+            {packages.map((pkg, index) => (
+              <button
+                key={pkg.id}
+                id={`package-tab-${pkg.id}`}
+                type="button"
+                role="tab"
+                aria-selected={activePackage === index}
+                aria-controls={`package-panel-${pkg.id}`}
+                className={activePackage === index ? 'is-active' : ''}
+                onClick={() => setActivePackage(index)}
+              >
+                <span>0{index + 1}</span>
+                {pkg.name}
+                {pkg.popular && <small>Popular</small>}
+              </button>
+            ))}
+          </div>
+
+          <div
+            id={`package-panel-${selectedPackage.id}`}
+            className="package-stage__panel"
+            role="tabpanel"
+            aria-labelledby={`package-tab-${selectedPackage.id}`}
+          >
+            <div className="package-stage__summary">
+              <p className="package-stage__index">Selected direction · 0{activePackage + 1}</p>
+              <h3>{selectedPackage.name}</h3>
+              <div className="package-stage__price">{selectedPackage.price}</div>
+              <p>{selectedPackage.description}</p>
+              <button type="button" onClick={scrollToEstimator}>
+                Shape this scope <ArrowRight aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="package-stage__included">
+              <p>Foundation includes</p>
+              <ul>
+                {selectedPackage.features.map((feature) => (
+                  <li key={feature}>
+                    <Check aria-hidden="true" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="package-stage__note">
+                Need branding, photography, copy, or launch content too?
+                <strong> We can scope it as one cohesive engagement.</strong>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {packages.map((pkg) => (
-            <Card
-              key={pkg.id}
-              hover
-              className={pkg.popular ? 'border-primary border-2' : ''}
-            >
-              {pkg.popular && (
-                <div className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-b-md inline-block mb-4">
-                  MOST POPULAR
-                </div>
-              )}
-              
-              <CardHeader>
-                <CardTitle className="text-2xl">{pkg.name}</CardTitle>
-                <div className="text-3xl font-bold mt-2">{pkg.price}</div>
-                <p className="text-sm text-foreground/60 mt-2">{pkg.description}</p>
-              </CardHeader>
-
-              <CardContent>
-                <ul className="space-y-3 mb-6">
-                  {pkg.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Button
-                  variant={pkg.popular ? 'primary' : 'outline'}
-                  className="w-full"
-                  onClick={scrollToEstimator}
-                >
-                  Build My Estimate
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </Container>
-    </Section>
+      </div>
+    </section>
   );
 }

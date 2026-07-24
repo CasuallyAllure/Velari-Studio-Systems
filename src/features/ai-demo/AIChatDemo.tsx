@@ -9,9 +9,10 @@ import type { Message } from '@/lib/types/intake';
 
 interface AIChatDemoProps {
   onConversationUpdate?: (messages: Message[]) => void;
+  compact?: boolean;
 }
 
-export function AIChatDemo({ onConversationUpdate }: AIChatDemoProps) {
+export function AIChatDemo({ onConversationUpdate, compact = false }: AIChatDemoProps) {
   const { theme } = useTheme();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -115,7 +116,7 @@ export function AIChatDemo({ onConversationUpdate }: AIChatDemoProps) {
   };
 
   return (
-    <Card className="max-w-2xl mx-auto">
+    <Card className={`max-w-2xl mx-auto ${compact ? 'ai-intake-card--compact' : ''}`}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>AI Intake Assistant</CardTitle>
@@ -127,14 +128,15 @@ export function AIChatDemo({ onConversationUpdate }: AIChatDemoProps) {
           </button>
         </div>
         <p className="text-sm text-foreground/60 mt-2">
-          {theme === 'swedish_minimal' && 'Ask me about our design approach and services.'}
-          {theme === 'industrial_services' && 'Ask me about booking systems and dispatch automation.'}
-          {theme === 'modern_tech' && 'Ask me about API integrations and platform architecture.'}
+          Start with your business and what you want to create, improve, or simplify.
         </p>
       </CardHeader>
 
       <CardContent>
-        <div ref={messagesContainerRef} className="space-y-4 mb-4 max-h-[400px] overflow-y-auto">
+        <div
+          ref={messagesContainerRef}
+          className={`space-y-4 mb-4 overflow-y-auto ${compact ? 'max-h-[250px]' : 'max-h-[400px]'}`}
+        >
           {messages.map((message, index) => (
             <div
               key={index}

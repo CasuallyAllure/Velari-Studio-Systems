@@ -6,7 +6,6 @@ import { ShowcaseTunnelSection } from './components/homepage/ShowcaseTunnelSecti
 import { WhatWeBuildSection } from './components/homepage/WhatWeBuildSection';
 import { PackagesSection } from './components/homepage/PackagesSection';
 import { HowItWorksSection } from './components/homepage/HowItWorksSection';
-import { DemoSection } from './components/homepage/DemoSection';
 import { ContactSection } from './components/homepage/ContactSection';
 
 function App() {
@@ -21,7 +20,6 @@ function App() {
           <WhatWeBuildSection />
           <PackagesSection />
           <HowItWorksSection />
-          <DemoSection />
           <ContactSection />
         </main>
 
