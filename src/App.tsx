@@ -2,6 +2,7 @@ import { ThemeProvider } from './features/theme/ThemeProvider';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { HeroSection } from './components/homepage/HeroSection';
+import { ShowcaseTunnelSection } from './components/homepage/ShowcaseTunnelSection';
 import { WhatWeBuildSection } from './components/homepage/WhatWeBuildSection';
 import { PackagesSection } from './components/homepage/PackagesSection';
 import { HowItWorksSection } from './components/homepage/HowItWorksSection';
@@ -16,6 +17,7 @@ function App() {
         
         <main>
           <HeroSection />
+          <ShowcaseTunnelSection />
           <WhatWeBuildSection />
           <PackagesSection />
           <HowItWorksSection />

@@ -6,11 +6,11 @@ export const mockEmailClient: EmailClient = {
     console.log('📧 [MOCK] Sending confirmation email to:', data.email);
     console.log('📧 [MOCK] Email content:', {
       to: data.email,
-      subject: 'Your Velari Studio Systems Intake Confirmation',
+      subject: 'Your Velari Systems Project Request',
       preview: `Thanks ${data.name}, we received your intake for ${data.business_name}...`,
       body: {
         greeting: `Hi ${data.name},`,
-        message: `Thank you for your interest in Velari Studio Systems. We've received your intake for ${data.business_name}.`,
+        message: `Thank you for your interest in Velari Systems. We've received your project request for ${data.business_name}.`,
         details: {
           industry: data.industry,
           goals: data.goals.join(', '),

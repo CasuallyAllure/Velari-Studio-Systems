@@ -3,7 +3,7 @@
 // ============================================================
 // Description: Privacy-first analytics for conversion tracking
 // Required env vars: 
-//   - VITE_PLAUSIBLE_DOMAIN (velaristudiosystems.com)
+//   - VITE_PLAUSIBLE_DOMAIN (velariss.co)
 // Setup: Add domain in Plausible dashboard
 // Documentation: https://plausible.io/docs
 // ============================================================

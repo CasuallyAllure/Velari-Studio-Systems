@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
-import { useTheme } from '@/features/theme/ThemeProvider';
+import { useTheme } from '@/features/theme/ThemeContext';
 import { aiClient } from '@/lib/clients/ai';
 import type { Message } from '@/lib/types/intake';
 
@@ -16,24 +16,18 @@ export function AIChatDemo({ onConversationUpdate }: AIChatDemoProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const hasRequestedGreeting = useRef(false);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
+  // Scroll the chat box only — scrollIntoView here would scroll the whole page
+  // down to the demo section on load.
   useEffect(() => {
-    scrollToBottom();
+    const container = messagesContainerRef.current;
+    if (!container || messages.length === 0) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   }, [messages]);
 
-  useEffect(() => {
-    // Send initial greeting
-    if (messages.length === 0) {
-      handleInitialGreeting();
-    }
-  }, []);
-
-  const handleInitialGreeting = async () => {
+  const handleInitialGreeting = useCallback(async () => {
     setIsLoading(true);
     
     try {
@@ -56,7 +50,13 @@ export function AIChatDemo({ onConversationUpdate }: AIChatDemoProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [onConversationUpdate, theme]);
+
+  useEffect(() => {
+    if (hasRequestedGreeting.current) return;
+    hasRequestedGreeting.current = true;
+    void handleInitialGreeting();
+  }, [handleInitialGreeting]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -134,7 +134,7 @@ export function AIChatDemo({ onConversationUpdate }: AIChatDemoProps) {
       </CardHeader>
 
       <CardContent>
-        <div className="space-y-4 mb-4 max-h-[400px] overflow-y-auto">
+        <div ref={messagesContainerRef} className="space-y-4 mb-4 max-h-[400px] overflow-y-auto">
           {messages.map((message, index) => (
             <div
               key={index}
@@ -164,7 +164,6 @@ export function AIChatDemo({ onConversationUpdate }: AIChatDemoProps) {
             </div>
           )}
           
-          <div ref={messagesEndRef} />
         </div>
 
         <div className="flex gap-2">

@@ -3,9 +3,9 @@
 // ============================================================
 // Description: Sends confirmation emails and internal notifications
 // Required env vars: 
-//   - VITE_RESEND_API_KEY (re_...)
-//   - VITE_FROM_EMAIL (intake@velaristudiosystems.com)
-//   - VITE_NOTIFICATION_EMAIL (you@velaristudiosystems.com)
+//   - Server-only RESEND_API_KEY (never VITE_ prefixed)
+//   - Server-only FROM_EMAIL (for example, estimates@velariss.co)
+//   - Server-only NOTIFICATION_EMAIL (for example, info@velariss.co)
 // Setup: Verify domain in Resend dashboard (SPF, DKIM, DMARC)
 // Documentation: https://resend.com/docs
 // ============================================================
@@ -18,36 +18,34 @@ export interface EmailClient {
   sendInternalNotification(data: IntakeData): Promise<void>;
 }
 
-// Automatically use mock if no API key, real if key exists
-export const emailClient: EmailClient = 
-  import.meta.env.VITE_RESEND_API_KEY 
-    ? createResendClient() 
-    : mockEmailClient;
+// Browser code always uses the mock until the server-side estimate endpoint is wired.
+// Resend credentials must never be read by this client bundle.
+export const emailClient: EmailClient = mockEmailClient;
 
 // FUTURE: Real Resend implementation (uncomment when ready)
-function createResendClient(): EmailClient {
+export function createServerEmailClient(): EmailClient {
   // const { Resend } = await import('resend');
-  // const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+  // const resend = new Resend(process.env.RESEND_API_KEY);
   
   return {
     async sendIntakeConfirmation(data: IntakeData) {
       // await resend.emails.send({
-      //   from: import.meta.env.VITE_FROM_EMAIL,
+      //   from: process.env.FROM_EMAIL,
       //   to: data.email,
-      //   subject: 'Your Velari Studio Systems Intake Confirmation',
+      //   subject: 'Your Velari Systems Project Request',
       //   html: renderConfirmationEmail(data),
       // });
       console.log('📧 [REAL] Would send confirmation email to:', data.email);
     },
     
-    async sendInternalNotification(_data: IntakeData) {
+    async sendInternalNotification(data: IntakeData) {
       // await resend.emails.send({
-      //   from: import.meta.env.VITE_FROM_EMAIL,
-      //   to: import.meta.env.VITE_NOTIFICATION_EMAIL,
+      //   from: process.env.FROM_EMAIL,
+      //   to: process.env.NOTIFICATION_EMAIL,
       //   subject: `New Intake: ${data.business_name}`,
       //   html: renderNotificationEmail(data),
       // });
-      console.log('📧 [REAL] Would send notification to team');
+      console.log('📧 [REAL] Would send notification for:', data.business_name);
     },
   };
 }
