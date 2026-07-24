@@ -227,6 +227,39 @@ export function ShowcaseTunnelSection() {
           </button>
         </div>
 
+        <div className="industry-proof__mobile-picker" aria-label="Choose an industry concept">
+          <button
+            type="button"
+            aria-label="Show previous industry concept"
+            onClick={() => stepConcept(-1)}
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+          <label>
+            <small>Choose an industry</small>
+            <select
+              value={concept.id}
+              onChange={(event) => {
+                const nextConcept = concepts.findIndex((item) => item.id === event.target.value);
+                if (nextConcept >= 0) setActiveConcept(nextConcept);
+              }}
+            >
+              {concepts.map((item, index) => (
+                <option value={item.id} key={item.id}>
+                  {String(index + 1).padStart(2, '0')} · {item.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            aria-label="Show next industry concept"
+            onClick={() => stepConcept(1)}
+          >
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
         <div
           id="industry-concept-panel"
           className="industry-proof__stage"
