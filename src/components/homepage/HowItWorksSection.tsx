@@ -1,71 +1,135 @@
-import { MessageSquare, Palette, Code, Rocket } from 'lucide-react';
-import { Section, Container } from '../layout/Section';
+import { useState } from 'react';
+import { ArrowDownRight, Code, MessageSquare, Palette, Rocket } from 'lucide-react';
+import { AIChatDemo } from '@/features/ai-demo/AIChatDemo';
+import { IntakeForm } from '@/features/intake/IntakeForm';
+import type { Message } from '@/lib/types/intake';
 
 const steps = [
   {
     icon: MessageSquare,
     number: '01',
-    title: 'Discovery Call',
-    description: 'We discuss your business, goals, and technical requirements. No sales pitch, just honest conversation.',
+    title: 'Discovery',
+    description: 'We learn the business, the audience, and what needs to change.',
   },
   {
     icon: Palette,
     number: '02',
-    title: 'Design & Planning',
-    description: 'We create wireframes and a technical spec. You approve the plan before we write a single line of code.',
+    title: 'Direction',
+    description: 'We shape the visual language, content plan, and working scope.',
   },
   {
     icon: Code,
     number: '03',
-    title: 'Build & Iterate',
-    description: 'We build in weekly sprints with regular check-ins. You see progress and provide feedback continuously.',
+    title: 'Build',
+    description: 'Design and development move together with clear review points.',
   },
   {
     icon: Rocket,
     number: '04',
-    title: 'Launch & Support',
-    description: 'We deploy to production, train your team, and provide ongoing support. You own all the code.',
+    title: 'Launch',
+    description: 'We deploy, hand off, train, and stay close through the first month.',
   },
 ];
 
 export function HowItWorksSection() {
+  const [conversationTranscript, setConversationTranscript] = useState<Message[]>([]);
+  const [activeTab, setActiveTab] = useState<'chat' | 'form'>('chat');
+
   return (
-    <Section id="how-it-works" variant="muted">
-      <Container>
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">How It Works</h2>
-          <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            A simple, transparent process from discovery to deployment.
+    <section id="how-it-works" className="velari-lower process-studio">
+      <div className="velari-shell">
+        <header className="velari-section-heading">
+          <div>
+            <p className="velari-kicker">Process + live intake</p>
+            <h2 className="velari-title">
+              A clear path in.
+              <em>A considered build out.</em>
+            </h2>
+          </div>
+          <p className="velari-section-heading__copy">
+            Start with a conversation. We turn the answers into a practical direction,
+            then design, build, and launch with you in the room.
           </p>
-        </div>
+        </header>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {steps.map((step) => {
-            const Icon = step.icon;
-            return (
-              <div key={step.number} className="text-center">
-                <div className="relative mb-6">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                    <Icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">
-                    {step.number}
-                  </div>
-                </div>
-                
-                <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                <p className="text-sm text-foreground/80">{step.description}</p>
+        <div className="process-studio__layout">
+          <div className="process-studio__steps velari-glass">
+            <div className="process-studio__steps-heading">
+              <span>How the work moves</span>
+              <small>Typical range · 2–8 weeks</small>
+            </div>
+
+            <div className="process-studio__step-list">
+              {steps.map((step) => {
+                const Icon = step.icon;
+                return (
+                  <article key={step.number}>
+                    <span>{step.number}</span>
+                    <Icon aria-hidden="true" />
+                    <div>
+                      <h3>{step.title}</h3>
+                      <p>{step.description}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className="process-studio__handoff">
+              <span>Nothing starts with a hard sell.</span>
+              <p>We start by understanding what would actually make the business better.</p>
+            </div>
+          </div>
+
+          <div className="process-intake velari-glass">
+            <div className="process-intake__heading">
+              <div>
+                <p>Try the intake</p>
+                <h3>Tell us what you&apos;re thinking.</h3>
               </div>
-            );
-          })}
-        </div>
+              <ArrowDownRight aria-hidden="true" />
+            </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-foreground/60">
-            Typical timeline: <span className="font-bold text-foreground">2-8 weeks</span> depending on package
-          </p>
+            <p className="process-intake__intro">
+              Use the guided assistant for a quick conversation or move directly into
+              the project questionnaire. Your answers stay attached to the inquiry.
+            </p>
+
+            <div className="process-intake__tabs" role="tablist" aria-label="Choose an intake method">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === 'chat'}
+                className={activeTab === 'chat' ? 'is-active' : ''}
+                onClick={() => setActiveTab('chat')}
+              >
+                Guided conversation
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === 'form'}
+                className={activeTab === 'form' ? 'is-active' : ''}
+                onClick={() => setActiveTab('form')}
+              >
+                Project questionnaire
+              </button>
+            </div>
+
+            <div className="process-intake__surface">
+              {activeTab === 'chat' ? (
+                <AIChatDemo onConversationUpdate={setConversationTranscript} compact />
+              ) : (
+                <IntakeForm conversationTranscript={conversationTranscript} />
+              )}
+            </div>
+
+            <p className="process-intake__fine-print">
+              Early estimates are starting ranges. We confirm the final scope together before any agreement.
+            </p>
+          </div>
         </div>
-      </Container>
-    </Section>
+      </div>
+    </section>
   );
 }

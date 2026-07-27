@@ -24,9 +24,9 @@ const responseTemplates: Record<ThemeName, string[]> = {
 };
 
 const greetings: Record<ThemeName, string> = {
-  swedish_minimal: "Hello. I'm here to help you understand how Velari Systems can support your project.",
-  industrial_services: "Hey there. Let's talk about getting your business set up with a solid system.",
-  modern_tech: "Welcome. I can help you explore how our platform can power your business operations.",
+  swedish_minimal: "Let’s shape a starting scope. What kind of business is this, and are you thinking about a website, branding, photography, or a digital system?",
+  industrial_services: "Let’s shape a starting scope. What service do you provide, and do you mainly need a stronger website, better intake, or help connecting the tools you already use?",
+  modern_tech: "Let’s shape a starting scope. Tell me what you are building and whether the priority is the public website, the product experience, or the systems behind it.",
 };
 
 export const mockAIClient: AIClient = {
@@ -71,6 +71,18 @@ export const mockAIClient: AIClient = {
           : context.theme === 'industrial_services'
           ? "A Signature Landing starts at $999. If you need customer accounts, payments, bookings, or a dashboard, a Business Platform starts at $2,999."
           : "Signature Landing projects start at $999, Business Platforms at $2,999, and AI-Integrated Platforms at $4,999. Integrations and specialized workflows are scoped separately.",
+      };
+    }
+
+    if (message.includes('brand') || message.includes('logo') || message.includes('identity')) {
+      return {
+        content: "We can handle the full identity—logo direction, color, typography, voice, and a practical brand guide—then carry it directly into the website and launch materials. Are you starting fresh or refining something that already exists?",
+      };
+    }
+
+    if (message.includes('photo') || message.includes('content') || message.includes('campaign')) {
+      return {
+        content: "We can plan and direct original photography for the site, social launch, products, spaces, or team portraits. What needs to be photographed, and where will the imagery be used first?",
       };
     }
     

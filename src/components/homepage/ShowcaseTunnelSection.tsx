@@ -181,13 +181,9 @@ export function ShowcaseTunnelSection() {
       </section>
 
       <section id="industry-concepts" className="industry-proof" aria-labelledby="industry-proof-title">
-        <div className="industry-proof__heading">
-          <div>
-            <p>Nine industry-ready website directions</p>
-            <h2 id="industry-proof-title">Beautiful websites. <em>Built around your business.</em></h2>
-          </div>
-          <p>Start with a custom website and a simple inquiry or client-intake flow. Add ordering, payments, AI, automation, or integrations only where they genuinely help.</p>
-        </div>
+        <h2 id="industry-proof-title" className="industry-proof__section-label">
+          Nine industry-ready website directions
+        </h2>
 
         <div className="industry-proof__tabs-shell">
           <button
@@ -227,6 +223,39 @@ export function ShowcaseTunnelSection() {
           </button>
         </div>
 
+        <div className="industry-proof__mobile-picker" aria-label="Choose an industry concept">
+          <button
+            type="button"
+            aria-label="Show previous industry concept"
+            onClick={() => stepConcept(-1)}
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+          <label>
+            <small>Choose an industry</small>
+            <select
+              value={concept.id}
+              onChange={(event) => {
+                const nextConcept = concepts.findIndex((item) => item.id === event.target.value);
+                if (nextConcept >= 0) setActiveConcept(nextConcept);
+              }}
+            >
+              {concepts.map((item, index) => (
+                <option value={item.id} key={item.id}>
+                  {String(index + 1).padStart(2, '0')} · {item.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            aria-label="Show next industry concept"
+            onClick={() => stepConcept(1)}
+          >
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
         <div
           id="industry-concept-panel"
           className="industry-proof__stage"
@@ -245,12 +274,6 @@ export function ShowcaseTunnelSection() {
                 View concept <span>↗</span>
               </a>
             </div>
-            <div className="industry-proof__details">
-              <p>{concept.body}</p>
-              <div className="industry-proof__chips">
-                {concept.proofs.map((proof) => <span key={proof}>{proof}</span>)}
-              </div>
-            </div>
           </div>
 
           <div className="industry-proof__devices" key={concept.id}>
@@ -262,6 +285,12 @@ export function ShowcaseTunnelSection() {
               <span></span>
               <img src={concept.mobile} alt={`${concept.label} mobile website concept`} />
             </figure>
+            <div className="industry-proof__device-notes">
+              <p>{concept.body}</p>
+              <div className="industry-proof__chips">
+                {concept.proofs.map((proof) => <span key={proof}>{proof}</span>)}
+              </div>
+            </div>
           </div>
         </div>
       </section>

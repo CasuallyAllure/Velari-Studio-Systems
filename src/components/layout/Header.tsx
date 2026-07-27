@@ -2,10 +2,10 @@ import { Container } from './Section';
 import { ThemeSwitcher } from '@/features/theme/ThemeSwitcher';
 
 const NAV_ITEMS = [
-  { id: 'what-we-build', label: 'What We Build' },
-  { id: 'packages', label: 'Packages' },
-  { id: 'how-it-works', label: 'How It Works' },
-  { id: 'demo', label: 'Live Demo' },
+  { id: 'what-we-build', label: 'Studio' },
+  { id: 'packages', label: 'Starting Points' },
+  { id: 'how-it-works', label: 'Process + Intake' },
+  { id: 'contact', label: 'Inquiries' },
 ] as const;
 
 export function Header() {
