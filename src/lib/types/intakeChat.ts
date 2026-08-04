@@ -58,3 +58,10 @@ export interface IntakeRequestBody {
 export interface IntakeNotConfigured {
   error: 'not_configured';
 }
+
+/** Body posted to /api/lead when an intake conversation reaches its done turn. */
+export interface IntakeLeadBody {
+  summary: IntakeSummary;
+  transcript: Array<{ role: 'user' | 'assistant'; text: string }>;
+  mode: 'live' | 'guided';
+}

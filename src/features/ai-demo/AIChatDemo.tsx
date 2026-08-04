@@ -72,6 +72,25 @@ export function AIChatDemo({ onConversationUpdate, compact = false }: AIChatDemo
   const contextRef = useRef<IntakeContext | undefined>(undefined);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const hasStarted = useRef(false);
+  const leadSentRef = useRef(false);
+
+  // Fire-and-forget lead capture once a turn completes the intake. Silent on
+  // any failure — the visitor's experience never depends on this succeeding,
+  // and it only fires once per conversation.
+  const maybeSendLead = useCallback((turn: IntakeTurn, history: ChatEntry[]) => {
+    if (!turn.done || !turn.summary || leadSentRef.current) return;
+    leadSentRef.current = true;
+    const transcript = history.map(({ role, content }) => ({ role, text: content }));
+    fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        summary: turn.summary,
+        transcript,
+        mode: modeRef.current === 'guided' ? 'guided' : 'live',
+      }),
+    }).catch(() => {});
+  }, []);
 
   // Scroll the chat box only — never scroll the message element into view at
   // the window level, or the whole page jumps down to the demo section on load.
@@ -125,6 +144,7 @@ export function AIChatDemo({ onConversationUpdate, compact = false }: AIChatDemo
       if (modeRef.current === 'guided') {
         engineRef.current = createGuidedIntake(context);
       }
+      leadSentRef.current = false;
       setEntries([]);
       setInput('');
       setSelections([]);
@@ -141,6 +161,7 @@ export function AIChatDemo({ onConversationUpdate, compact = false }: AIChatDemo
         };
         setEntries([greeting]);
         onConversationUpdate?.(toPlainMessages([greeting]));
+        maybeSendLead(turn, [greeting]);
       } catch (error) {
         console.error('Failed to start intake conversation:', error);
         setEntries([{ role: 'assistant', content: SNAG_MESSAGE, timestamp: Date.now() }]);
@@ -148,7 +169,7 @@ export function AIChatDemo({ onConversationUpdate, compact = false }: AIChatDemo
         setIsLoading(false);
       }
     },
-    [getTurn, onConversationUpdate],
+    [getTurn, onConversationUpdate, maybeSendLead],
   );
 
   useEffect(() => {
@@ -190,6 +211,7 @@ export function AIChatDemo({ onConversationUpdate, compact = false }: AIChatDemo
       setEntries(updated);
       setChipsConsumed(false);
       onConversationUpdate?.(toPlainMessages(updated));
+      maybeSendLead(turn, updated);
     } catch (error) {
       console.error('Failed to get intake response:', error);
       setEntries([...history, { role: 'assistant', content: SNAG_MESSAGE, timestamp: Date.now() }]);
