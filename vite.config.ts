@@ -42,6 +42,15 @@ export default defineConfig(({ mode }) => {
   if (env.INTAKE_MODEL) {
     process.env.INTAKE_MODEL = env.INTAKE_MODEL
   }
+  if (env.RESEND_API_KEY) {
+    process.env.RESEND_API_KEY = env.RESEND_API_KEY
+  }
+  if (env.FROM_EMAIL) {
+    process.env.FROM_EMAIL = env.FROM_EMAIL
+  }
+  if (env.NOTIFICATION_EMAIL) {
+    process.env.NOTIFICATION_EMAIL = env.NOTIFICATION_EMAIL
+  }
 
   // Local dev twin of api/intake.ts and api/lead.ts (the Vercel functions) —
   // same handlers.

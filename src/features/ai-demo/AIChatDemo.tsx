@@ -8,6 +8,7 @@ import { createGuidedIntake, type GuidedIntake } from '@/lib/mocks/guidedIntake'
 import { onPackageSelected } from '@/features/ai-demo/intakeBus';
 import type { IntakeContext, IntakeSummary, IntakeTurn } from '@/lib/types/intakeChat';
 import type { Message } from '@/lib/types/intake';
+import { businessProfile } from '../../config/businessProfile';
 
 interface AIChatDemoProps {
   onConversationUpdate?: (messages: Message[]) => void;
@@ -55,6 +56,16 @@ function SummaryCard({ summary }: { summary: IntakeSummary }) {
           </div>
         ))}
       </div>
+      {businessProfile.nextSteps.bookingUrl && (
+        <a
+          href={businessProfile.nextSteps.bookingUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="block mt-4 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium text-center hover:opacity-90 transition-opacity"
+        >
+          Book a 15-minute call
+        </a>
+      )}
     </div>
   );
 }

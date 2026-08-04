@@ -11,6 +11,7 @@
 // - We recommend a package from their answers — we never quiz them on tiers.
 
 import type { IntakeContext, IntakeTurn } from '@/lib/types/intakeChat';
+import { businessProfile } from '../../config/businessProfile';
 
 type Step =
   | 'industry'
@@ -340,7 +341,7 @@ export function createGuidedIntake(context?: IntakeContext) {
       .filter(Boolean)
       .join(' — ');
     return {
-      message: `Perfect — here's what I'm sending in: ${pkg} for ${who}, ${extrasPhrase}${replacePhrase}, ${timeline.toLowerCase()} timeline. We'll come back with a considered scope, usually within one business day. Want to add anything, the Project Questionnaire tab is right there.`,
+      message: `Perfect — here's what I'm sending in: ${pkg} for ${who}, ${extrasPhrase}${replacePhrase}, ${timeline.toLowerCase()} timeline. We'll come back with a considered scope, usually within one business day. Want to add anything, the Project Questionnaire tab is right there.${businessProfile.nextSteps.bookingUrl ? ` If you'd like, you can also grab a 15-minute call now: ${businessProfile.nextSteps.bookingUrl}` : ''}`,
       done: true,
       summary: {
         package: TIER_NAMES[answers.tierId] || undefined,
