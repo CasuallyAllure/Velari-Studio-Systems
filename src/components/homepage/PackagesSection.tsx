@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { packages } from '@/config/packages';
+import { emitPackageSelected } from '@/features/ai-demo/intakeBus';
 
 export function PackagesSection() {
   const [activePackage, setActivePackage] = useState(0);
 
-  const scrollToEstimator = () => {
+  const selectedPackage = packages[activePackage];
+
+  const shapeScope = () => {
+    emitPackageSelected(selectedPackage.id);
     document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  const selectedPackage = packages[activePackage];
 
   return (
     <section id="packages" className="velari-lower velari-packages">
@@ -59,7 +61,7 @@ export function PackagesSection() {
               <h3>{selectedPackage.name}</h3>
               <div className="package-stage__price">{selectedPackage.price}</div>
               <p>{selectedPackage.description}</p>
-              <button type="button" onClick={scrollToEstimator}>
+              <button type="button" onClick={shapeScope}>
                 Shape this scope <ArrowRight aria-hidden="true" />
               </button>
             </div>

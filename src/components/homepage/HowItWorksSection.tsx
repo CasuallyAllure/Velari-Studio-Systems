@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowDownRight, Code, MessageSquare, Palette, Rocket } from 'lucide-react';
 import { AIChatDemo } from '@/features/ai-demo/AIChatDemo';
+import { onPackageSelected } from '@/features/ai-demo/intakeBus';
 import { IntakeForm } from '@/features/intake/IntakeForm';
 import type { Message } from '@/lib/types/intake';
 
@@ -34,6 +35,11 @@ const steps = [
 export function HowItWorksSection() {
   const [conversationTranscript, setConversationTranscript] = useState<Message[]>([]);
   const [activeTab, setActiveTab] = useState<'chat' | 'form'>('chat');
+
+  // "Shape this scope" on a package should land the visitor on the chat tab.
+  useEffect(() => {
+    return onPackageSelected(() => setActiveTab('chat'));
+  }, []);
 
   return (
     <section id="how-it-works" className="velari-lower process-studio">
