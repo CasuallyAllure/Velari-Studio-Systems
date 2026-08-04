@@ -116,8 +116,7 @@ export const businessProfile = {
     responseTime: 'usually within one business day',
     alternative:
       'The Project Questionnaire tab is there if they want to add detail in their own words.',
-    // TODO_RAY: scheduling link (Cal.com / Calendly). Empty = Vela offers the email follow-up path only.
-    bookingUrl: '',
+    bookingUrl: 'https://calendly.com/velariss-info/intro-discovery',
   },
 
   // TODO_RAY: notable clients, case studies, and any social proof Vela may cite.
