@@ -2,6 +2,7 @@
 // NOTE: relative import on purpose — this module is compiled by esbuild via
 // vite.config and by Vercel's api builder, where the `@` alias does not resolve.
 import { quoteConfig } from '../../src/config/quote';
+import { businessProfile } from '../../src/config/businessProfile';
 
 const catalog = {
   tiers: quoteConfig.tiers.map((tier) => ({
@@ -37,6 +38,48 @@ function formatPriceLine(tier: (typeof quoteConfig.tiers)[number]): string {
   const amount = `$${tier.price.toLocaleString('en-US')}`;
   return tier.pricingMode === 'starting_at' ? `from ${amount}` : amount;
 }
+
+// Renders businessProfile into prompt text. Only positioning, idealClients,
+// faqs, and objections are used here — socialProof/founder/serviceArea/
+// bookingUrl are TODO_RAY placeholders (empty today) and must never leak a
+// blank/TODO value into the prompt, so each optional field is gated on
+// having real content before it's rendered.
+function buildAboutVelariBlock(): string {
+  const { positioning, idealClients, faqs, objections } = businessProfile;
+
+  const serviceAreaLine = idealClients.serviceArea
+    ? `\nService area: ${idealClients.serviceArea}`
+    : '';
+  const faqLines = faqs.map((faq) => `- ${faq.question} — ${faq.answer}`).join('\n');
+  const objectionLines = objections
+    .map((item) => `- ${item.objection} — ${item.response}`)
+    .join('\n');
+
+  return `ABOUT VELARI
+${positioning.summary}
+Ownership: ${positioning.ownershipAngle}
+Engagement: ${positioning.engagementModel}
+What sets Velari apart: ${positioning.differentiators.join(' ')}
+
+IDEAL CLIENTS
+${idealClients.profile}
+Budget comfort: ${idealClients.budgetComfort}
+Below budget: ${idealClients.belowBudget}${serviceAreaLine}
+
+FAQS
+${faqLines}
+
+OBJECTIONS
+${objectionLines}
+
+When the visitor asks about the business, answer from these facts in one tight sentence, then steer back to the intake. Never invent facts not listed here.`;
+}
+
+// Done-turn recap instruction: offers a booking link only once nextSteps.bookingUrl
+// is filled in (TODO_RAY placeholder is empty today).
+const doneRecapInstruction = businessProfile.nextSteps.bookingUrl
+  ? `we'll come back with a considered scope, usually within one business day; they can grab a 15-minute call now at ${businessProfile.nextSteps.bookingUrl}, or fill the Project Questionnaire tab if they want to add detail.`
+  : `we'll come back with a considered scope, usually within one business day, and they can also fill the Project Questionnaire tab if they want to add detail.`;
 
 export function buildSystemPrompt(context?: { packageId?: string; theme?: string }): string {
   const tier = context?.packageId
@@ -83,7 +126,9 @@ Every turn you MUST call the \`respond\` tool.
 - \`quickReplies\`: up to 4 short tap-able options — use whenever your question is a closed choice.
 - \`multiSelect\`: use for "which of these apply" moments (options array + confirmLabel like "That's everything"); options must map to catalog item names.
 - Use chips generously early in the conversation; switch to free text for open questions.
-- When you have enough to scope (or the visitor wants to wrap): set \`done: true\`, fill \`summary\` (package, addOns, timeline, budgetComfort, notes, contact), and make \`message\` a tight recap ending with: we'll come back with a considered scope, usually within one business day, and they can also fill the Project Questionnaire tab if they want to add detail.
+- When you have enough to scope (or the visitor wants to wrap): set \`done: true\`, fill \`summary\` (package, addOns, timeline, budgetComfort, notes, contact), and make \`message\` a tight recap ending with: ${doneRecapInstruction}
+
+${buildAboutVelariBlock()}
 
 HARD RULES
 - Prices come ONLY from the catalog below. Never invent numbers or discounts. The only discount that exists: 10% off fixed-price brand items when bundled with a build.
