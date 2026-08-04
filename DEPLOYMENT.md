@@ -1,5 +1,38 @@
 # Deployment Guide
 
+## Cloudflare Pages — AI intake + lead email (current setup)
+
+This site deploys to **Cloudflare Pages**, not Vercel. The Vela intake chat
+(`/api/intake`) and lead-capture email (`/api/lead`) endpoints are
+Cloudflare Pages Functions in `functions/api/`, backed by the HTTP-agnostic
+handlers in `server/intake/`.
+
+### Server-side environment variables
+
+Set these in Cloudflare Pages → Settings → Environment variables →
+**Production**, then redeploy. These are read server-side by the Pages
+Functions (via `context.env`) — do **not** prefix them with `VITE_`, and
+they are never exposed to the client bundle:
+
+```
+ANTHROPIC_API_KEY=sk-ant-...       # required — powers the Vela intake chat
+INTAKE_MODEL=claude-sonnet-5       # optional — defaults to claude-sonnet-5
+RESEND_API_KEY=re_...              # required — sends the lead notification email
+FROM_EMAIL=intake@yourdomain.com   # optional — defaults to onboarding@resend.dev
+NOTIFICATION_EMAIL=you@yourdomain.com  # required — where lead emails are sent
+```
+
+Without `ANTHROPIC_API_KEY`, `/api/intake` returns `503 not_configured` (the
+UI falls back to guided mode). Without `RESEND_API_KEY` +
+`NOTIFICATION_EMAIL`, `/api/lead` still logs the lead to the Functions log
+but returns `503 not_configured` for the email send.
+
+**The sections below (Vercel, Netlify, Supabase, `VITE_OPENAI_API_KEY`,
+`VITE_RESEND_API_KEY`, etc.) describe an earlier, unused deployment target
+and are outdated where they conflict with the above.**
+
+---
+
 ## Quick Deploy to Vercel
 
 ### 1. Install Vercel CLI (if not already installed)
