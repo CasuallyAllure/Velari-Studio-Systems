@@ -1,7 +1,8 @@
 // HTTP-agnostic lead-capture handler for POST /api/lead. Fired once an intake
 // conversation reaches its done turn. Always logs to the server console
-// first (Vercel logs double as a free backup), then emails Ray via the
-// Resend REST API with plain fetch (no SDK dependency — mirrors handler.ts).
+// first (Cloudflare Pages logs double as a free backup), then emails Ray via
+// the Resend REST API with plain fetch (no SDK dependency — mirrors
+// handler.ts).
 import type { IntakeLeadBody, IntakeSummary } from '../../src/lib/types/intakeChat';
 
 const RESEND_URL = 'https://api.resend.com/emails';
@@ -71,7 +72,16 @@ function buildEmailText(summary: IntakeSummary, transcript: IntakeLeadBody['tran
   return [...rows, '', ...transcriptLines].join('\n');
 }
 
-export async function handleLeadRequest(rawBody: unknown): Promise<{ status: number; body: unknown }> {
+export interface LeadEnv {
+  RESEND_API_KEY?: string;
+  FROM_EMAIL?: string;
+  NOTIFICATION_EMAIL?: string;
+}
+
+export async function handleLeadRequest(
+  rawBody: unknown,
+  env?: LeadEnv,
+): Promise<{ status: number; body: unknown }> {
   const candidate = rawBody as
     | { summary?: unknown; transcript?: unknown; mode?: unknown }
     | null
@@ -87,7 +97,7 @@ export async function handleLeadRequest(rawBody: unknown): Promise<{ status: num
 
   console.log('[intake-lead] new lead:', JSON.stringify({ summary, transcript, mode }));
 
-  if (!process.env.RESEND_API_KEY || !process.env.NOTIFICATION_EMAIL) {
+  if (!env?.RESEND_API_KEY || !env?.NOTIFICATION_EMAIL) {
     return { status: 503, body: { error: 'not_configured' } };
   }
 
@@ -95,12 +105,12 @@ export async function handleLeadRequest(rawBody: unknown): Promise<{ status: num
     const response = await fetch(RESEND_URL, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        from: process.env.FROM_EMAIL || 'onboarding@resend.dev',
-        to: process.env.NOTIFICATION_EMAIL,
+        from: env.FROM_EMAIL || 'onboarding@resend.dev',
+        to: env.NOTIFICATION_EMAIL,
         subject: `New intake — ${summary.contact?.name || 'visitor'} · ${summary.package || 'unscoped'}`,
         text: buildEmailText(summary, transcript),
       }),

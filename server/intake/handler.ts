@@ -1,7 +1,7 @@
 // HTTP-agnostic intake turn handler. Speaks the contract in
 // src/lib/types/intakeChat.ts and talks to the Anthropic API via plain fetch
 // (no SDK dependency — this module runs under both Vite dev middleware and
-// Vercel's serverless builder).
+// Cloudflare Pages Functions).
 import type {
   IntakeRequestBody,
   IntakeChatMessage,
@@ -79,8 +79,8 @@ interface AnthropicContentBlock {
 export async function runIntakeTurn(
   body: IntakeRequestBody,
   apiKey: string,
+  model: string = DEFAULT_MODEL,
 ): Promise<IntakeTurn> {
-  const model = process.env.INTAKE_MODEL || DEFAULT_MODEL;
 
   const messages =
     body.messages.length > 0
@@ -155,6 +155,7 @@ function sanitizeMessages(raw: unknown[]): IntakeChatMessage[] {
 export async function handleIntakeRequest(
   rawBody: unknown,
   apiKey: string | undefined,
+  model?: string,
 ): Promise<{ status: number; body: unknown }> {
   if (!apiKey) {
     return { status: 503, body: { error: 'not_configured' } };
@@ -174,7 +175,7 @@ export async function handleIntakeRequest(
   };
 
   try {
-    const turn = await runIntakeTurn(body, apiKey);
+    const turn = await runIntakeTurn(body, apiKey, model || DEFAULT_MODEL);
     return { status: 200, body: turn };
   } catch (error) {
     console.error('[intake] upstream error:', error);

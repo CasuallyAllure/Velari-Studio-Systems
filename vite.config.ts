@@ -39,30 +39,30 @@ function jsonApiMiddleware(
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  if (env.INTAKE_MODEL) {
-    process.env.INTAKE_MODEL = env.INTAKE_MODEL
-  }
-  if (env.RESEND_API_KEY) {
-    process.env.RESEND_API_KEY = env.RESEND_API_KEY
-  }
-  if (env.FROM_EMAIL) {
-    process.env.FROM_EMAIL = env.FROM_EMAIL
-  }
-  if (env.NOTIFICATION_EMAIL) {
-    process.env.NOTIFICATION_EMAIL = env.NOTIFICATION_EMAIL
-  }
 
-  // Local dev twin of api/intake.ts and api/lead.ts (the Vercel functions) —
-  // same handlers.
+  // Local dev twin of functions/api/intake.ts and functions/api/lead.ts (the
+  // Cloudflare Pages Functions) — same handlers, env values passed directly
+  // instead of read from process.env.
   function intakeApiDev(): Plugin {
     return {
       name: 'intake-api-dev',
       configureServer(server: ViteDevServer) {
         server.middlewares.use(
           '/api/intake',
-          jsonApiMiddleware((parsed) => handleIntakeRequest(parsed, env.ANTHROPIC_API_KEY)),
+          jsonApiMiddleware((parsed) =>
+            handleIntakeRequest(parsed, env.ANTHROPIC_API_KEY, env.INTAKE_MODEL),
+          ),
         )
-        server.middlewares.use('/api/lead', jsonApiMiddleware(handleLeadRequest))
+        server.middlewares.use(
+          '/api/lead',
+          jsonApiMiddleware((parsed) =>
+            handleLeadRequest(parsed, {
+              RESEND_API_KEY: env.RESEND_API_KEY,
+              FROM_EMAIL: env.FROM_EMAIL,
+              NOTIFICATION_EMAIL: env.NOTIFICATION_EMAIL,
+            }),
+          ),
+        )
       },
     }
   }
