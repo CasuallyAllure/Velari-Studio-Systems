@@ -1,0 +1,200 @@
+[
+  {
+    "concept": "property",
+    "viewport": "desktop",
+    "url": "http://127.0.0.1:4173/concepts/property/index.html",
+    "buttons": 1,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 9,
+    "scrollHeight": 900,
+    "title": "Northline Residences — Property Concept"
+  },
+  {
+    "concept": "dental",
+    "viewport": "desktop",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=dental",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 900,
+    "title": "Arc Dental Atelier — Velari Concept"
+  },
+  {
+    "concept": "restaurant",
+    "viewport": "desktop",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=restaurant",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 900,
+    "title": "Ember & Grain — Velari Concept"
+  },
+  {
+    "concept": "trades",
+    "viewport": "desktop",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=trades",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 900,
+    "title": "Copperline — Velari Concept"
+  },
+  {
+    "concept": "industrial",
+    "viewport": "desktop",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=industrial",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 900,
+    "title": "Forgeworks — Velari Concept"
+  },
+  {
+    "concept": "logistics",
+    "viewport": "desktop",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=logistics",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 900,
+    "title": "Northbound Freight — Velari Concept"
+  },
+  {
+    "concept": "retail",
+    "viewport": "desktop",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=retail",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 900,
+    "title": "Alder & Form — Velari Concept"
+  },
+  {
+    "concept": "research",
+    "viewport": "desktop",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=research",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 900,
+    "title": "Vanta Research — Velari Concept"
+  },
+  {
+    "concept": "construction",
+    "viewport": "desktop",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=construction",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 900,
+    "title": "Groundline — Velari Concept"
+  },
+  {
+    "concept": "property",
+    "viewport": "mobile",
+    "url": "http://127.0.0.1:4173/concepts/property/index.html",
+    "buttons": 1,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 9,
+    "scrollHeight": 1141,
+    "title": "Northline Residences — Property Concept"
+  },
+  {
+    "concept": "dental",
+    "viewport": "mobile",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=dental",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 1023,
+    "title": "Arc Dental Atelier — Velari Concept"
+  },
+  {
+    "concept": "restaurant",
+    "viewport": "mobile",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=restaurant",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 1020,
+    "title": "Ember & Grain — Velari Concept"
+  },
+  {
+    "concept": "trades",
+    "viewport": "mobile",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=trades",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 1022,
+    "title": "Copperline — Velari Concept"
+  },
+  {
+    "concept": "industrial",
+    "viewport": "mobile",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=industrial",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 1042,
+    "title": "Forgeworks — Velari Concept"
+  },
+  {
+    "concept": "logistics",
+    "viewport": "mobile",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=logistics",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 1047,
+    "title": "Northbound Freight — Velari Concept"
+  },
+  {
+    "concept": "retail",
+    "viewport": "mobile",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=retail",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 1020,
+    "title": "Alder & Form — Velari Concept"
+  },
+  {
+    "concept": "research",
+    "viewport": "mobile",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=research",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 1020,
+    "title": "Vanta Research — Velari Concept"
+  },
+  {
+    "concept": "construction",
+    "viewport": "mobile",
+    "url": "http://127.0.0.1:4173/concepts/studio/index.html?scene=construction",
+    "buttons": 0,
+    "headings": 2,
+    "horizontalOverflow": false,
+    "links": 11,
+    "scrollHeight": 1046,
+    "title": "Groundline — Velari Concept"
+  }
+]

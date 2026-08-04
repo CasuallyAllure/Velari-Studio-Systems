@@ -5,13 +5,8 @@
       "name": "velari-dev",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
-      "port": 5173
-    },
-    {
-      "name": "velari-dc",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["-y", "live-server", "--port=8081", "--no-browser", "--quiet", "--watch=Velari Home v3.dc.html,support.js,img", "."],
-      "port": 8081
+      "port": 5173,
+      "autoPort": true
     }
   ]
 }

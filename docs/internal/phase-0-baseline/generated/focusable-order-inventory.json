@@ -1,0 +1,622 @@
+[
+  {
+    "disabled": false,
+    "href": "/",
+    "index": 0,
+    "name": "VELARISystems",
+    "tabindex": null,
+    "tag": "A",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 1,
+    "name": "Studio",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 2,
+    "name": "Starting Points",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 3,
+    "name": "Process + Intake",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 4,
+    "name": "Inquiries",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 5,
+    "name": "Velari Cinematic",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 6,
+    "name": "Industrial Services",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 7,
+    "name": "Modern Tech",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 8,
+    "name": "Let's TalkBook a Consult",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 9,
+    "name": "Build my estimate",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 10,
+    "name": "Show previous industry concept",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 11,
+    "name": "01Property",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 12,
+    "name": "02Dental",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 13,
+    "name": "03Restaurant",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 14,
+    "name": "04Trades",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 15,
+    "name": "05Industrial",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 16,
+    "name": "06Logistics",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 17,
+    "name": "07Retail",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 18,
+    "name": "08Research Labs",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 19,
+    "name": "09Construction",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 20,
+    "name": "Show next industry concept",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 21,
+    "name": "Show previous industry concept",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": false
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 22,
+    "name": "01 · Property02 · Dental03 · Restaurant04 · Trades05 · Industrial06 · Logistics0",
+    "tabindex": null,
+    "tag": "SELECT",
+    "type": null,
+    "visible": false
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 23,
+    "name": "Show next industry concept",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": false
+  },
+  {
+    "disabled": false,
+    "href": "/concepts/property/index.html",
+    "index": 24,
+    "name": "View the Property website concept",
+    "tabindex": null,
+    "tag": "A",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 25,
+    "name": "View Brand systems",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 26,
+    "name": "View Websites",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 27,
+    "name": "View Photography + creative",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 28,
+    "name": "View Portals + ordering",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 29,
+    "name": "View AI intake + reception",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 30,
+    "name": "View Automation + integrations",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 31,
+    "name": "01Signature Landing",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 32,
+    "name": "02Business PlatformPopular",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 33,
+    "name": "03AI-Integrated Platform",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 34,
+    "name": "Shape this scope",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 35,
+    "name": "Guided conversation",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 36,
+    "name": "Project questionnaire",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 37,
+    "name": "Reset",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 38,
+    "name": "Restaurant / café",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 39,
+    "name": "Salon / studio",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 40,
+    "name": "Gym / fitness",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 41,
+    "name": "Trades / home services",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 42,
+    "name": "Real estate / property",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 43,
+    "name": "Health / wellness",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 44,
+    "name": "Shop / online store",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 45,
+    "name": "Something else",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "button",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 46,
+    "name": "Type your message...",
+    "tabindex": null,
+    "tag": "INPUT",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": true,
+    "href": null,
+    "index": 47,
+    "name": null,
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": "mailto:info@velariss.co",
+    "index": 48,
+    "name": "Emailinfo@velariss.co",
+    "tabindex": null,
+    "tag": "A",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": "tel:(415)988-0944",
+    "index": 49,
+    "name": "Phone(415) 988-0944",
+    "tabindex": null,
+    "tag": "A",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 50,
+    "name": "New website or redesignBrand identity or logo systemPhotography or creative dire",
+    "tabindex": null,
+    "tag": "SELECT",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 51,
+    "name": "Name",
+    "tabindex": null,
+    "tag": "INPUT",
+    "type": "text",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 52,
+    "name": "you@company.com",
+    "tabindex": null,
+    "tag": "INPUT",
+    "type": "email",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 53,
+    "name": "Optional",
+    "tabindex": null,
+    "tag": "INPUT",
+    "type": "text",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 54,
+    "name": "Optional",
+    "tabindex": null,
+    "tag": "INPUT",
+    "type": "tel",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 55,
+    "name": "A few sentences about the business, the opportunity, or what you want to change.",
+    "tabindex": null,
+    "tag": "TEXTAREA",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": null,
+    "index": 56,
+    "name": "Prepare inquiry",
+    "tabindex": null,
+    "tag": "BUTTON",
+    "type": "submit",
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": "/",
+    "index": 57,
+    "name": "VELARI Systems",
+    "tabindex": null,
+    "tag": "A",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": "mailto:info@velariss.co",
+    "index": 58,
+    "name": "info@velariss.co",
+    "tabindex": null,
+    "tag": "A",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": "tel:(415)988-0944",
+    "index": 59,
+    "name": "(415) 988-0944",
+    "tabindex": null,
+    "tag": "A",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": "https://www.openstreetmap.org/copyright",
+    "index": 60,
+    "name": "OpenStreetMap contributors",
+    "tabindex": null,
+    "tag": "A",
+    "type": null,
+    "visible": true
+  },
+  {
+    "disabled": false,
+    "href": "https://www.usgs.gov/3d-elevation-program",
+    "index": 61,
+    "name": "USGS 3DEP",
+    "tabindex": null,
+    "tag": "A",
+    "type": null,
+    "visible": true
+  }
+]

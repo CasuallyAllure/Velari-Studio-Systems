@@ -1,0 +1,49 @@
+{
+  "environment": "Codex in-app browser, 1440x900, local production preview",
+  "wallClockMs": 2336,
+  "before": {
+    "supported": false,
+    "total": null,
+    "used": null,
+    "videos": [
+      {
+        "currentTime": 0,
+        "readyState": 4,
+        "src": "blob:http://127.0.0.1:4173/fdf375fa-9591-4e0b-a8d6-ed1ce0febd25"
+      },
+      {
+        "currentTime": 0,
+        "readyState": 4,
+        "src": "http://127.0.0.1:4173/assets/showcase/animos/animo-totem-wall-nine-web.mp4"
+      },
+      {
+        "currentTime": 11.9,
+        "readyState": 4,
+        "src": "blob:http://127.0.0.1:4173/d9075762-e473-4c08-818a-62e288e75261"
+      }
+    ]
+  },
+  "after": {
+    "supported": false,
+    "total": null,
+    "used": null,
+    "videos": [
+      {
+        "currentTime": 0.918614,
+        "readyState": 1,
+        "src": "blob:http://127.0.0.1:4173/fdf375fa-9591-4e0b-a8d6-ed1ce0febd25"
+      },
+      {
+        "currentTime": 0,
+        "readyState": 4,
+        "src": "http://127.0.0.1:4173/assets/showcase/animos/animo-totem-wall-nine-web.mp4"
+      },
+      {
+        "currentTime": 11.9,
+        "readyState": 4,
+        "src": "blob:http://127.0.0.1:4173/d9075762-e473-4c08-818a-62e288e75261"
+      }
+    ]
+  },
+  "caveat": "Wall clock includes automation round trips and is not a CPU benchmark. Heap excludes decoded media memory."
+}

@@ -1,0 +1,135 @@
+[
+  {
+    "sha256": "6b2e3719a213e34cc043760e5a5b420d4067f477dfe06b92ef3c9fd914192dd4",
+    "paths": [
+      "fonts/geist-mono-400.woff2",
+      "public/fonts/geist-mono-400.woff2"
+    ]
+  },
+  {
+    "sha256": "9a91efaa3599a6ef01b2f49e9ec670e3a2f39baeef09c73198f1052cf3bb0850",
+    "paths": [
+      "fonts/instrument-sans-400.woff2",
+      "public/fonts/instrument-sans-400.woff2"
+    ]
+  },
+  {
+    "sha256": "9d3547da16d950d12a677c772a3ff9b69846e60e7dcd1b5efd540993f7286532",
+    "paths": [
+      "fonts/instrument-sans-500.woff2",
+      "public/fonts/instrument-sans-500.woff2"
+    ]
+  },
+  {
+    "sha256": "b089ac6fca39eb8d49d166db9e33574fb891223cfa5d63b3b3be1668f1cfe28b",
+    "paths": [
+      "fonts/instrument-sans-italic-400.woff2",
+      "public/fonts/instrument-sans-italic-400.woff2"
+    ]
+  },
+  {
+    "sha256": "02007805cd77359a5da5c76dda8b8a02e164f5e49d0971a7e17035986b214159",
+    "paths": [
+      "fonts/instrument-sans-italic-500.woff2",
+      "public/fonts/instrument-sans-italic-500.woff2"
+    ]
+  },
+  {
+    "sha256": "b40bddcc3b6282e2b6b74c3098a92622c06d35e3b097b2eb2872991b5327c80b",
+    "paths": [
+      "img/sfbay_4k_v2.png",
+      "public/sfbay_4k_v2.png"
+    ]
+  },
+  {
+    "sha256": "eb686b0dc1bbaf1a9ea09211b13895649786e2437eeb09f67d362fac2d57b726",
+    "paths": [
+      "public/assets/showcase/animos/animo-grid-zoom-strip-corrected-poster.jpg",
+      "public/assets/showcase/animos/animo-grid-zoom-strip-poster.jpg"
+    ]
+  },
+  {
+    "sha256": "1b9f1f69d1686147930f6e3ee4854365c9f6702cfedf084e58c7d0eec4e73a04",
+    "paths": [
+      "public/assets/showcase/animos/animo-grid-zoom-strip-corrected-web.mp4",
+      "public/assets/showcase/animos/animo-grid-zoom-strip-web.mp4"
+    ]
+  },
+  {
+    "sha256": "b577eca1eb533a914e735970c2b9609278e7772f3bf9c79c1d9b1601b7f32607",
+    "paths": [
+      "public/assets/showcase/backgrounds/01-property-higgsfield.png",
+      "public/assets/showcase/lookdev/vesper-house-flux-v1.png"
+    ]
+  },
+  {
+    "sha256": "ad9449c7c91ffffc4ee149b4497d3f70b1526865ecd9cba83fb9bb7849d37f9e",
+    "paths": [
+      "public/assets/showcase/panels-tunnel-ready/01-property-single-panel.png",
+      "public/assets/showcase/velari-animos-panels-tunnel-ready/01-property-single-panel.png"
+    ]
+  },
+  {
+    "sha256": "53df9570067f3e5d88a7b9af7372963c3a47c71953c4ece8db834f3129ed884b",
+    "paths": [
+      "public/assets/showcase/panels-tunnel-ready/02-dental-single-panel.png",
+      "public/assets/showcase/velari-animos-panels-tunnel-ready/02-dental-single-panel.png"
+    ]
+  },
+  {
+    "sha256": "7dca4260d32a4432a52884df1b19b7ccc7556b696fd988e74eebcedb1d712f6c",
+    "paths": [
+      "public/assets/showcase/panels-tunnel-ready/03-restaurant-single-panel.png",
+      "public/assets/showcase/velari-animos-panels-tunnel-ready/03-restaurant-single-panel.png"
+    ]
+  },
+  {
+    "sha256": "2ecb9ec5326a55733e2bba06088d88cb3247d9cd20f2fbf04ae9cb8ab157fdb7",
+    "paths": [
+      "public/assets/showcase/panels-tunnel-ready/04-plumbing-single-panel.png",
+      "public/assets/showcase/velari-animos-panels-tunnel-ready/04-plumbing-single-panel.png"
+    ]
+  },
+  {
+    "sha256": "183098b0f377580627f430a2dd4eea0a78e0ae024cdc4cd84e595fae4a5e6e71",
+    "paths": [
+      "public/assets/showcase/panels-tunnel-ready/05-electrical-single-panel.png",
+      "public/assets/showcase/velari-animos-panels-tunnel-ready/05-electrical-single-panel.png"
+    ]
+  },
+  {
+    "sha256": "6d31bb6da811428714f220bf1ac5fdfdc04601786c6b50e7e564ca1efae13a98",
+    "paths": [
+      "public/assets/showcase/panels-tunnel-ready/06-industrial-single-panel.png",
+      "public/assets/showcase/velari-animos-panels-tunnel-ready/06-industrial-single-panel.png"
+    ]
+  },
+  {
+    "sha256": "c0952bbccf3f1374f015bc38ff3befad552d08947b09fd382a1d60abb8173a40",
+    "paths": [
+      "public/assets/showcase/panels-tunnel-ready/07-transport-single-panel.png",
+      "public/assets/showcase/velari-animos-panels-tunnel-ready/07-transport-single-panel.png"
+    ]
+  },
+  {
+    "sha256": "3cd737364427e0e6e71e1f174cd0726dc21afe706059e9d6706908f3c53da4d5",
+    "paths": [
+      "public/assets/showcase/panels-tunnel-ready/08-hvac-single-panel.png",
+      "public/assets/showcase/velari-animos-panels-tunnel-ready/08-hvac-single-panel.png"
+    ]
+  },
+  {
+    "sha256": "250707270351fd528ade69bd4e075b391b5987adbe3ea92f0c79fe8c3c2f90e6",
+    "paths": [
+      "public/assets/showcase/velari-animos-final-v2.zip",
+      "public/assets/showcase/velari-animos-nine-final.zip"
+    ]
+  },
+  {
+    "sha256": "0686a5ce00f00f971e526437ab8ad5ecf2be3fe8d1674e16b6993a3e03572efd",
+    "paths": [
+      "public/assets/v4/mascot/velari-mascot-base-v2-candidate.png",
+      "public/assets/v4/mascot/velari-mascot-base-v2.png"
+    ]
+  }
+]

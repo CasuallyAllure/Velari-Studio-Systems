@@ -32,8 +32,34 @@ dist-ssr
 # Vercel
 .vercel
 
+# Local agent tooling and recovery snapshots
+.agents/
+.recovery/
+.claude/skills/
+
+# Production intermediates: sources, alternates, zips stay local
+public/assets/showcase/source*/
+public/assets/showcase/panels*/
+public/assets/showcase/backgrounds/
+public/assets/showcase/lookdev/
+public/assets/showcase/*.zip
+public/assets/showcase/velari-animos-panels-tunnel-ready/
+public/assets/services-orbit/source/
+public/assets/services-orbit/v2/
+public/assets/services-orbit/video-review/
+public/assets/v4/
+
 # 3D pipeline: large binary meshes stay local
 assets-3d/frames/
+
+# San Francisco Scroll World: keep reproducible pipelines/docs, not generated scan media
+assets-3d/sf-scroll-world/source/*.laz
+assets-3d/sf-scroll-world/source/*.osm
+assets-3d/sf-scroll-world/working/*.ply
+assets-3d/sf-scroll-world/working/*-metadata.json
+assets-3d/sf-scroll-world/exports/*.blend
+assets-3d/sf-scroll-world/exports/*.blend1
+assets-3d/sf-scroll-world/renders/**
 assets-3d/*.blend
 assets-3d/*.blend1
 

@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-08-02T06:32:47.456Z",
+  "assetRoots": [
+    "public",
+    "img",
+    "fonts"
+  ],
+  "assetCount": 260,
+  "totalBytes": 513447372,
+  "byType": {
+    "3d": 3,
+    "archive": 7,
+    "blend": 3,
+    "css": 2,
+    "file": 4,
+    "font": 12,
+    "html": 2,
+    "image": 200,
+    "javascript": 1,
+    "md": 4,
+    "py": 3,
+    "video": 19
+  },
+  "orphanCandidates": 207,
+  "duplicateGroups": 19,
+  "caveat": "Orphan status is static-reference evidence only. Dynamic, generated, source, and experimental assets require manual review before deletion."
+}

@@ -1,0 +1,291 @@
+[
+  {
+    "name": "large-desktop-1920x1080",
+    "buttons": 45,
+    "formControls": 8,
+    "headings": 18,
+    "horizontalOverflow": false,
+    "links": 9,
+    "mainChildren": [
+      {
+        "height": 6912,
+        "id": "hero",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1080,
+        "id": "selected-systems",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1490,
+        "id": "industry-concepts",
+        "tag": "SECTION"
+      },
+      {
+        "height": 5832,
+        "id": "what-we-build",
+        "tag": "SECTION"
+      },
+      {
+        "height": 945,
+        "id": "packages",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1053,
+        "id": "how-it-works",
+        "tag": "SECTION"
+      },
+      {
+        "height": 968,
+        "id": "contact",
+        "tag": "SECTION"
+      }
+    ],
+    "scrollHeight": 18460,
+    "sectionCount": 7,
+    "viewport": {
+      "height": 1080,
+      "width": 1920
+    },
+    "visibleHeaderControls": [
+      "VELARISystems",
+      "Studio",
+      "Starting Points",
+      "Process + Intake",
+      "Inquiries",
+      "Velari Cinematic",
+      "Industrial Services",
+      "Modern Tech",
+      "Let's TalkBook a Consult"
+    ]
+  },
+  {
+    "name": "desktop-1440x900",
+    "buttons": 45,
+    "formControls": 8,
+    "headings": 18,
+    "horizontalOverflow": false,
+    "links": 9,
+    "mainChildren": [
+      {
+        "height": 5760,
+        "id": "hero",
+        "tag": "SECTION"
+      },
+      {
+        "height": 810,
+        "id": "selected-systems",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1195,
+        "id": "industry-concepts",
+        "tag": "SECTION"
+      },
+      {
+        "height": 4860,
+        "id": "what-we-build",
+        "tag": "SECTION"
+      },
+      {
+        "height": 876,
+        "id": "packages",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1018,
+        "id": "how-it-works",
+        "tag": "SECTION"
+      },
+      {
+        "height": 967,
+        "id": "contact",
+        "tag": "SECTION"
+      }
+    ],
+    "scrollHeight": 15666,
+    "sectionCount": 7,
+    "viewport": {
+      "height": 900,
+      "width": 1440
+    },
+    "visibleHeaderControls": [
+      "VELARISystems",
+      "Studio",
+      "Starting Points",
+      "Process + Intake",
+      "Inquiries",
+      "Velari Cinematic",
+      "Industrial Services",
+      "Modern Tech",
+      "Let's TalkBook a Consult"
+    ]
+  },
+  {
+    "name": "tablet-768x1024",
+    "buttons": 45,
+    "formControls": 8,
+    "headings": 18,
+    "horizontalOverflow": false,
+    "links": 9,
+    "mainChildren": [
+      {
+        "height": 6554,
+        "id": "hero",
+        "tag": "SECTION"
+      },
+      {
+        "height": 432,
+        "id": "selected-systems",
+        "tag": "SECTION"
+      },
+      {
+        "height": 775,
+        "id": "industry-concepts",
+        "tag": "SECTION"
+      },
+      {
+        "height": 5530,
+        "id": "what-we-build",
+        "tag": "SECTION"
+      },
+      {
+        "height": 827,
+        "id": "packages",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1360,
+        "id": "how-it-works",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1183,
+        "id": "contact",
+        "tag": "SECTION"
+      }
+    ],
+    "scrollHeight": 16852,
+    "sectionCount": 7,
+    "viewport": {
+      "height": 1024,
+      "width": 768
+    },
+    "visibleHeaderControls": [
+      "VELARISystems",
+      "Let's TalkBook a Consult"
+    ]
+  },
+  {
+    "name": "mobile-390x844",
+    "buttons": 45,
+    "formControls": 8,
+    "headings": 18,
+    "horizontalOverflow": false,
+    "links": 9,
+    "mainChildren": [
+      {
+        "height": 4051,
+        "id": "hero",
+        "tag": "SECTION"
+      },
+      {
+        "height": 288,
+        "id": "selected-systems",
+        "tag": "SECTION"
+      },
+      {
+        "height": 633,
+        "id": "industry-concepts",
+        "tag": "SECTION"
+      },
+      {
+        "height": 4051,
+        "id": "what-we-build",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1184,
+        "id": "packages",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1721,
+        "id": "how-it-works",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1369,
+        "id": "contact",
+        "tag": "SECTION"
+      }
+    ],
+    "scrollHeight": 13583,
+    "sectionCount": 7,
+    "viewport": {
+      "height": 844,
+      "width": 390
+    },
+    "visibleHeaderControls": [
+      "VELARISystems",
+      "Let's TalkBook a Consult"
+    ]
+  },
+  {
+    "name": "narrow-mobile-320x568",
+    "buttons": 45,
+    "formControls": 8,
+    "headings": 18,
+    "horizontalOverflow": false,
+    "links": 9,
+    "mainChildren": [
+      {
+        "height": 2726,
+        "id": "hero",
+        "tag": "SECTION"
+      },
+      {
+        "height": 288,
+        "id": "selected-systems",
+        "tag": "SECTION"
+      },
+      {
+        "height": 586,
+        "id": "industry-concepts",
+        "tag": "SECTION"
+      },
+      {
+        "height": 2726,
+        "id": "what-we-build",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1221,
+        "id": "packages",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1932,
+        "id": "how-it-works",
+        "tag": "SECTION"
+      },
+      {
+        "height": 1490,
+        "id": "contact",
+        "tag": "SECTION"
+      }
+    ],
+    "scrollHeight": 11257,
+    "sectionCount": 7,
+    "viewport": {
+      "height": 568,
+      "width": 320
+    },
+    "visibleHeaderControls": [
+      "VELARISystems",
+      "Let's TalkBook a Consult"
+    ]
+  }
+]

@@ -1,4 +1,4 @@
-# Velari Studio Systems
+# Velari Systems
 
 Swedish-minimalist website template with built-in AI intake and automation. Production-ready, client-reusable SaaS starter.
 
@@ -12,6 +12,7 @@ Swedish-minimalist website template with built-in AI intake and automation. Prod
 - **♻️ Client-Reusable**: Clone for new clients, change 4 config files, deploy in 10 minutes
 - **📱 Mobile-First**: Fully responsive design with Tailwind CSS
 - **⚡ Fast**: Vite + React + TypeScript for instant HMR and type safety
+- **🌉 Scroll World Hero**: A continuous, scroll-scrubbed flight from downtown San Francisco to the Golden Gate Bridge, with dedicated desktop and mobile renders
 
 ## Tech Stack
 
@@ -55,12 +56,14 @@ Edit `.env.local` with your credentials:
 ```env
 VITE_SUPABASE_URL=https://xxxx.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJhbGci...
-VITE_RESEND_API_KEY=re_...
-VITE_OPENAI_API_KEY=sk-proj-...
-VITE_PLAUSIBLE_DOMAIN=yourdomain.com
+VITE_PLAUSIBLE_DOMAIN=velariss.co
+RESEND_API_KEY=re_...
+FROM_EMAIL=estimates@velariss.co
+NOTIFICATION_EMAIL=info@velariss.co
+OPENAI_API_KEY=sk-proj-...
 ```
 
-**Note**: The app automatically switches from mocks to real services when environment variables are present.
+**Note**: Secrets without the `VITE_` prefix are server-only. The browser demo stays on mocks until the protected estimate endpoint is connected.
 
 ## Project Structure
 
@@ -128,12 +131,12 @@ packages[1].features = [
 
 ### 4. Set Environment Variables
 
-Create `.env.local` with client-specific values:
+Create `.env.local` with client-specific values. Keep email and AI credentials on the server:
 
 ```env
 VITE_SUPABASE_URL=https://joes-plumbing.supabase.co
-VITE_FROM_EMAIL=service@joesplumbing.com
-VITE_NOTIFICATION_EMAIL=joe@joesplumbing.com
+FROM_EMAIL=service@joesplumbing.com
+NOTIFICATION_EMAIL=joe@joesplumbing.com
 ```
 
 ### 5. Deploy
@@ -179,6 +182,20 @@ vercel --prod
 **Mock behavior**: Logs events to console
 
 ## Development
+
+### San Francisco Scroll World
+
+The homepage hero uses pre-rendered Blender camera animation for consistent visual quality and smooth browser playback. The editable scene, render scripts, web encodes, and implementation live here:
+
+- `assets-3d/sf-scroll-world/exports/velari-sf-scrollworld-final-master.blend` — editable Blender master
+- `assets-3d/sf-scroll-world/working/build_sf_scrollworld_final.py` — deterministic world builder
+- `assets-3d/sf-scroll-world/working/render_sf_scrollworld_assets.py` — desktop and mobile renderer
+- `assets-3d/sf-scroll-world/working/encode_sf_scrollworld_assets.sh` — web-video encoder
+- `public/assets/scrollworld/` — production MP4 and poster assets
+- `src/components/homepage/HeroSection.tsx` — responsive scroll-scrub implementation
+- `docs/sf-scroll-world-hero-master-plan.md` — story, camera, mobile, and performance specification
+
+Building geometry is derived from © OpenStreetMap contributors. Elevation and LiDAR reference data comes from the USGS 3D Elevation Program.
 
 ### Build
 
@@ -253,4 +270,4 @@ MIT
 
 ## Support
 
-For questions or issues, contact: hello@velaristudiosystems.com
+For questions or issues, contact: info@velariss.co
